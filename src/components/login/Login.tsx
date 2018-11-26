@@ -2,6 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { RouteComponentProps, withRouter } from 'react-router'
 
+import { I18n } from 'react-redux-i18n'
 import { IRootProps } from '../../statics/types'
 
 interface ILoginProps extends IRootProps, RouteComponentProps<any> {
@@ -24,11 +25,15 @@ class Login extends React.PureComponent<ILoginProps, ILoginState> {
     }
   }
 
-  render() {
+  public render() {
     return (
       <div className="login-wrapper">
-        hello world pls Login
-        <button>xd</button>
+        <div className="login-floaty">
+          <div className="title">{I18n.t('title')}</div>
+          <div className="forms">
+            -
+          </div>
+        </div>
       </div>
     )
   }

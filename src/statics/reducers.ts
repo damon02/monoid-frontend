@@ -3,8 +3,9 @@ import { combineReducers } from 'redux'
 import { appReducer } from '../components/app/reducer'
 import { loginReducer } from '../components/login/reducer'
 
+import nl_NL from '../translations/nl_NL'
 import { loadProperty } from '../utils/cookies'
-import { IAuthObject, IRootProps } from './types'
+import { IAuthObject, II18nState, IRootProps } from './types'
 
 const emptyAuthObject : IAuthObject = {
   username: null,
@@ -20,7 +21,11 @@ export const initialState : IRootProps = {
   },
   login: {
     auth
-  }
+  },
+  i18n: {
+    translations: { nl: nl_NL },
+    locale: 'nl'
+  } as II18nState,
 }
 
 export const combinedReducers = combineReducers({

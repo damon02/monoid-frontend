@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { withRouter, RouteComponentProps, Redirect } from 'react-router'
+import { Redirect, RouteComponentProps, withRouter } from 'react-router'
 import { Dispatch } from 'redux'
 
 import { IRootProps } from '../../statics/types'
@@ -23,7 +23,7 @@ class App extends React.PureComponent<IAppProps, IAppState> {
     }
   }
 
-  render() {
+  public render() {
     if (!this.props.login.auth.token) {
       return <Redirect to={'login'} />
     }
