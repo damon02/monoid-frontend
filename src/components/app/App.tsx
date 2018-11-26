@@ -1,28 +1,46 @@
 import * as React from 'react'
-import logo from './logo.svg'
+import { connect } from 'react-redux'
+import { withRouter, RouteComponentProps, Redirect } from 'react-router'
+import { Dispatch } from 'redux'
+
+import { IRootProps } from '../../statics/types'
+import { setData } from './actions'
 import './App.css'
 
-class App extends React.PureComponent {
+interface IAppProps extends IRootProps, RouteComponentProps<any> {
+  setData : (data: any) => void
+}
+
+interface IAppState {
+  loading: boolean
+}
+
+class App extends React.PureComponent<IAppProps, IAppState> {
+  constructor(props: IAppProps) {
+    super(props)
+    this.state = {
+      loading: false
+    }
+  }
+
   render() {
+    if (!this.props.login.auth.token) {
+      return <Redirect to={'login'} />
+    }
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        memes
       </div>
     )
   }
 }
 
-export default App
+const mapStateToProps = (state : IRootProps, ownProps : {}) => state
+const mapDispatchToProps = (dispatch : Dispatch) => {
+  return {
+    setData : (data : any) => { dispatch(setData(data)) }
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
