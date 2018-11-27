@@ -1,3 +1,4 @@
+import { i18nReducer } from 'react-redux-i18n'
 import { combineReducers } from 'redux'
 
 import { appReducer } from '../components/app/reducer'
@@ -30,5 +31,6 @@ export const initialState : IRootProps = {
 
 export const combinedReducers = combineReducers({
   app: appReducer,
-  login: loginReducer
+  login: loginReducer,
+  i18n: i18nReducer
 })

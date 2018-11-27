@@ -5,7 +5,7 @@ import { Dispatch } from 'redux'
 
 import { IRootProps } from '../../statics/types'
 import { setData } from './actions'
-import './App.css'
+import './App.scss'
 
 interface IAppProps extends IRootProps, RouteComponentProps<any> {
   setData : (data: any) => void
@@ -29,7 +29,7 @@ class App extends React.PureComponent<IAppProps, IAppState> {
     }
 
     return (
-      <div className="App">
+      <div className="app">
         memes
       </div>
     )

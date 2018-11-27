@@ -1,0 +1,32 @@
+@import '../../style/style.scss';
+
+.terminal {
+  background-color: #fff;
+  color: #5d5d5d;
+  height: 100%;
+  padding: $spaces-xsmall;
+  font-family: 'Inconsolata', monospace;
+  font-size: 13px;
+  text-align: left;
+  font-weight: 400;
+
+  &.dark {
+    color: #d0d0d0;
+    background: #000000;
+  }
+
+  &.1337 {
+    color: #00ff00;
+    background: #000000;
+  }
+
+  input {
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+  }
+}
