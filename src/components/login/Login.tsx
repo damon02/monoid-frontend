@@ -215,16 +215,8 @@ class Login extends React.PureComponent<ILoginProps, ILoginState> {
         
         if ((dirTo.indexOf('../') !== -1 || dirTo.indexOf('..') !== -1) && activeDir && activeDir.length >= 1) {
           // Back traversal
-          const backAmount = dirTo.split('/').length - 2
+          const backAmount = dirTo.indexOf('../') !== -1 ? dirTo.split('/').length - 2 : 2
           ns.activeDir = activeDir.slice(0, activeDir.length - backAmount - 1)
-
-          ns.history.push({
-            isCommand: false,
-            dir: this.state.activeDir.join('/'),
-            user,
-            value: `${activeDir.join('/')}`
-          })
-
         } else if (!dirTo || dirTo.length === 0) {
           // Invalid
 
@@ -242,12 +234,6 @@ class Login extends React.PureComponent<ILoginProps, ILoginState> {
           
           if (dir) {
             ns.activeDir = this.state.activeDir.concat(dirTo)
-            ns.history.push({
-              isCommand: false,
-              dir: this.state.activeDir.join('/'),
-              user,
-              value: `Going to ${dirTo}`
-            })
           } else {
             ns.history.push({
               isCommand: false,
@@ -257,6 +243,32 @@ class Login extends React.PureComponent<ILoginProps, ILoginState> {
             })
           }
 
+        }
+        break
+      }
+
+      case 'ls': {
+        const prefix = this.state.activeDir.join('/').replace(/\//g, '.')
+        const dir = this.state.activeDir.length > 0 
+          ? get(this.state.directories, `start.${prefix.length > 1 ? `${prefix}` : '.'}`)
+          : get(this.state.directories, 'start')
+
+        console.log(dir, `start${prefix.length > 1 ? `.${prefix}` : ''}`)
+
+        if (dir && Object.keys(dir).length > 0) {
+          ns.history.push({
+            isCommand: false,
+            dir: this.state.activeDir.join('/'),
+            user,
+            value: Object.keys(dir).join(' ')
+          })
+        } else {
+          ns.history.push({
+            isCommand: false,
+            dir: this.state.activeDir.join('/'),
+            user,
+            value: `This directory is empty`
+          })
         }
         break
       }
