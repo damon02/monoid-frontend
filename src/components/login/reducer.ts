@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux'
 import { initialState } from '../../statics/reducers'
-import { ILoginProps, IAuthObject } from '../../statics/types'
-import { saveProperty, removeProperty } from '../../utils/cookies'
+import { IAuthObject, ILoginProps } from '../../statics/types'
+import { removeProperty, saveProperty } from '../../utils/cookies'
 
 export function loginReducer(state : ILoginProps = initialState.login, action: AnyAction) {
   switch(action.type) {

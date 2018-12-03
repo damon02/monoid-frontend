@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { Redirect, RouteComponentProps, withRouter } from 'react-router'
+import { Redirect, Route, RouteComponentProps, Switch, withRouter } from 'react-router'
 import { Dispatch } from 'redux'
+
+import Terminal from '../terminal/Terminal'
 
 import { IRootProps } from '../../statics/types'
 import { setData } from './actions'
@@ -30,7 +32,10 @@ class App extends React.PureComponent<IAppProps, IAppState> {
 
     return (
       <div className="app">
-        memes
+        <Switch>
+          <Route path="/terminal" component={Terminal} />
+          <Route path="/" component={() => <h2>Hello</h2>} />
+        </Switch>
       </div>
     )
   }

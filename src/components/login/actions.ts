@@ -1,4 +1,4 @@
-import { IAuthObject } from "../../statics/types"
+import { IAuthObject } from '../../statics/types'
 
 export function setAuth(auth : IAuthObject) {
   return {
