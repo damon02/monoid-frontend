@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="inputComponent "
+>
+  <label
+    className="label extended"
+  >
+    test
+  </label>
+  <input
+    autoComplete="on"
+    className="field untouched"
+    onChange={[Function]}
+    onFocus={[Function]}
+    type="text"
+    value="hello world"
+  />
+</div>
+`;

@@ -4,6 +4,10 @@ export default {
   title_long: 'Network Intrusion Detection System',
   code: 'nids',
 
-  username: 'Gebruikersnaam',
-  password: 'Wachtwoord'
+  
+  login: {
+    title: 'Inloggen',
+    username: 'Gebruikersnaam',
+    password: 'Wachtwoord',
+  }
 }

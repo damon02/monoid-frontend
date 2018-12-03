@@ -1,0 +1,23 @@
+@import '../../style/style.scss';
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
+  .login-floaty {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-width: 320px;
+    max-width: 500px;
+    padding: $spaces-large;
+  
+    h1 {
+      margin-top: 0px;
+    }
+  }  
+}

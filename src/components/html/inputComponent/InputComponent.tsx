@@ -10,17 +10,19 @@ interface IInputComponentProps {
   onFocus?: (x: boolean) => void
   touched?: boolean
   autoComplete?: 'on' | 'off'
+  faIcon?: string
 }
 
 
 const InputComponent = (props : IInputComponentProps) => (
-  <div className={`inputComponent ${props.isValid !== undefined ? props.isValid === false ? ' invalid' : ' valid' : ''}`}>
+  <div className={`inputComponent ${props.isValid !== undefined ? props.isValid === false ? ' invalid' : ' valid' : ''}${props.faIcon ? ' icon-padding' : ''}`}>
     <label className={`label ${props.value ? 'extended' : 'empty'}`}>{props.label}</label>
+    {props.faIcon ? <i className={`abs-fa ${props.faIcon}`}/> : null}
     <input 
-      className={`field${props.touched ? '' : ' untouched'}`}
+      className={`field${props.touched ? '' : ' untouched'}${props.faIcon ? ' icon-padding' : ''}`}
       type={props.type}
       value={props.value}
-      onChange={(e) => props.onChange(e.target.value)}
+      onChange={(e) => !props.onChange ? ({}) : props.onChange(e.target.value)}
       onFocus={() => !props.onFocus ? ({}) : props.onFocus(true)}
       autoComplete={props.autoComplete || 'on'}
     />
