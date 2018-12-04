@@ -2,6 +2,7 @@
 
 $color-primary: #f1c232;
 $color-secondary: #ffffff;
+$color-tertiary: #32b4f1;
 
 $color-black: #000000;
 $color-dark-gray: #505050;
@@ -36,4 +37,57 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Proxima Nova';
+}
+
+button {
+  background-color: $color-black;
+  border: none;
+  color: $color-white;
+  cursor: pointer;
+  font-family: 'Proxima Nova';
+  font-size: 16px;
+  padding: 0px;
+  height: 40px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  .text {
+    margin: 10px 24px;
+  }
+
+  &:hover {
+    opacity: .85;
+  }
+
+  &:active {
+    opacity: .75;
+  }
+
+  &:focus {
+    outline: none;
+    background: $color-dark-gray;
+  }
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-red;
+  color: #ffffff; 
+  opacity: 1;
+  padding: $spaces-medium 0px;
+  font-size: 14px;
+  font-family: 'Proxima Nova';
+
+  i {
+    margin-right: $spaces-medium;
+  }
+
+  &.clickable {
+    cursor: pointer;
+  }
 }

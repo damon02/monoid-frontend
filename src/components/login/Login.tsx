@@ -7,6 +7,7 @@ import InputComponent from '../html/inputComponent/InputComponent'
 import { I18n } from 'react-redux-i18n'
 import { IRootProps } from '../../statics/types'
 
+import ErrorComponent from '../html/errorComponent/ErrorComponent'
 import './Login.scss'
 
 interface ILoginComponentProps extends IRootProps, RouteComponentProps<any> {
@@ -30,7 +31,7 @@ class Login extends React.PureComponent<ILoginComponentProps, ILoginState> {
       password: '',
       ptouched: false,
       loading: false,
-      error: ''
+      error: '',
     }
   }
 
@@ -43,6 +44,14 @@ class Login extends React.PureComponent<ILoginComponentProps, ILoginState> {
   public render() {
     return (
       <div className="login-wrapper">
+        <div className="back-wrap">
+          <div className="background-img"/>
+        </div>
+        <ErrorComponent 
+          message={this.state.error ? I18n.t(`error.${this.state.error}`) : ''}
+          faIcon={'fas fa-times'}
+          onClick={() => this.setState({ error: '' })}
+        />
         <div className="login-floaty">
           <h1>{I18n.t('login.title')}</h1>
           <InputComponent 
@@ -62,8 +71,18 @@ class Login extends React.PureComponent<ILoginComponentProps, ILoginState> {
             onFocus={() => this.handlePasswordTouch()}
             touched={this.state.ptouched}
             autoComplete={'off'}
+            onEnter={() => this.handleLogin()}
           />
+          <button className="button" onClick={() => this.handleLogin()}>
+            <span className="text">
+              {this.state.loading 
+                ? <i className="fas fa-circle-notch fa-spin"/>
+                : I18n.t('login.submit')
+              }
+            </span>
+          </button>
         </div>
+        <div className="monoid-logo"/>
       </div>
     )
   }
@@ -74,6 +93,15 @@ class Login extends React.PureComponent<ILoginComponentProps, ILoginState> {
 
   public handlePasswordTouch = () => {
     this.setState({ ptouched: true })
+  }
+
+  public handleLogin = async () => {
+    try {
+      this.setState({ loading: true, error: 'loginError' })
+    } catch (error) {
+      this.setState({ loading: false, error: 'loginError' })
+      console.error()
+    }
   }
 }
 

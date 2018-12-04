@@ -11,11 +11,11 @@ interface IInputComponentProps {
   touched?: boolean
   autoComplete?: 'on' | 'off'
   faIcon?: string
+  onEnter? : () => void
 }
 
-
 const InputComponent = (props : IInputComponentProps) => (
-  <div className={`inputComponent ${props.isValid !== undefined ? props.isValid === false ? ' invalid' : ' valid' : ''}${props.faIcon ? ' icon-padding' : ''}`}>
+  <div className={`inputComponent${props.isValid !== undefined ? props.isValid === false ? ' invalid' : ' valid' : ''}${props.faIcon ? ' icon-padding' : ''}`}>
     <label className={`label ${props.value ? 'extended' : 'empty'}`}>{props.label}</label>
     {props.faIcon ? <i className={`abs-fa ${props.faIcon}`}/> : null}
     <input 
@@ -25,6 +25,7 @@ const InputComponent = (props : IInputComponentProps) => (
       onChange={(e) => !props.onChange ? ({}) : props.onChange(e.target.value)}
       onFocus={() => !props.onFocus ? ({}) : props.onFocus(true)}
       autoComplete={props.autoComplete || 'on'}
+      onKeyPress={(e) => props.onEnter && e.key === 'Enter' ? props.onEnter() : ({})}
     />
   </div>
 )
