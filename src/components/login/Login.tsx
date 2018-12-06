@@ -1,16 +1,20 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { RouteComponentProps, withRouter } from 'react-router'
-
-import InputComponent from '../html/inputComponent/InputComponent'
-
 import { I18n } from 'react-redux-i18n'
-import { IRootProps } from '../../statics/types'
+import { RouteComponentProps, withRouter } from 'react-router'
+import { Dispatch } from 'redux'
 
 import ErrorComponent from '../html/errorComponent/ErrorComponent'
+import InputComponent from '../html/inputComponent/InputComponent'
+
+import { IAuthObject, IRootProps } from '../../statics/types'
+import { loginUser } from '../../utils/rest'
+import { setAuth } from './actions'
+
 import './Login.scss'
 
 interface ILoginComponentProps extends IRootProps, RouteComponentProps<any> {
+  setAuth: (auth: IAuthObject) => void
 }
 
 interface ILoginState {
@@ -41,10 +45,16 @@ class Login extends React.PureComponent<ILoginComponentProps, ILoginState> {
     }
   }
 
+  public componentDidUpdate() {
+    if (this.props.login.auth.token) {
+      this.props.history.push(`/`)
+    }
+  }
+
   public render() {
     return (
       <div className="login-wrapper">
-        <div className="back-wrap">
+        <div className={`back-wrap${this.state.loading ? ' loading' : ''}`}>
           <div className="background-img"/>
         </div>
         <ErrorComponent 
@@ -73,14 +83,30 @@ class Login extends React.PureComponent<ILoginComponentProps, ILoginState> {
             autoComplete={'off'}
             onEnter={() => this.handleLogin()}
           />
-          <button className="button" onClick={() => this.handleLogin()}>
-            <span className="text">
-              {this.state.loading 
-                ? <i className="fas fa-circle-notch fa-spin"/>
-                : I18n.t('login.submit')
-              }
-            </span>
-          </button>
+          <div className="buttons">
+            <button className="button" onClick={() => this.handleLogin()}>
+              <span className="text">
+                {this.state.loading 
+                  ? <i className="fas fa-circle-notch fa-spin"/>
+                  : I18n.t('login.submit')
+                }
+              </span>
+            </button>
+            <button className="button" onClick={() => this.props.history.push(`/register`)}>
+              <span className="text">{I18n.t('login.register')}</span>
+            </button>
+          </div>
+          <button className="hyperlink">{I18n.t('login.forgot')}</button>
+          {/* {this.state.passwordForgot
+            ? <div className="forgotpass">
+              <InputComponent
+                label={I18n.t('login.username')} 
+                type={'email'}
+                value={this.state.passwordForgotValue} 
+              />
+            </div>
+            : null
+          } */}
         </div>
         <div className="monoid-logo"/>
       </div>
@@ -97,7 +123,17 @@ class Login extends React.PureComponent<ILoginComponentProps, ILoginState> {
 
   public handleLogin = async () => {
     try {
-      this.setState({ loading: true, error: 'loginError' })
+      this.setState({ loading: true, error: '' })
+      const response = await loginUser(this.state.username, this.state.password)
+      this.setState({ loading: false })
+      
+      if (response) {      
+        this.props.setAuth({ username: response.userName, token: response.token, timestamp: Date.now() })
+      } else {
+        this.setState({ error: 'loginError' })
+        throw new Error('No data returned from backend')
+      }
+      
     } catch (error) {
       this.setState({ loading: false, error: 'loginError' })
       console.error()
@@ -105,4 +141,11 @@ class Login extends React.PureComponent<ILoginComponentProps, ILoginState> {
   }
 }
 
-export default withRouter(connect(state => state)(Login))
+const mapStateToProps = (state : IRootProps, ownProps : {}) => state
+const mapDispatchToProps = (dispatch : Dispatch) => {
+  return {
+    setAuth : (auth : IAuthObject) => { dispatch(setAuth(auth)) }
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login))

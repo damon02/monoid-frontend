@@ -6,6 +6,8 @@ import { removeProperty, saveProperty } from '../../utils/cookies'
 export function loginReducer(state : ILoginProps = initialState.login, action: AnyAction) {
   switch(action.type) {
     case 'SET_AUTH':
+      console.log(action)
+
       saveProperty('auth', action.auth)
       return Object.assign({}, state, { auth: action.auth })
 

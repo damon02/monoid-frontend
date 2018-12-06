@@ -9,11 +9,38 @@ export default {
   login: {
     title: 'Inloggen',
     username: 'Gebruikersnaam',
+    email: 'E-mail',
     password: 'Wachtwoord',
     submit: 'Log in',
+    register: 'Registreer',
+    forgot: 'Wachtwoord vergeten?',
   },
 
+  register: {
+    title: 'Registreer',
+    username: 'Gebruikersnaam',
+    email: 'E-mail',
+    password: 'Wachtwoord',
+    repeatpassword: 'Herhaal uw wachtwoord',
+    submit: 'Registreer',
+    backLogin: 'Ga terug naar login',
+
+    minimal: 'Minimaal',
+    uppercase: 'Minimaal 1 hoofdletter',
+    lowercase: 'Minimaal 1 kleine letter',
+    symbols: 'Minimaal 1 symbool',
+    digits: 'Minimaal 1 getal',
+    length: 'Minimaal 10 karakters lang',
+    matching: 'Uw wachtwoorden komen overeen.',
+    repeating: 'Uw wachtwoord mag niet 3 of meer dezelfde karakters achter elkaar bevatten.',
+    success: 'Registratie is gelukt! U kunt nu inloggen met uw gebruikersnaam en wachtwoord.',
+  },
+  
   error: {
     loginError: 'Er ging iets fout met inloggen, probeer het nog eens.',
+    passNotStrong: 'Uw wachtwoord is niet sterk genoeg.',
+    passMatch: 'Uw wachtwoorden komen niet overeen',
+    userInvalid: 'Uw gebruikersnaam klopt niet.',
+    emailInvalid: 'Uw email adres klopt niet.',
   }
 }

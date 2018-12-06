@@ -19,7 +19,7 @@ export interface ILoginProps {
 export interface IAuthObject {
   username: string | null
   token: string | null
-  timestamp: string | null
+  timestamp: number | null
 }
 
 /**
@@ -34,3 +34,15 @@ export interface II18nState {
   translations: ITranslationObjects
   locale: string
 }
+
+
+// REST types
+
+export interface IGenericAPIResponse<T> {
+  success: boolean
+  message: string | null
+  data: T | null
+}
+
+export type IRegisterResponse = { userName: string, emailAddress: string } | null
+export type ILoginResponse = { userName: string, token: string } | null
