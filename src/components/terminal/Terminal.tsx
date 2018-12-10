@@ -3,14 +3,19 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import { RouteComponentProps, withRouter } from 'react-router'
+import { Dispatch } from 'redux'
 
-import { IRootProps } from '../../statics/types'
+import { IAuthObject, IRootProps } from '../../statics/types'
+import { loginUser } from '../../utils/rest'
 import Directories from './directories'
+
+import { clearAuth, setAuth } from '../login/actions'
 
 import './Terminal.scss'
 
 interface ITerminalProps extends IRootProps, RouteComponentProps<any> {
-
+  clearAuth: () => void
+  setAuth: (auth: IAuthObject) => void
 }
 
 interface ITerminalState {
@@ -47,13 +52,25 @@ class Terminal extends React.PureComponent<ITerminalProps, ITerminalState> {
       directories: Directories,
       activeDir: []
     }
-    this.me = `null`
+    this.me = `guest`
     this.myInp = React.createRef()
   }
 
-  public componentDidUpdate() {
+  public componentDidMount() {
+    if (this.props.login.auth.username) {
+      this.me = this.props.login.auth.username
+    }
+  }
+
+  public componentDidUpdate(prevProps: ITerminalProps) {
     if (this.myInp && this.myInp.current) {
       this.myInp.current.scrollIntoView()
+    }
+
+    if (this.props.login.auth.username && this.props.login.auth.username !== prevProps.login.auth.username) {
+      this.me = this.props.login.auth.username
+    } else if (!this.props.login.auth.username) {
+      this.me = 'guest'
     }
   }
 
@@ -102,38 +119,52 @@ class Terminal extends React.PureComponent<ITerminalProps, ITerminalState> {
 
   public handleLoginStep = () => {
     const history = cloneDeep(this.state.history)
-    const isPassword = this.state.loginStep === 2
-    const value = isPassword
-      ? new Array(this.state.password.length + 1).join('•')
-      : this.state.username
 
-    history.push({
-      isCommand: false,
-      user: '',
-      dir: '',
-      value: `${isPassword ? 'Password: ' : 'Username: '}${value}`
-    })
-    
-    if (value.length >= 1) {
-      this.setState({ loginStep: isPassword ? 0 : 2, history })    
-      if (isPassword) {
-        this.handleLogin()
+    if (!this.props.login.auth.token) {
+      const isPassword = this.state.loginStep === 2
+      const value = isPassword
+        ? new Array(this.state.password.length + 1).join('•')
+        : this.state.username
+  
+      history.push({
+        isCommand: false,
+        user: '',
+        dir: '',
+        value: `${isPassword ? 'Password: ' : 'Username: '}${value}`
+      })
+      
+      if (value.length >= 1) {
+        this.setState({ loginStep: isPassword ? 0 : 2, history })    
+        if (isPassword) {
+          this.handleLogin()
+        }
+      } else {
+        this.setState({ history })
       }
-    } else {
-      this.setState({ history })
     }
   }
 
   public handleLogin = async () => {
     try {
-      const x = await fetch(``)
+      const response = await loginUser(this.state.username, this.state.password)
       const history = cloneDeep(this.state.history)
-      history.push({
-        isCommand: false,
-        dir: '',
-        user: '',
-        value: `${x.status} ${x.statusText}`
-      })
+      
+      if (response) {      
+        this.props.setAuth({ username: response.userName, token: response.token, timestamp: Date.now() })
+        history.push({
+          isCommand: false,
+          dir: '',
+          user: '',
+          value: I18n.t('terminal.loginSuccess', { user: response.userName })
+        })
+      } else {
+        history.push({
+          isCommand: false,
+          dir: '',
+          user: '',
+          value: I18n.t('terminal.loginError')
+        })
+      }
       
       this.setState({ history, username: '', password: '' })
     } catch (error) {
@@ -142,7 +173,7 @@ class Terminal extends React.PureComponent<ITerminalProps, ITerminalState> {
         isCommand: false,
         dir: '',
         user: '',
-        value: `${error}`
+        value: I18n.t('terminal.loginError')
       })
 
       this.setState({ history, username: '', password: '' })
@@ -153,7 +184,7 @@ class Terminal extends React.PureComponent<ITerminalProps, ITerminalState> {
   public renderHistory (item : IHistoryItem, key : number) {
     const prefix = item.isCommand
       ? <span className="prefix">{item.user}@{I18n.t('code')}:~{item.dir} $ </span>
-      : undefined
+      : null
     return <div key={key}>{prefix}{item.value}</div>
   }
 
@@ -167,7 +198,7 @@ class Terminal extends React.PureComponent<ITerminalProps, ITerminalState> {
   } 
 
   public handleCommand = (command : string, state: ITerminalState) : ITerminalState => {
-    const commandList = ['login', 'clear', 'help', 'ls', 'cd'].sort()
+    const commandList = ['login', 'logout', 'clear', 'help', 'ls', 'cd'].sort()
     const cmdArray = command.split(' ')
 
     const isSudo = cmdArray[0] === 'sudo'
@@ -188,7 +219,12 @@ class Terminal extends React.PureComponent<ITerminalProps, ITerminalState> {
         if (isSudo) {
           this.me = `root`
         } else {
-          ns.history.push({ isCommand: false, user, dir: this.state.activeDir.join('/'), value: `${user} is not allowed to run sudo su` })
+          ns.history.push({ 
+            isCommand: false, 
+            user, 
+            dir: this.state.activeDir.join('/'), 
+            value: `${user} is not allowed to run sudo su` 
+          })
         }
         break
       }
@@ -204,7 +240,36 @@ class Terminal extends React.PureComponent<ITerminalProps, ITerminalState> {
       }
 
       case 'login': {
-        ns.loginStep = 1
+        if (this.props.login.auth.token) {
+          ns.history.push({
+            isCommand: false,
+            dir: '',
+            user: '',
+            value: I18n.t('terminal.alreadyLoggedIn')
+          })
+        } else {
+          ns.loginStep = 1
+        }
+        break
+      }
+
+      case 'logout': {
+        if (this.props.login.auth.token) {
+          this.props.clearAuth()
+          ns.history.push({
+            isCommand: false,
+            dir: '',
+            user: '',
+            value: I18n.t('terminal.loggedOut')
+          })
+        } else {
+          ns.history.push({
+            isCommand: false,
+            dir: '',
+            user: '',
+            value: I18n.t('terminal.notLoggedIn')
+          })
+        }
         break
       }
 
@@ -301,4 +366,12 @@ class Terminal extends React.PureComponent<ITerminalProps, ITerminalState> {
   }
 }
 
-export default withRouter(connect(state => state)(Terminal))
+const mapStateToProps = (state : IRootProps, ownProps : {}) => state
+const mapDispatchToProps = (dispatch : Dispatch) => {
+  return {
+    setAuth : (auth : IAuthObject) => { dispatch(setAuth(auth)) },
+    clearAuth: () => { dispatch(clearAuth()) }
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Terminal))

@@ -70,6 +70,19 @@ button {
     outline: none;
     background: $color-dark-gray;
   }
+
+  &.alt {
+    background-color: transparent;
+    color: $color-black;
+    &:focus {
+      color: $color-white;
+      background-color: $color-dark-gray;
+    }
+    &:hover {
+      color: $color-white;
+      background-color: $color-light-gray;
+    }
+  }
 }
 
 .error {

@@ -35,6 +35,14 @@ export default {
     repeating: 'Uw wachtwoord mag niet 3 of meer dezelfde karakters achter elkaar bevatten.',
     success: 'Registratie is gelukt! U kunt nu inloggen met uw gebruikersnaam en wachtwoord.',
   },
+
+  terminal: {
+    alreadyLoggedIn: 'U bent al reeds ingelogd',
+    loginSuccess: '%{user} is met succes ingelogd',
+    loggedOut: 'U heeft uitgelogd',
+    notLoggedIn: 'U moet ingelogd zijn om deze actie uit te voeren',
+    loginError: 'Er ging iets fout met inloggen, probeer het nog eens.',
+  },
   
   error: {
     loginError: 'Er ging iets fout met inloggen, probeer het nog eens.',
