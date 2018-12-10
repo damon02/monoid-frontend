@@ -1,0 +1,30 @@
+@import '../../../style/style.scss';
+
+.dropdown-component {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  
+  .label {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  select {
+    height: 32px;
+    min-width: 200px;
+    border: none;
+    background-color: transparent;
+    font-family: 'Proxima Nova';
+
+    &:focus {
+      outline: 0;
+      border-bottom: 2px solid $color-primary;
+    }
+
+    .dark & {
+      color: $color-darktext;
+      background-color: $color-dark;
+    }
+  }
+}

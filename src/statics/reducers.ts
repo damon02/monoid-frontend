@@ -14,14 +14,13 @@ const emptyAuthObject : IAuthObject = {
   timestamp: null
 }
 
-const auth : IAuthObject = loadProperty('auth', emptyAuthObject)
 
 export const initialState : IRootProps = {
   app: {
-    data: []
+    theme: loadProperty('theme', 'light'),
   },
   login: {
-    auth
+    auth: loadProperty('auth', emptyAuthObject)
   },
   i18n: {
     translations: { nl: nl_NL },

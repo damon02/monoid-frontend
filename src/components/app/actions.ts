@@ -1,6 +1,6 @@
-export function setData(data : any) {
+export function setTheme(theme : string) {
   return {
-    type: 'SET_DATA',
-    data
+    type: 'SET_THEME',
+    theme
   }
 }

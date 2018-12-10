@@ -50,5 +50,12 @@ export default {
     passMatch: 'Uw wachtwoorden komen niet overeen',
     userInvalid: 'Uw gebruikersnaam klopt niet.',
     emailInvalid: 'Uw email adres klopt niet.',
+  },
+
+  settings: {
+    title: 'Instellingen',
+    theme: 'Thema',
+    dark: 'Donker',
+    light: 'Licht'
   }
 }

@@ -12,6 +12,12 @@
     background-color: $color-white;
     color: $color-dark-gray;
     border-bottom: 2px solid $color-gray;
+
+    .dark & {
+      background-color: $color-darkest;
+      color: $color-darktext;
+      border-bottom: 2px solid $color-dark;
+    }
   
     .logo {
       display: flex;
@@ -64,6 +70,13 @@
           &:focus .text {
             color: $color-primary;
           }
+
+          .dark & {
+            color: $color-darktext;
+            &:hover .text {
+              color: $color-black;
+            }
+          }
         }
       }
     }
@@ -107,6 +120,21 @@
         
         &.active {
           border-bottom: 2px solid $color-primary;
+        }
+
+        .dark & {
+          background-color: $color-darker;
+          color: $color-darktext;
+          border: 2px solid $color-darker;
+
+          &:focus {
+            border: 2px solid $color-notdark;
+            background-color: $color-notdark;
+          }
+
+          &.active {
+            border-bottom: 2px solid $color-primary;
+          }
         }
       }
     }

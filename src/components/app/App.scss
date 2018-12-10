@@ -7,4 +7,9 @@
   .content {
     margin: $spaces-medium;
   }
+
+  &.dark {
+    background-color: $color-dark;
+    color: $color-darktext;
+  }
 }

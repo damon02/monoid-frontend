@@ -4,6 +4,7 @@ import { Redirect, Route, RouteComponentProps, Switch, withRouter } from 'react-
 import { Dispatch } from 'redux'
 
 import Header from '../header/Header'
+import Settings from '../settings/Settings'
 
 import { IRootProps } from '../../statics/types'
 import { clearAuth } from '../login/actions'
@@ -31,11 +32,11 @@ class App extends React.PureComponent<IAppProps, IAppState> {
     }
 
     return (
-      <div className="app">
+      <div className={`app ${this.props.app.theme}`}>
         <Header />
         <div className="content">
-          <h2>Hello</h2>
           <Switch>
+            <Route path="/settings" component={Settings} />
             <Route path="/" />
           </Switch>
         </div>

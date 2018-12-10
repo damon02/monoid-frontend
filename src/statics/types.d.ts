@@ -7,7 +7,7 @@ export interface IRootProps {
 }
 
 export interface IAppProps {
-  data: any
+  theme: 'light' | 'dark' | 'lsd'
 }
 
 export interface ILoginProps {
