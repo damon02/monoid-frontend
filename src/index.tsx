@@ -9,6 +9,7 @@ import { AnyAction, createStore, Store } from 'redux'
 import App from './components/app/App'
 import Login from './components/login/Login'
 import Register from './components/register/Register'
+import Terminal from './components/terminal/Terminal'
 
 import { combinedReducers, initialState } from './statics/reducers'
 import { IRootProps } from './statics/types'
@@ -23,6 +24,7 @@ ReactDOM.render(
   <Provider store={store}>
     <HashRouter basename={'/'}>
       <Switch>
+        <Route path="/terminal" component={Terminal} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
         <Route path="/" component={App} />

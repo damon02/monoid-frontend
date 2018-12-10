@@ -1,0 +1,45 @@
+@import '../../style/style.scss';
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+
+  background-color: $color-black;
+  color: $color-primary;
+
+  .logo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    .image {
+      background-color: $color-primary;
+      height: 32px;
+      width: 32px;
+      margin-left: $spaces-medium;
+      margin-right: $spaces-medium;
+    }
+    .logotext {
+      font-family: 'Proxima Nova';
+      font-size: 18px;
+    }
+  }
+
+  .buttons {
+    height: 100%;
+    button {
+      height: 50px;
+      color: $color-primary;
+      .text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        color: $color-primary;
+      }
+    }
+  }
+}
