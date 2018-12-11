@@ -1,0 +1,120 @@
+@import '../../style/style.scss';
+
+.dropdown-component {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  
+  .setting-label {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  select {
+    height: 32px;
+    min-width: 200px;
+    border: none;
+    background-color: transparent;
+    font-family: 'Proxima Nova';
+
+    &:focus {
+      outline: 0;
+      border-bottom: 2px solid $color-primary;
+    }
+
+    .dark & {
+      color: $color-darktext;
+      background-color: $color-dark;
+    }
+  }
+}
+
+.settings {
+  .error {
+    margin-bottom: $spaces-large;
+  }
+
+  .options {
+    .refreshToken {
+      display: flex;
+      flex-direction: row;
+      margin-top: 8px;
+
+      .setting-label {
+        width: 100%;
+        max-width: 200px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+      .frame {
+        display: flex;
+        justify-content: center;
+
+        .inputComponent {
+          width: 100%;
+          margin: 0;
+          input {
+            min-height: 36px;
+            min-width: 200px;
+            width: 100%;
+          }
+        }
+
+        .lockbutton {
+          display: flex;
+          width: 36px;
+          height: 36px;
+          justify-content: center;
+          align-items: center;
+          background-color: $color-light-gray;
+          color: $color-black;
+          padding: 0 $spaces-medium;
+
+          &:hover {
+            cursor: pointer;
+          }
+
+          &:focus {
+            opacity: .75;
+          }
+
+          &.unlocked {
+            background-color: $color-primary;
+          }
+        }
+        
+      }
+    }
+    .refreshbutton {
+      height: auto;
+      min-height: 36px;
+      margin-top: $spaces-medium;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 $spaces-large;
+      color: $color-white;
+      background-color: #ff4f4f;
+
+      &:focus {
+        opacity: .95;
+        background-color: #ff0000;
+      }
+    }
+  }
+
+  .warning {
+    background-color: $color-primary;
+    color: $color-dark;
+    padding: $spaces-medium;
+    margin-top: $spaces-small;
+    font-family: 'Proxima Nova';
+
+    i {
+      margin-right: $spaces-medium;
+    }
+  }
+}

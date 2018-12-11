@@ -86,6 +86,22 @@ export function resetPassword(token: string, password: string) : Promise<any> {
     .then(r => formatResponseFromBackend<any>(r))
 }
 
+/**
+ * Gets a token for the Raspberry Pi systems
+ */
+export function getToken(token: string) : Promise<string | null> {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Authorization': token,
+      'Content-Type': 'application/json',
+    }
+  }
+
+  return fetch(`${BASE_URL}/authorize/get-token`, options)
+    .then(r => formatResponseFromBackend<string>(r))
+}
+
 
 /**
  * Function which strips down a HTTP request from the server to the bare data needed for the frontend

@@ -50,14 +50,18 @@ export default {
     passMatch: 'Uw wachtwoorden komen niet overeen',
     userInvalid: 'Uw gebruikersnaam klopt niet.',
     emailInvalid: 'Uw e-mail adres klopt niet.',
-    mailError: 'Er ging iets mis met het resetten van het password, probeer het nog eens.'
+    mailError: 'Er ging iets mis met het resetten van het password, probeer het nog eens.',
+    tokenFetchError: 'Er ging iets mis met het ophalen van een nieuwe token',
   },
 
   settings: {
     title: 'Instellingen',
     theme: 'Thema',
     dark: 'Donker',
-    light: 'Licht'
+    light: 'Licht',
+    refreshToken: 'Token',
+    safetyToken: 'Het regenereren van een nieuwe token kan in potentie het complete systeem buiten gebruik stellen. Gebruik deze functionaliteit alleen als u weet wat u doet.',
+    refresh: 'Vernieuw token',
   },
 
   recover: {

@@ -12,6 +12,7 @@ interface IInputComponentProps {
   autoComplete?: 'on' | 'off'
   faIcon?: string
   onEnter? : () => void
+  disabled?: boolean
 }
 
 const InputComponent = (props : IInputComponentProps) => (
@@ -26,6 +27,7 @@ const InputComponent = (props : IInputComponentProps) => (
       onFocus={() => !props.onFocus ? ({}) : props.onFocus(true)}
       autoComplete={props.autoComplete || 'on'}
       onKeyPress={(e) => props.onEnter && e.key === 'Enter' ? props.onEnter() : ({})}
+      disabled={props.disabled}
     />
   </div>
 )
