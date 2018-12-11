@@ -28,7 +28,7 @@ class App extends React.PureComponent<IAppProps, IAppState> {
 
   public render() {
     if (!this.props.login.auth.token) {
-      return <Redirect to={'login'} />
+      return <Redirect to={'/login'} />
     }
 
     return (

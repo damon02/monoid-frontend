@@ -8,6 +8,7 @@ import { AnyAction, createStore, Store } from 'redux'
 
 import App from './components/app/App'
 import Login from './components/login/Login'
+import RecoverPassword from './components/recoverPassword/RecoverPassword'
 import Register from './components/register/Register'
 import Terminal from './components/terminal/Terminal'
 
@@ -26,6 +27,7 @@ ReactDOM.render(
       <Switch>
         <Route path="/terminal" component={Terminal} />
         <Route path="/register" component={Register} />
+        <Route path="/recover/:token?" component={RecoverPassword} />
         <Route path="/login" component={Login} />
         <Route path="/" component={App} />
       </Switch>

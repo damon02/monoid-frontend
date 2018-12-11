@@ -49,7 +49,8 @@ export default {
     passNotStrong: 'Uw wachtwoord is niet sterk genoeg.',
     passMatch: 'Uw wachtwoorden komen niet overeen',
     userInvalid: 'Uw gebruikersnaam klopt niet.',
-    emailInvalid: 'Uw email adres klopt niet.',
+    emailInvalid: 'Uw e-mail adres klopt niet.',
+    mailError: 'Er ging iets mis met het resetten van het password, probeer het nog eens.'
   },
 
   settings: {
@@ -57,5 +58,13 @@ export default {
     theme: 'Thema',
     dark: 'Donker',
     light: 'Licht'
+  },
+
+  recover: {
+    sendMail: 'Wachtwoord vergeten',
+    email: 'E-mail adres',
+    send: 'Vraag een nieuw wachtwoord aan',
+    mailSuccess: 'Als het e-mail adres overeenkomt in onze database, is er een e-mail verstuurd',
+    checkMail: 'Bekijk uw mailbox voor een e-mail met verdere instructies.',
   }
 }
