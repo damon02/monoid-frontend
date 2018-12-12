@@ -128,7 +128,7 @@ class Login extends React.PureComponent<ILoginComponentProps, ILoginState> {
       this.setState({ loading: false })
       
       if (response) {      
-        this.props.setAuth({ username: response.userName, token: response.token, timestamp: Date.now() })
+        this.props.setAuth({ username: response.user.userName, token: response.user.token, timestamp: Date.now() })
       } else {
         this.setState({ error: 'loginError' })
         throw new Error('No data returned from backend')

@@ -150,12 +150,12 @@ class Terminal extends React.PureComponent<ITerminalProps, ITerminalState> {
       const history = cloneDeep(this.state.history)
       
       if (response) {      
-        this.props.setAuth({ username: response.userName, token: response.token, timestamp: Date.now() })
+        this.props.setAuth({ username: response.user.userName, token: response.user.token, timestamp: Date.now() })
         history.push({
           isCommand: false,
           dir: '',
           user: '',
-          value: I18n.t('terminal.loginSuccess', { user: response.userName })
+          value: I18n.t('terminal.loginSuccess', { user: response.user.userName })
         })
       } else {
         history.push({
