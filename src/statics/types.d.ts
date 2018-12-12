@@ -46,3 +46,4 @@ export interface IGenericAPIResponse<T> {
 
 export type IRegisterResponse = { userName: string, emailAddress: string } | null
 export type ILoginResponse = { userName: string, token: string } | null
+export type ITokenResponse = { token: string } | null

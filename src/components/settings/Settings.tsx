@@ -34,6 +34,10 @@ class Settings extends React.PureComponent<ISettingsProps, ISettingsState> {
     }
   }
 
+  public componentDidMount() {
+    this.regenerateToken()
+  }
+
   public render() {
     return (
       <div className="settings">
@@ -84,10 +88,10 @@ class Settings extends React.PureComponent<ISettingsProps, ISettingsState> {
     if (this.props.login.auth.token) {
       try {
         this.setState({ error: '', token: '' })
-        const token = await getToken(this.props.login.auth.token)
+        const response = await getToken(this.props.login.auth.token)
         
-        if (token) {
-          this.setState({ token })
+        if (response) {
+          this.setState({ token: response.token })
         } else {
           this.setState({ error: 'tokenFetchError' })
         }

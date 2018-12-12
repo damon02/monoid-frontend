@@ -1,5 +1,5 @@
 import { BASE_URL } from '../statics/constants'
-import { IGenericAPIResponse, ILoginResponse, IRegisterResponse } from '../statics/types'
+import { IGenericAPIResponse, ILoginResponse, IRegisterResponse, ITokenResponse } from '../statics/types'
 
 /**
  * Registers a user inside the backend
@@ -89,17 +89,18 @@ export function resetPassword(token: string, password: string) : Promise<any> {
 /**
  * Gets a token for the Raspberry Pi systems
  */
-export function getToken(token: string) : Promise<string | null> {
+export function getToken(token: string, refresh?: boolean) : Promise<ITokenResponse> {
   const options = {
     method: 'GET',
     headers: {
-      'Authorization': token,
+      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
     }
   }
 
-  return fetch(`${BASE_URL}/authorize/get-token`, options)
-    .then(r => formatResponseFromBackend<string>(r))
+  const query = refresh ? '?refresh=true' : ''
+  return fetch(`${BASE_URL}/authorize/get-token${query}`, options)
+    .then(r => formatResponseFromBackend<ITokenResponse>(r))
 }
 
 
