@@ -35,7 +35,7 @@ class Settings extends React.PureComponent<ISettingsProps, ISettingsState> {
   }
 
   public componentDidMount() {
-    this.regenerateToken()
+    this.regenerateToken(false)
   }
 
   public render() {
@@ -71,7 +71,7 @@ class Settings extends React.PureComponent<ISettingsProps, ISettingsState> {
             </div>
           </div>
           {!this.state.safety && <div className="warning"><i className="fas fa-exclamation-triangle"/>{I18n.t('settings.safetyToken')}</div>}
-          {!this.state.safety && <button className="refreshbutton" onClick={() => this.regenerateToken()}>{I18n.t('settings.refresh')}</button>}
+          {!this.state.safety && <button className="refreshbutton" onClick={() => this.regenerateToken(true)}>{I18n.t('settings.refresh')}</button>}
         </div>
       </div>
     )
@@ -84,11 +84,11 @@ class Settings extends React.PureComponent<ISettingsProps, ISettingsState> {
     this.setState({ safety: !this.state.safety })
   }
 
-  private regenerateToken = async () => {
+  private regenerateToken = async (refresh: boolean) => {
     if (this.props.login.auth.token) {
       try {
         this.setState({ error: '', token: '' })
-        const response = await getToken(this.props.login.auth.token)
+        const response = await getToken(this.props.login.auth.token, refresh)
         
         if (response) {
           this.setState({ token: response.token })

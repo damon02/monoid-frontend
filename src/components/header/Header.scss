@@ -25,11 +25,13 @@
       align-items: center;
       height: 100%;
       .image {
-        background-color: $color-primary;
         height: 32px;
         width: 32px;
         margin-left: $spaces-medium;
         margin-right: $spaces-medium;
+        background-image: url('../../style/logoapp.png');
+        background-repeat: no-repeat;
+        background-size: cover;
       }
       .logotext {
         font-family: 'Proxima Nova';
