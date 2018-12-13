@@ -83,7 +83,6 @@ class Register extends React.PureComponent<IRegisterProps, IRegisterState> {
           </div>
           : [<div className="register-floaty" key={1}>
           <h1>{I18n.t('register.title')}</h1>
-          <button className="hyperlink" onClick={() => this.props.history.push('/login')}>{I18n.t('register.backLogin')}</button>
           <InputComponent
             label={I18n.t('register.username')}
             type={'email'}
@@ -116,9 +115,10 @@ class Register extends React.PureComponent<IRegisterProps, IRegisterState> {
               {this.state.loading 
                   ? <i className="fas fa-circle-notch"/>
                   : I18n.t('register.submit')
-              }
+                }
             </span>
           </button>
+          <button className="hyperlink" onClick={() => this.props.history.push('/login')}>{I18n.t('register.backLogin')}</button>
         </div>,
         <div className="validation" key={2}>
           <div className={`validate-object ${this.state.validation.uppercase ? 'valid' : 'invalid'}`}>

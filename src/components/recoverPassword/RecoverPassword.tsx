@@ -143,6 +143,7 @@ class RecoverPassword extends React.PureComponent<IRecoverPasswordProps, IRecove
               <p>{I18n.t('recover.checkMail')}</p>
             </React.Fragment>
           }
+          <button className="hyperlink" onClick={() => this.props.history.push(`/login`)}>{I18n.t('recover.backToLogin')}</button>
         </div>
       </div>
     )

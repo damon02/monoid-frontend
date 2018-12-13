@@ -52,6 +52,7 @@ export default {
     emailInvalid: 'Uw e-mail adres klopt niet.',
     mailError: 'Er ging iets mis met het resetten van het password, probeer het nog eens.',
     tokenFetchError: 'Er ging iets mis met het ophalen van een nieuwe token',
+    localMailError: 'Vul een e-mail adres in',
   },
 
   settings: {
@@ -70,5 +71,13 @@ export default {
     send: 'Vraag een nieuw wachtwoord aan',
     mailSuccess: 'Als het e-mail adres overeenkomt in onze database, is er een e-mail verstuurd',
     checkMail: 'Bekijk uw mailbox voor een e-mail met verdere instructies.',
+    backToLogin: 'Terug naar het inlogscherm',
+  },
+
+  activateAccount: {
+    title: 'Account activeren',
+    activated: 'Uw account is geactiveerd!',
+    activating: 'Account activeren...',
+    failedToActivate: 'Het is niet gelukt om uw account te activeren, probeer het nog eens door de pagina opnieuw te laden.'
   }
 }

@@ -103,6 +103,21 @@ export function getToken(token: string, refresh?: boolean) : Promise<ITokenRespo
     .then(r => formatResponseFromBackend<ITokenResponse>(r))
 }
 
+export function activateAccountFirstTime(token: string) : Promise<any> {
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      token
+    })
+  }
+
+  return fetch(`${BASE_URL}/authorize/activate-user`, options)
+    .then(r => formatResponseFromBackend<any>(r))
+}
+
 
 /**
  * Function which strips down a HTTP request from the server to the bare data needed for the frontend

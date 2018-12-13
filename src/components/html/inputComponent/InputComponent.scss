@@ -43,6 +43,11 @@
     -ms-transition: all .3s ease;
     -o-transition: all .3s ease;
     transition: all .3s ease;
+
+    .dark & {
+      background-color: $color-dark;
+      color: $color-darktext;
+    }
   }
   
   input {
@@ -65,13 +70,22 @@
     }
     &:disabled {
       color: $color-gray;
-      cursor: not-allowed;
+      cursor: text;
     }
     .invalid & {
       border-bottom: 2px solid $color-red;
     }
     .valid & {
       border-bottom: 2px solid $color-green;
+    }
+
+    .dark & {
+      border-color: $color-darkest;
+      color: $color-darktext;
+
+      &:disabled {
+        color: $color-notdark;
+      }
     }
   }
 
