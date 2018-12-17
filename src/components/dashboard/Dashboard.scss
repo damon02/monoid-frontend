@@ -1,0 +1,27 @@
+@import '../../style/style.scss';
+
+.dashboard-wrapper {
+  width: auto;
+  height: auto;
+
+  .chart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    
+    .title {
+      background-color: $color-gray;
+      width: 100%;
+      padding: $spaces-small;
+      font-family: 'Proxima Nova';
+    }
+    
+    .inner {
+      border: 1px solid $color-gray;
+      padding: $spaces-small;
+    }
+  }
+}

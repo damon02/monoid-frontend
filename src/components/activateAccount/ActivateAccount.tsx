@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { withRouter, RouteComponentProps } from 'react-router'
 import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
+import { RouteComponentProps, withRouter } from 'react-router'
 
 import { IRootProps } from '../../statics/types'
 import { activateAccountFirstTime } from '../../utils/rest'
@@ -33,7 +33,7 @@ class ActivateAccount extends React.PureComponent<IActivateAccountProps, IActiva
     if (this.props.match.params.token) {
       this.activateAccount(this.props.match.params.token)
     } else {
-      this.props.history.push('/login')
+      this.props.history.push('/')
     }
   }
 
