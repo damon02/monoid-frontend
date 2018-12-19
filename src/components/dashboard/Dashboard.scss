@@ -1,15 +1,20 @@
 @import '../../style/style.scss';
 
 .dashboard-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   width: auto;
   height: auto;
 
   .chart {
     display: flex;
+    flex: 1 0 auto;
+    margin: $spaces-small;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: auto;
+    width: fit-content;
     height: auto;
     
     .title {
@@ -17,11 +22,16 @@
       width: 100%;
       padding: $spaces-small;
       font-family: 'Proxima Nova';
+
+      .dark & {
+        color: #000; 
+      }
     }
     
     .inner {
       border: 1px solid $color-gray;
       padding: $spaces-small;
+      width: 100%;
     }
   }
 }

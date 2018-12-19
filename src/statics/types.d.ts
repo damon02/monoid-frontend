@@ -22,6 +22,14 @@ export interface IAuthObject {
   timestamp: number | null
 }
 
+export interface IGraphComponentData {
+  color: string
+  data: Array<{ name: string, value: number }>
+  dataKey: string
+  nameKey: string
+  label: boolean
+}
+
 /**
  * react-redux-I18n 
  */

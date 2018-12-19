@@ -1,0 +1,23 @@
+@import '../../../../style/style.scss';
+
+.table-component { 
+  display: flex;
+  flex-direction: column;
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    padding: $spaces-xsmall;
+    border-bottom: $color-gray 1px solid;
+
+    &.headers {
+      background-color: $color-primary;
+      font-family: 'Proxima Nova';
+      border-bottom: unset;
+
+      .dark & {
+        color: #000;
+      }
+    }
+  }
+}

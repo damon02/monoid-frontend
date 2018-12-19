@@ -3,9 +3,11 @@ import { connect } from 'react-redux'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { Dispatch } from 'redux'
 
-import PieChartComponent, { IPieComponentData } from './graphs/pie/PieChartComponent'
+import BarChartComponent from './graphs/bar/BarChartComponent'
+import PieChartComponent from './graphs/pie/PieChartComponent'
+import TableComponent from './graphs/table/TableComponent'
 
-import { IRootProps } from '../../statics/types'
+import { IGraphComponentData, IRootProps } from '../../statics/types'
 import './Dashboard.scss'
 
 interface IDashboardComponentProps extends IRootProps, RouteComponentProps<any> {
@@ -30,14 +32,22 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
         <div className="chart">
           <span className="title">Aantal debielen per capita</span>
           <div className="inner">
-            <PieChartComponent dataSet={this.getDataSet()} responsive={{ width: 200, height: '100%' }} />
+            <PieChartComponent dataSet={this.getDataSet()} responsive={{ width: '100%', height: 320 }} />
+            <TableComponent dataSet={this.getDataSet()} rows={[{ key: 'name', txt: 'Name' }, { key: 'value', txt: 'Value'}]} showHeader direction={'vertical'} />
+          </div>
+        </div>
+        <div className="chart">
+          <span className="title">Aantal debielen per capita</span>
+          <div className="inner">
+            <BarChartComponent dataSet={this.getDataSet()} xkey={'name'} responsive={{ width: '100%', height: 320 }} />
+            <TableComponent dataSet={this.getDataSet()} rows={[{ key: 'name', txt: 'Name' }, { key: 'value', txt: 'Value'}]} showHeader direction={'vertical'} />
           </div>
         </div>
       </div>
     )
   }
 
-  private getDataSet = () : IPieComponentData[] => {
+  private getDataSet = () : IGraphComponentData[] => {
     return [
       {
         color: '#FF0000',
