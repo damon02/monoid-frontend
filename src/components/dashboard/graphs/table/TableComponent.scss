@@ -19,5 +19,8 @@
         color: #000;
       }
     }
+    .dark & {
+      border-bottom: $color-notdark 1px solid;
+    }
   }
 }

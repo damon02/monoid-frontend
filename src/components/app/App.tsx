@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect, Route, RouteComponentProps, Switch, withRouter } from 'react-router'
 import { Dispatch } from 'redux'
 
+import DailyStatistics from '../dailyStatistics/DailyStatistics'
 import Dashboard from '../dashboard/Dashboard'
 import Header from '../header/Header'
 import Settings from '../settings/Settings'
@@ -38,7 +39,9 @@ class App extends React.PureComponent<IAppProps, IAppState> {
         <div className="content">
           <Switch>
             <Route path="/settings" component={Settings} />
-            <Route path="/" component={Dashboard} />
+            <Route path="/daily" component={DailyStatistics} />
+            <Route exact path="/" component={Dashboard} />
+            <Redirect to="/" />
           </Switch>
         </div>
       </div>

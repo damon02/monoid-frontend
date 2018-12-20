@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Bar, BarChart, Legend, ResponsiveContainer, XAxis, YAxis } from 'recharts'  
+import { Bar, BarChart, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'  
 import { IGraphComponentData } from '../../../../statics/types'
 
 
@@ -39,6 +39,7 @@ export default class BarChartComponent extends React.PureComponent<IBarComponent
             <XAxis dataKey={'name'}/>
             <YAxis />
             <Legend />
+            <Tooltip />
           </BarChart>
         </ResponsiveContainer>
       )
@@ -48,6 +49,7 @@ export default class BarChartComponent extends React.PureComponent<IBarComponent
           <XAxis dataKey={xkey}/>
           <YAxis/>
           <Legend />
+          <Tooltip />
         </BarChart>
       )
     }

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Pie, PieChart, ResponsiveContainer } from 'recharts'  
+import { Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'  
 import { IGraphComponentData } from '../../../../statics/types'
 
 interface IPieComponentProps {
@@ -23,7 +23,8 @@ export default class PieChartComponent extends React.PureComponent<IPieComponent
           data={data.data} 
           dataKey={data.dataKey} 
           nameKey={data.nameKey} 
-          label={data.label} 
+          label={true} 
+          labelLine={true}
           fill={data.color}
           cx={'50%'}
           cy={'50%'}
@@ -35,12 +36,14 @@ export default class PieChartComponent extends React.PureComponent<IPieComponent
         <ResponsiveContainer minHeight={250} minWidth={250} width={responsive.width} height={responsive.height}>
           <PieChart>
             {pies}
+            <Tooltip />
           </PieChart>
         </ResponsiveContainer>
       )
     : dimensions && (
       <PieChart width={dimensions.width} height={dimensions.height}>
         {pies}
+        <Tooltip />
       </PieChart>
     )
   }

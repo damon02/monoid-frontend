@@ -42,12 +42,11 @@ class Header extends React.PureComponent<IHeaderProps, {}> {
         </div>
         <div className="bottom">
           <div className="links">
-            <button className={`linkbutton${location === '/terminal' ? ' active' : ''}`} onClick={() => this.handleRouting('/terminal')}>{I18n.t('header.terminal')}</button>
-            <button className={`linkbutton${location === '/link1' ? ' active' : ''}`} onClick={() => this.handleRouting('/link1')}>{I18n.t('header.link1')}</button>
-            <button className={`linkbutton${location === '/link2' ? ' active' : ''}`} onClick={() => this.handleRouting('/link2')}>{I18n.t('header.link2')}</button>
-            <button className={`linkbutton${location === '/link3' ? ' active' : ''}`} onClick={() => this.handleRouting('/link3')}>{I18n.t('header.link3')}</button>
-            <button className={`linkbutton${location === '/link4' ? ' active' : ''}`} onClick={() => this.handleRouting('/link4')}>{I18n.t('header.link4')}</button>
-            <button className={`linkbutton${location === '/link5' ? ' active' : ''}`} onClick={() => this.handleRouting('/link5')}>{I18n.t('header.link5')}</button>
+            <button className={`linkbutton${location === '/' ? ' active' : ''}`} onClick={() => this.handleRouting('/')}>{I18n.t('header.home')}</button>
+            <button className={`linkbutton${location === '/daily' ? ' active' : ''}`} onClick={() => this.handleRouting('/daily')}>{I18n.t('header.daily')}</button>
+            <button className={`linkbutton${location === '/udp' ? ' active' : ''}`} onClick={() => this.handleRouting('/udp')}>{I18n.t('header.udp')}</button>
+            <button className={`linkbutton${location === '/tcp' ? ' active' : ''}`} onClick={() => this.handleRouting('/tcp')}>{I18n.t('header.tcp')}</button>
+            <button className={`linkbutton${location === '/uip' ? ' active' : ''}`} onClick={() => this.handleRouting('/uip')}>{I18n.t('header.uip')}</button>
           </div>
         </div>
       </header>

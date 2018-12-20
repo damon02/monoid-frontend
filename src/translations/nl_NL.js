@@ -79,5 +79,12 @@ export default {
     activated: 'Uw account is geactiveerd!',
     activating: 'Account activeren...',
     failedToActivate: 'Het is niet gelukt om uw account te activeren, probeer het nog eens door de pagina opnieuw te laden.'
+  },
+
+  dashboard: {
+    graphs: {
+      httpMethods: 'HTTP Methodes',
+      protocols: 'Protocols',
+    }
   }
 }

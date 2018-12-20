@@ -12,8 +12,8 @@
     flex: 1 0 auto;
     margin: $spaces-small;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: stretch;
+    align-items: stretch;
     width: fit-content;
     height: auto;
     
@@ -24,7 +24,8 @@
       font-family: 'Proxima Nova';
 
       .dark & {
-        color: #000; 
+        color: $color-darktext; 
+        background-color: $color-darkest;
       }
     }
     
@@ -32,6 +33,14 @@
       border: 1px solid $color-gray;
       padding: $spaces-small;
       width: 100%;
+
+      .dark & {
+        border: 1px solid $color-darkest;
+      }
+    }
+
+    &.tiny {
+      font-size: 13px;
     }
   }
 }
