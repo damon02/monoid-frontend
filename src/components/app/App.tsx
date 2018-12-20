@@ -7,8 +7,11 @@ import DailyStatistics from '../dailyStatistics/DailyStatistics'
 import Dashboard from '../dashboard/Dashboard'
 import Header from '../header/Header'
 import Settings from '../settings/Settings'
+import TCP from '../tcp/TCP'
+import UDP from '../udp/UDP'
 
 import { IRootProps } from '../../statics/types'
+import IPStatistics from '../ipStatistics/IPStatistics'
 import { clearAuth } from '../login/actions'
 import './App.scss'
 
@@ -40,6 +43,9 @@ class App extends React.PureComponent<IAppProps, IAppState> {
           <Switch>
             <Route path="/settings" component={Settings} />
             <Route path="/daily" component={DailyStatistics} />
+            <Route path="/udp" component={UDP} />
+            <Route path="/tcp" component={TCP} />
+            <Route path="/uip" component={IPStatistics} />
             <Route exact path="/" component={Dashboard} />
             <Redirect to="/" />
           </Switch>
