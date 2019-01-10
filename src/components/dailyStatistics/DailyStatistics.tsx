@@ -2,6 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { getPackets } from '../../utils/rest'
+import { getRules} from '../../utils/rest'
 
 import { IRootProps } from '../../statics/types'
 
@@ -34,6 +35,7 @@ class DailyStatistics extends React.PureComponent<IDailyStatisticsProps, IDailyS
 
   public componentDidMount() {
     this.handlePackets()
+    this.handleRules()
   }
 
   public componentDidUpdate() {
@@ -46,6 +48,25 @@ class DailyStatistics extends React.PureComponent<IDailyStatisticsProps, IDailyS
       const response = await getPackets(this.props.login.auth.token)
       this.setState({ loading: false })
       
+      if(response) {
+        //ToDO
+        console.log(response)
+      } else {
+          this.setState({error: 'dataError'})
+          throw new Error('No data packets found')
+      }
+      
+    } catch (error) {
+      this.setState({ loading: false, error: 'loginError' })
+      console.error()
+    }
+  }
+
+  public handleRules = async () => {
+    try {
+      this.setState({ loading: true, error: '' })
+      const response = await getRules(this.props.login.auth.token)
+      this.setState({ loading: false })
       if(response) {
         //ToDO
         console.log(response)

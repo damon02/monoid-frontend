@@ -152,7 +152,7 @@ function handleGenericRestResponse<T>(response : Response) : Promise<T> {
 }
 
 /**
- * Get all data packets
+ * Get data packets
  */
 export function getPackets(token: string | null) : Promise<ITokenResponse> {
     const options = {
@@ -166,4 +166,20 @@ export function getPackets(token: string | null) : Promise<ITokenResponse> {
     const query = '?seconds=100000000'
     return fetch(`${BASE_URL}/data/get-packets${query}`, options)
       .then(r => formatResponseFromBackend<ITokenResponse>(r))
-  }
+}
+
+/**
+ * Get rules
+ */
+export function getRules(token: string | null) : Promise<ITokenResponse> {
+    const options = {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    }
+  
+    return fetch(`${BASE_URL}/data/get-rules`, options)
+      .then(r => formatResponseFromBackend<ITokenResponse>(r))
+}
