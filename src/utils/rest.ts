@@ -103,6 +103,7 @@ export function getToken(token: string, refresh?: boolean) : Promise<ITokenRespo
     .then(r => formatResponseFromBackend<ITokenResponse>(r))
 }
 
+
 export function activateAccountFirstTime(token: string) : Promise<any> {
   const options = {
     method: 'POST',
@@ -149,3 +150,20 @@ function handleGenericRestResponse<T>(response : Response) : Promise<T> {
         })
   }
 }
+
+/**
+ * Get all data packets
+ */
+export function getPackets(token: string | null) : Promise<ITokenResponse> {
+    const options = {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    }
+  
+    const query = '?seconds=100000000'
+    return fetch(`${BASE_URL}/data/get-packets${query}`, options)
+      .then(r => formatResponseFromBackend<ITokenResponse>(r))
+  }
