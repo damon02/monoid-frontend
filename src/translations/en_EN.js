@@ -61,6 +61,7 @@ export default {
     mailError: 'Something went wrong while resetting your password, please try again.',
     tokenFetchError: 'Something went wrong while trying to fetch a token',
     localMailError: 'Fill in your e-mail address',
+    getSettingsError: 'Unable to fetch user settings'
   },
 
   settings: {
@@ -71,6 +72,12 @@ export default {
     refreshToken: 'Token',
     safetyToken: 'Regenerating your token could potentially break the entire system, please only use this if you know what you are doing.',
     refresh: 'Regenerate token',
+    enabledNotifications: 'Notifications',
+    disabled: 'Disabled',
+    enabled: 'Enabled',
+    recipients: 'Notification recipients',
+    addRecipient: 'Add recipient',
+    saveChanges: 'Save changes',
   },
 
   recover: {

@@ -29,6 +29,60 @@
   }
 }
 
+.recipients {
+  display: flex;
+  margin-top: $spaces-medium;
+  margin-bottom: $spaces-medium;
+
+  .setting-label {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .list-thing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .list {
+      display: flex;
+      flex-direction: column;
+
+      .inputitem {
+        display: flex;
+        justify-content: center;
+        .inputComponent input {
+          min-height: 32px;
+          width: 200px;
+          
+        }
+      }
+
+      button.danger {
+        display: flex;
+        width: 48px;
+        height: auto;
+        align-items: center;
+        justify-content: center;
+        background-color: #ff4f4f;
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+
+      .name {
+        min-height: 32px;
+        max-width: 200px;
+        width: 100%;
+      }
+    }
+
+    button {
+      width: 100%;
+      max-width: 233px;
+    }
+  }
+}
+
 .settings {
   .error {
     margin-bottom: $spaces-large;

@@ -1,5 +1,5 @@
 import { BASE_URL } from '../statics/constants'
-import { IGenericAPIResponse, ILoginResponse, IRegisterResponse, ITokenResponse } from '../statics/types'
+import { IGenericAPIResponse, ILoginResponse, IRegisterResponse, ISettingsResponse, ITokenResponse } from '../statics/types'
 
 /**
  * Registers a user inside the backend
@@ -118,6 +118,33 @@ export function activateAccountFirstTime(token: string) : Promise<any> {
     .then(r => formatResponseFromBackend<any>(r))
 }
 
+export function getSettings(token: string) : Promise<ISettingsResponse> {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+  }
+
+  return fetch(`${BASE_URL}/user/get-settings`, options)
+    .then(r => formatResponseFromBackend<ISettingsResponse>(r))
+}
+
+export function saveSettings(token : string, settings : ISettingsResponse) : Promise<any> {
+  const options = {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(settings)
+  }
+
+  return fetch(`${BASE_URL}/user/save-settings`, options)
+    .then(r => formatResponseFromBackend<any>(r))
+}
+
 
 /**
  * Function which strips down a HTTP request from the server to the bare data needed for the frontend
@@ -126,11 +153,15 @@ export function activateAccountFirstTime(token: string) : Promise<any> {
  * @returns Promise<T[]>
  */
 async function formatResponseFromBackend<T>(response : Response) : Promise<T | null> {
-  const intermediateResponse = await handleGenericRestResponse<Promise<IGenericAPIResponse<T>>>(response)
-  if (!intermediateResponse.success) {
-    throw new Error(intermediateResponse.message || 'An unknown error has occurred without any message.')
+  if (response.status === 401) {
+    throw new Error('401')
   } else {
-    return intermediateResponse.data
+    const intermediateResponse = await handleGenericRestResponse<Promise<IGenericAPIResponse<T>>>(response)
+    if (!intermediateResponse.success || response.status === 401) {
+      throw new Error(intermediateResponse.message || 'An unknown error has occurred without any message.')
+    } else {
+      return intermediateResponse.data
+    }
   }
 }
 
@@ -142,10 +173,6 @@ function handleGenericRestResponse<T>(response : Response) : Promise<T> {
   if (response.status >= 200 && response.status < 300) {
       return Promise.resolve(response.json())
   } else {
-      return Promise.resolve(response.json())
-        .then(message => {
-            const err : Error = new Error(`${message.message} (code ${message.statusCode})`)
-            throw err
-        })
+    throw new Error(`${response.statusText} (code ${response.status})`)
   }
 }

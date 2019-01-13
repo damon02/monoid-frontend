@@ -64,3 +64,7 @@ export type ILoginResponse = {
   } 
 } | null
 export type ITokenResponse = { token: string } | null
+export type ISettingsResponse = {
+  enabledNotifications: boolean
+  notificationRecipients: string[]
+} | null
