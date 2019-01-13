@@ -8,6 +8,10 @@ export interface IRootProps {
 
 export interface IAppProps {
   theme: 'light' | 'dark' | 'lsd'
+  settings: {
+    enabledNotifications: boolean
+    notificationRecipients: string[]
+  }
 }
 
 export interface ILoginProps {

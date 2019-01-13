@@ -88,6 +88,27 @@
     margin-bottom: $spaces-large;
   }
 
+  .saveButton {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 64px;
+    font-size: 24px;
+    bottom: $spaces-large;
+    left: calc(100vw - 50% - 125px);
+    border-radius: 32px;
+    background-color: $color-tertiary;
+    > span {
+      margin: 0;
+    }
+    i {
+      margin-right: $spaces-medium;
+    }
+  }
+
   .options {
     .refreshToken {
       display: flex;

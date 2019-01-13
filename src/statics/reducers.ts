@@ -19,6 +19,10 @@ const emptyAuthObject : IAuthObject = {
 export const initialState : IRootProps = {
   app: {
     theme: loadProperty('theme', 'light'),
+    settings: {
+      enabledNotifications: false,
+      notificationRecipients: [],
+    }
   },
   login: {
     auth: loadProperty('auth', emptyAuthObject)

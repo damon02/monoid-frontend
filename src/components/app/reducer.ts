@@ -9,6 +9,9 @@ export function appReducer(state : IAppProps = initialState.app, action: AnyActi
       saveProperty('theme', action.theme)
       return Object.assign({}, state, { theme: action.theme })
 
+    case 'SET_SETTINGS':
+      return Object.assign({}, state, { settings: action.settings })
+
     default:
       return state
   }
