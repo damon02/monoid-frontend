@@ -1,10 +1,11 @@
+import { countBy } from 'lodash'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { Dispatch } from 'redux'
 
 import BarChartComponent from './graphs/bar/BarChartComponent'
-import PieChartComponent from './graphs/pie/PieChartComponent'
+// import PieChartComponent from './graphs/pie/PieChartComponent'
 import TableComponent from './graphs/table/TableComponent'
 
 import { I18n } from 'react-redux-i18n'
@@ -28,48 +29,66 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
   }
 
   public render() {
+    const data = this.props.app.packets
+    if (data === null) {
+      return <h2>{I18n.t('noData')}</h2>
+    }
+
+    const uniqueDestinationIP = countBy(data.map(p => p.DestinationIp))
+    const uniqueDestinations = Object.keys(uniqueDestinationIP).sort().map(key => ({ IP: key, amount: uniqueDestinationIP[key] }))
+    const uniqueDestinationMAC = countBy(data.map(p => p.DestinationMacAddress))
+    const uniqueMACDestinations = Object.keys(uniqueDestinationMAC).sort().map(key => ({ MAC: key, amount: uniqueDestinationMAC[key] }))
+  
     return (
       <div className={'dashboard-wrapper'}>
-        <div className="chart tiny">
-          <span className="title">{I18n.t('dashboard.graphs.httpMethods')}</span>
-          <div className="inner">
-            <PieChartComponent dataSet={this.getHTTPMethods()} responsive={{ width: 250, height: '100%' }} />
-            <TableComponent dataSet={this.getHTTPMethods()} rows={[{ key: 'name', txt: 'Name' }, { key: 'value', txt: 'Value'}]} showHeader direction={'vertical'} />
+        <div className="left">
+          <div className="chart number">
+            <div className="inner">
+              <h1>{uniqueDestinations.length}</h1>
+            </div>
+            <span className="title">{I18n.t('dashboard.graphs.uniqueDestinationIP')}</span>
+          </div>
+          <div className="chart number">
+            <div className="inner">
+              <h1>{data.length}</h1>
+            </div>
+            <span className="title">{I18n.t('dashboard.graphs.dataLength')}</span>
+          </div>
+          <div className="chart number">
+            <div className="inner">
+              <h1>{uniqueMACDestinations.length}</h1>
+            </div>
+            <span className="title">{I18n.t('dashboard.graphs.uniqueDestinationMAC')}</span>
           </div>
         </div>
         <div className="chart">
-          <span className="title">{I18n.t('dashboard.graphs.uniqueIPAmount')}</span>
+          <span className="title">{I18n.t('dashboard.graphs.uniqueDestinationIPamount')}</span>
           <div className="inner">
-            <BarChartComponent dataSet={this.getUniqueIP()} xkey={'name'} responsive={{ width: '100%', height: 320 }} />
-            <TableComponent dataSet={this.getUniqueIP()} rows={[{ key: 'name', txt: 'Name' }, { key: 'value', txt: 'Value'}]} showHeader direction={'vertical'} />
+            <BarChartComponent dataSet={this.getUniqueDestinationIP()} xkey={'amount'} responsive={{ width: '100%', height: 320 }} />
+            <TableComponent dataSet={this.getUniqueDestinationIP()} rows={[{ key: 'IP', txt: 'IP Address' }, { key: 'amount', txt: 'Amount of packets'}]} showHeader direction={'vertical'} />
           </div>
         </div>
       </div>
     )
   }
 
-  private getHTTPMethods = () : IGraphComponentData[] => {
-    return [
-      {
-        color: '#32b4f1',
-        dataKey: 'value',
-        nameKey: 'name',
-        data: [{ name: 'POST', value: 78 }, { name: 'GET', value: 271 }],
-        label: true
-      }
-    ]
-  }
-
-  private getUniqueIP = () : IGraphComponentData[] => {
-    return [
-      {
-        color: '#FF0000',
-        dataKey: 'value',
-        nameKey: 'name',
-        data: [{ name: '172.217.19.196', value: 201 }, { name: '140.82.118.4', value: 304 }, { name: '151.101.36.133', value: 97 }, { name: '217.121.244.1', value: 12 }],
-        label: true
-      },
-    ]
+  private getUniqueDestinationIP = () : IGraphComponentData[] => {
+    if (this.props.app.packets) {
+      const uniqueIPDict = countBy(this.props.app.packets.map(p => p.DestinationIp))
+      const uniqueArray = Object.keys(uniqueIPDict).sort().map(key => ({ IP: key, amount: uniqueIPDict[key] }))
+      
+      return [
+        {
+          color: '#FF0000',
+          dataKey: 'amount',
+          nameKey: 'IP',
+          data: uniqueArray,
+          label: true
+        }
+      ]
+    } else {
+      return []
+    }
   }
 }
 

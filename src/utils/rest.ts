@@ -1,5 +1,5 @@
 import { BASE_URL } from '../statics/constants'
-import { IGenericAPIResponse, ILoginResponse, IRegisterResponse, ISettingsResponse, ITokenResponse } from '../statics/types'
+import { IGenericAPIResponse, ILoginResponse, IPacketsResponse, IRegisterResponse, IRulesResponse, ISettingsResponse, ITokenResponse } from '../statics/types'
 
 /**
  * Registers a user inside the backend
@@ -146,6 +146,33 @@ export function saveSettings(token : string, settings : ISettingsResponse) : Pro
     .then(r => formatResponseFromBackend<any>(r))
 }
 
+export function getPackets(token: string | null) : Promise<IPacketsResponse> {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    }
+  }
+
+  const query = '?seconds=100000000'
+  return fetch(`${BASE_URL}/data/get-packets${query}`, options)
+    .then(r => formatResponseFromBackend<IPacketsResponse>(r))
+}
+
+export function getRules(token: string | null) : Promise<IRulesResponse> {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    }
+  }
+
+  return fetch(`${BASE_URL}/data/get-rules`, options)
+    .then(r => formatResponseFromBackend<IRulesResponse>(r))
+}
+
 
 /**
  * Function which strips down a HTTP request from the server to the bare data needed for the frontend
@@ -176,37 +203,4 @@ function handleGenericRestResponse<T>(response : Response) : Promise<T> {
   } else {
     throw new Error(`${response.statusText} (code ${response.status})`)
   }
-}
-
-/**
- * Get data packets
- */
-export function getPackets(token: string | null) : Promise<ITokenResponse> {
-    const options = {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      }
-    }
-  
-    const query = '?seconds=100000000'
-    return fetch(`${BASE_URL}/data/get-packets${query}`, options)
-      .then(r => formatResponseFromBackend<ITokenResponse>(r))
-}
-
-/**
- * Get rules
- */
-export function getRules(token: string | null) : Promise<ITokenResponse> {
-    const options = {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      }
-    }
-  
-    return fetch(`${BASE_URL}/data/get-rules`, options)
-      .then(r => formatResponseFromBackend<ITokenResponse>(r))
 }

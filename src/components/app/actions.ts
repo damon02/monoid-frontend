@@ -1,4 +1,4 @@
-import { IAppProps } from "../../statics/types";
+import { IAppProps } from '../../statics/types'
 
 export function setTheme(theme : string) {
   return {
@@ -11,5 +11,19 @@ export function setSettings(settings: IAppProps['settings']) {
   return {
     type: 'SET_SETTINGS',
     settings
+  }
+}
+
+export function setRules(rules: IAppProps['rules']) {
+  return {
+    type: 'SET_RULES',
+    rules
+  }
+}
+
+export function setPackets(packets: IAppProps['packets']) {
+  return {
+    type: 'SET_PACKETS',
+    packets
   }
 }

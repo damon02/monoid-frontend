@@ -170,7 +170,6 @@ class Register extends React.PureComponent<IRegisterProps, IRegisterState> {
     const repeatedPassword = this.state.password2
 
     const validated = values(this.state.validation).filter(x => x === false)
-    console.log(validated)
 
     if (this.state.username.length === 0) {
       this.setState({ error: 'emailInvalid' })
@@ -188,8 +187,7 @@ class Register extends React.PureComponent<IRegisterProps, IRegisterState> {
         // 3. Set success to true
         // 4. Let user redirect itself to login
 
-        const response = await registerUser(username, email, password) 
-        console.log(response)
+        await registerUser(username, email, password) 
 
         this.setState({ loading: false, error: '', success: true })
       } catch (error) {

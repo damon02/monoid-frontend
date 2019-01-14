@@ -4,7 +4,8 @@ export default {
   title_long: 'Network Intrusion Detection System',
   code: 'nids',
   copyright: `© Monoid Inc | 2018-2019`,
-
+  loading: 'Loading data...',
+  noData: 'There is no data to be displayed. Make sure there are packets present inside the system in order to view statistics.',
   
   login: {
     title: 'Login',
@@ -21,7 +22,8 @@ export default {
     udp: 'UDP',
     tcp: 'TCP',
     uip: 'IP statistics',
-    daily: 'Daily statistics'
+    daily: 'Daily statistics',
+    packets: 'Packets',
   },
 
   register: {
@@ -99,7 +101,31 @@ export default {
   dashboard: {
     graphs: {
       httpMethods: 'HTTP methods',
-      protocols: 'Protocols',
+      uniqueDestinationIP: 'Unique Destination IP addresses',
+      uniqueDestinationIPamount: 'Packets per unique IP address destinations',
+      uniqueSourceIP: 'Unique IP addresses sources',
+      uniqueDestinationMAC: 'Unique MAC Address destinations',
+      dataLength: 'Packets'
     }
+  },
+  
+  packetBrowser: {
+    title: 'Packets',
+    destIP: 'Destination IP',
+    destMAC: 'Destination Mac Address',
+    destPORT: 'Destination Port',
+    dnsRequest: 'DNS',
+    ack: 'ACK',
+    rst: 'RST',
+    syn: 'SYN',
+    mainProtocol: 'Main Protocol',
+    packetSize: 'Packet Size',
+    protocol: 'Protocol',
+    reason: 'Reason',
+    risk: 'Risk',
+    ruleApplied: 'RuleApplied',
+    srcIP: 'Source IP',
+    srcMAC: 'Source Mac Address', 
+    srcPORT: 'Source Port'
   }
 }

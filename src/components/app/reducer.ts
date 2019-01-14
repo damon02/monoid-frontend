@@ -12,6 +12,12 @@ export function appReducer(state : IAppProps = initialState.app, action: AnyActi
     case 'SET_SETTINGS':
       return Object.assign({}, state, { settings: action.settings })
 
+    case 'SET_PACKETS':
+      return Object.assign({}, state, { packets: action.packets })
+
+    case 'SET_RULES':
+      return Object.assign({}, state, { rules: action.rules })
+
     default:
       return state
   }

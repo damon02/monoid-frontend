@@ -29,14 +29,12 @@ export default class BarChartComponent extends React.PureComponent<IBarComponent
         />
       )})
 
-    console.log(bars)
-
     return responsive
       ? (
         <ResponsiveContainer minHeight={250} minWidth={250} width={responsive.width} height={responsive.height}>
           <BarChart data={dataSet[0].data}>
-            <Bar dataKey="value" fill="#8884d8" />
-            <XAxis dataKey={'name'}/>
+            <Bar dataKey={dataSet[0].dataKey} fill="#8884d8" />
+            <XAxis dataKey={dataSet[0].nameKey}/>
             <YAxis />
             <Legend />
             <Tooltip />

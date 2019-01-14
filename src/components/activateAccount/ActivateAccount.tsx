@@ -66,9 +66,7 @@ class ActivateAccount extends React.PureComponent<IActivateAccountProps, IActiva
   private activateAccount = async (token : string) => {
     try {
       this.setState({ loading: true, error: '', success: '' })
-      const activationResponse = await activateAccountFirstTime(token)
-      console.log(activationResponse)
-
+      await activateAccountFirstTime(token)
       this.setState({ loading: false, success: 'accountActivated' })
     } catch (error) {
       this.setState({ loading: false, error: 'activationError' })

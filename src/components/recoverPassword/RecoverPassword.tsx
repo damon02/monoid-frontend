@@ -159,7 +159,6 @@ class RecoverPassword extends React.PureComponent<IRecoverPasswordProps, IRecove
         // Send recovery request
         this.setState({ error: '', success: '' })
         const response = await requestPasswordRecoveryEmail(email)
-        console.log(response)
 
         if (response.success) {
           this.setState({ success: 'mailSuccess' })

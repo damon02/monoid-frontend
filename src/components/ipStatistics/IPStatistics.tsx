@@ -4,6 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router'
 
 import { IRootProps } from '../../statics/types'
 
+import { I18n } from 'react-redux-i18n'
 import './IPStatistics.scss'
 
 interface IIPStatisticsProps extends IRootProps, RouteComponentProps<any> {
@@ -24,6 +25,11 @@ class IPStatistics extends React.PureComponent<IIPStatisticsProps, IIPStatistics
   }
 
   public render() {
+    const data = this.props.app.packets
+    if (data === null) {
+      return <h2>{I18n.t('noData')}</h2>
+    }
+    
     return (
       <h1>IP statistics</h1>
     )

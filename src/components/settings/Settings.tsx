@@ -1,17 +1,17 @@
+import { cloneDeep, isEqual } from 'lodash'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { Dispatch } from 'redux'
-import { cloneDeep, isEqual } from 'lodash'
 
 import ErrorComponent from '../html/errorComponent/ErrorComponent'
 import InputComponent from '../html/inputComponent/InputComponent'
 
 import { IRootProps, ISettingsResponse } from '../../statics/types'
-import { setTheme, setSettings } from '../app/actions'
-import { setAuth } from '../login/actions'
 import { getToken, saveSettings } from '../../utils/rest'
+import { setSettings, setTheme } from '../app/actions'
+import { setAuth } from '../login/actions'
 
 import './Settings.scss'
 
@@ -62,8 +62,6 @@ class Settings extends React.PureComponent<ISettingsProps, ISettingsState> {
       enabledNotifications: this.state.enabledNotifications, 
       notificationRecipients: this.state.notificationRecipients 
     }
-
-    console.log(localSettings, this.props.app.settings, this.state.hasChanged)
 
     // Make sure that the save button only appears when the settings have been changed
     if (!isEqual(localSettings, this.props.app.settings)) {
@@ -230,7 +228,7 @@ class Settings extends React.PureComponent<ISettingsProps, ISettingsState> {
 
         this.setState({ loading: false })
       } catch (error) {
-        this.setState({ error: error, loading: false })
+        this.setState({ error, loading: false })
         console.error(error)
       }
     } else {

@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
+import { I18n } from 'react-redux-i18n'
 import { RouteComponentProps, withRouter } from 'react-router'
-import { getPackets } from '../../utils/rest'
-import { getRules} from '../../utils/rest'
 
 import { IRootProps } from '../../statics/types'
 
@@ -26,59 +25,16 @@ class DailyStatistics extends React.PureComponent<IDailyStatisticsProps, IDailyS
       error: ''
     }
   }
-
+  
   public render() {
+    const data = this.props.app.packets
+    if (data === null) {
+      return <h2>{I18n.t('noData')}</h2>
+    }
+    
     return (
       <h1>Daily statistics</h1>
     )
-  }
-
-  public componentDidMount() {
-    this.handlePackets()
-    this.handleRules()
-  }
-
-  public componentDidUpdate() {
-
-  }
-
-  public handlePackets = async () => {
-    try {
-      this.setState({ loading: true, error: '' })
-      const response = await getPackets(this.props.login.auth.token)
-      this.setState({ loading: false })
-      
-      if(response) {
-        //ToDO
-        console.log(response)
-      } else {
-          this.setState({error: 'dataError'})
-          throw new Error('No data packets found')
-      }
-      
-    } catch (error) {
-      this.setState({ loading: false, error: 'loginError' })
-      console.error()
-    }
-  }
-
-  public handleRules = async () => {
-    try {
-      this.setState({ loading: true, error: '' })
-      const response = await getRules(this.props.login.auth.token)
-      this.setState({ loading: false })
-      if(response) {
-        //ToDO
-        console.log(response)
-      } else {
-          this.setState({error: 'dataError'})
-          throw new Error('No data packets found')
-      }
-      
-    } catch (error) {
-      this.setState({ loading: false, error: 'loginError' })
-      console.error()
-    }
   }
 }
 

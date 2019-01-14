@@ -47,6 +47,7 @@ class Header extends React.PureComponent<IHeaderProps, {}> {
             <button className={`linkbutton${location === '/udp' ? ' active' : ''}`} onClick={() => this.handleRouting('/udp')}>{I18n.t('header.udp')}</button>
             <button className={`linkbutton${location === '/tcp' ? ' active' : ''}`} onClick={() => this.handleRouting('/tcp')}>{I18n.t('header.tcp')}</button>
             <button className={`linkbutton${location === '/uip' ? ' active' : ''}`} onClick={() => this.handleRouting('/uip')}>{I18n.t('header.uip')}</button>
+            <button className={`linkbutton${location === '/packets' ? ' active' : ''}`} onClick={() => this.handleRouting('/packets')}>{I18n.t('header.packets')}</button>
           </div>
         </div>
       </header>

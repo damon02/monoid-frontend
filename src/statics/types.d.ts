@@ -7,11 +7,13 @@ export interface IRootProps {
 }
 
 export interface IAppProps {
-  theme: 'light' | 'dark' | 'lsd'
+  packets: IPacketsResponse
+  rules: IRulesResponse
   settings: {
     enabledNotifications: boolean
     notificationRecipients: string[]
   }
+  theme: 'light' | 'dark' | 'lsd'
 }
 
 export interface ILoginProps {
@@ -28,7 +30,7 @@ export interface IAuthObject {
 
 export interface IGraphComponentData {
   color: string
-  data: Array<{ name: string, value: number }>
+  data: Array<any>
   dataKey: string
   nameKey: string
   label: boolean
@@ -72,3 +74,35 @@ export type ISettingsResponse = {
   enabledNotifications: boolean
   notificationRecipients: string[]
 } | null
+
+export type IRulesResponse = Array<{
+  DestIp: string[]
+  DestPort: number[]
+  Id: string
+  Log: boolean
+  Message: string
+  Notify: boolean
+  Protocol: number
+  Risk: number
+  SourceIp: string[]
+  SourcePort: number[]
+}> | null
+
+export type IPacketsResponse = Array<{
+  DestinationIp: null | string
+  DestinationMacAddress: null | string
+  DestinationPort: number
+  DnsRequest: null | string
+  HasAckFlag: boolean
+  HasRstFlag: boolean
+  HasSynFlag: boolean
+  MainProtocol: 'TCP' | 'UDP' | 'Undefined' | 'ICMP'
+  PacketSize: number
+  Protocol: string
+  Reason: null | string
+  Risk: 'Information' | 'Low' | 'Medium' | 'High' | 'Critical'
+  RuleApplied: boolean
+  SourceIp: null | string
+  SourceMacAddress: null | string
+  SourcePort: number
+}> | null

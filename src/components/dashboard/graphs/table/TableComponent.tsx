@@ -20,8 +20,6 @@ export default class TableComponent extends React.PureComponent<ITableComponentP
     const { dataSet, rows, showHeader } = this.props 
     const headers = showHeader ? this.getHeaders(rows) : null
     const cells = dataSet.map(set => set.data.map((obj, index) => this.getCell(obj, rows, index)))
-    
-    console.log(dataSet)
 
     return (
       <div className="table-component">
