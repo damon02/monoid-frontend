@@ -1,17 +1,30 @@
 @import '../../style/style.scss';
 
 .app {
-  height: 100%;
+  height: auto;
+  min-height: 100%;
   width: 100%;
 
   .content {
     margin: $spaces-medium;
   }
 
+  .ReactTable .-pagination .-btn {
+    font-size: 16px;
+  }
   
   &.dark {
-    background-color: $color-dark;
-    color: $color-darktext;
+    body & {
+      background-color: $color-dark;
+      color: $color-darktext;
+    }
+    
+    .ReactTable .-pagination .-btn {
+      background-color: $color-primary;
+      &:hover {
+        color: $color-black;
+      }
+    }
   }
 }
 
@@ -25,5 +38,10 @@
 
   i {
     margin-right: $spaces-medium;
+  }
+
+  &.dark {
+    background-color: $color-dark;
+    color: $color-darktext;
   }
 }

@@ -59,7 +59,7 @@ class App extends React.PureComponent<IAppProps, IAppState> {
 
     if (!this.state.initialized && (this.props.app.rules === null || this.props.app.packets === null)) {
       return (
-        <div className="loadingScreen">
+        <div className={`loadingScreen ${this.props.app.theme}`}>
           <i className="fas fa-sync fa-spin"/>
           <h2>{I18n.t('loading')}</h2>
         </div>

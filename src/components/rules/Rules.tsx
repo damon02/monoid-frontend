@@ -45,7 +45,7 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
       Message: '',
       Notify: false,
       Protocol: undefined,
-      Risk: 3,
+      Risk: 1,
       SourceIp: [],
       SourcePort: [],
     }
@@ -136,9 +136,10 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
           <div className="row">
             <InputComponent 
               label={I18n.t('rules.risk')}
-              value={this.state.Risk || 3}
+              value={this.state.Risk || 1}
               type={'number'}
               onChange={(value) => this.setState({ Risk: parseInt(value, 10) })}
+              numberLimits={[1,3]}
             />
           </div>
 

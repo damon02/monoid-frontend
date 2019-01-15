@@ -13,6 +13,7 @@ interface IInputComponentProps {
   faIcon?: string
   onEnter? : () => void
   disabled?: boolean
+  numberLimits?: [number, number]
 }
 
 const InputComponent = (props : IInputComponentProps) => (
@@ -28,6 +29,8 @@ const InputComponent = (props : IInputComponentProps) => (
       autoComplete={props.autoComplete || 'on'}
       onKeyPress={(e) => props.onEnter && e.key === 'Enter' ? props.onEnter() : ({})}
       disabled={props.disabled}
+      min={props.numberLimits ? props.numberLimits[0] : undefined}
+      max={props.numberLimits ? props.numberLimits[1] : undefined}
     />
   </div>
 )

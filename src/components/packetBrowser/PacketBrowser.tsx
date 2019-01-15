@@ -48,7 +48,7 @@ class PacketBrowser extends React.PureComponent<IPacketBrowserProps, IPacketBrow
     return [
       {
         Header: I18n.t('packetBrowser.destIP'),
-        accessor: 'DestinationIP',
+        accessor: 'DestinationIp',
       },
       {
         Header: I18n.t('packetBrowser.destMAC'),
@@ -286,7 +286,7 @@ class PacketBrowser extends React.PureComponent<IPacketBrowserProps, IPacketBrow
       },
       {
         Header: I18n.t('packetBrowser.srcIP'),
-        accessor: 'SourceIP',
+        accessor: 'SourceIp',
       },
       {
         Header: I18n.t('packetBrowser.srcMAC'),

@@ -17,6 +17,8 @@
 
     align-items: center;
 
+
+
     i {
       padding: $spaces-medium;
     }
@@ -43,6 +45,17 @@
         background-color: $color-gray;
         padding: $spaces-medium;
         font-size: 14px;
+      }
+    }
+
+    .dark & {
+      background-color: unset;
+      border: 1px solid $color-black;
+      border-right: 4px solid $color-black;
+      border-bottom: 4px solid $color-black;
+
+      .allowed-vars {
+        background-color: $color-darkest;
       }
     }
   }
