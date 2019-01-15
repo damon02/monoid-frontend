@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dashboard tablecomponent renders correctly 1`] = `
+<div
+  className="table-component"
+>
+  <div
+    className="row headers"
+  >
+    <div
+      className="col-0"
+    >
+      Name
+    </div>
+    <div
+      className="col-1"
+    >
+      Value
+    </div>
+  </div>
+  <div
+    className="cells"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-0"
+      >
+        POST
+      </div>
+      <div
+        className="col-0"
+      >
+        78
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-1"
+      >
+        GET
+      </div>
+      <div
+        className="col-1"
+      >
+        271
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`tablecomponent renders correctly 1`] = `
+<div
+  className="table-component"
+>
+  <div
+    className="row headers"
+  >
+    <div
+      className="col-0"
+    >
+      Name
+    </div>
+    <div
+      className="col-1"
+    >
+      Value
+    </div>
+  </div>
+  <div
+    className="cells"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-0"
+      >
+        POST
+      </div>
+      <div
+        className="col-0"
+      >
+        78
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-1"
+      >
+        GET
+      </div>
+      <div
+        className="col-1"
+      >
+        271
+      </div>
+    </div>
+  </div>
+</div>
+`;
