@@ -75,10 +75,11 @@ export type ISettingsResponse = {
   notificationRecipients: string[]
 } | null
 
-export type IRulesResponse = Array<{
+
+export type IRule = {
   DestIp: string[]
   DestPort: number[]
-  Id: string
+  Id?: string
   Log: boolean
   Message: string
   Notify: boolean
@@ -86,7 +87,8 @@ export type IRulesResponse = Array<{
   Risk: number
   SourceIp: string[]
   SourcePort: number[]
-}> | null
+}
+export type IRulesResponse = IRule[] | null
 
 export type IPacketsResponse = Array<{
   DestinationIp: null | string

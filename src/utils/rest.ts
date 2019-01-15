@@ -1,5 +1,5 @@
 import { BASE_URL } from '../statics/constants'
-import { IGenericAPIResponse, ILoginResponse, IPacketsResponse, IRegisterResponse, IRulesResponse, ISettingsResponse, ITokenResponse } from '../statics/types'
+import { IGenericAPIResponse, ILoginResponse, IPacketsResponse, IRegisterResponse, IRule, IRulesResponse, ISettingsResponse, ITokenResponse } from '../statics/types'
 
 /**
  * Registers a user inside the backend
@@ -146,7 +146,7 @@ export function saveSettings(token : string, settings : ISettingsResponse) : Pro
     .then(r => formatResponseFromBackend<any>(r))
 }
 
-export function getPackets(token: string | null) : Promise<IPacketsResponse> {
+export function getPackets(token: string) : Promise<IPacketsResponse> {
   const options = {
     method: 'GET',
     headers: {
@@ -160,7 +160,7 @@ export function getPackets(token: string | null) : Promise<IPacketsResponse> {
     .then(r => formatResponseFromBackend<IPacketsResponse>(r))
 }
 
-export function getRules(token: string | null) : Promise<IRulesResponse> {
+export function getRules(token: string) : Promise<IRulesResponse> {
   const options = {
     method: 'GET',
     headers: {
@@ -173,6 +173,19 @@ export function getRules(token: string | null) : Promise<IRulesResponse> {
     .then(r => formatResponseFromBackend<IRulesResponse>(r))
 }
 
+export function addRule(token : string, rule: IRule) : Promise<null> {
+  const options = {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(rule)
+  }
+
+  return fetch(`${BASE_URL}/data/store-rule`, options)
+    .then(r => formatResponseFromBackend<null>(r))
+}
 
 /**
  * Function which strips down a HTTP request from the server to the bare data needed for the frontend

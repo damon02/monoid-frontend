@@ -4,7 +4,7 @@ import './InputComponent.scss'
 interface IInputComponentProps {
   label: string
   type: 'date' | 'email' | 'number' | 'password' | 'text' | 'url'
-  value: string
+  value: string | number
   onChange: (value : string) => void
   isValid?: boolean
   onFocus?: (x: boolean) => void

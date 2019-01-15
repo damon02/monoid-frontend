@@ -24,6 +24,7 @@ export default {
     uip: 'IP statistics',
     daily: 'Daily statistics',
     packets: 'Packets',
+    rules: 'Rules',
   },
 
   register: {
@@ -127,5 +128,21 @@ export default {
     srcIP: 'Source IP',
     srcMAC: 'Source Mac Address', 
     srcPORT: 'Source Port'
+  },
+
+  rules: {
+    title: 'Rules',
+    addRule: 'Add rule',
+    destIP: 'Destination IP',
+    destPort: 'Destination Port',
+    log: 'Log',
+    message: 'Message',
+    notify: 'Notify',
+    protocol: 'Protocol',
+    risk: 'Risk', 
+    sourceIP: 'Source IP',
+    sourcePort: 'Source Port',
+    allowedVars: 'Inside of the message the following variables can be used:',
+    vars: '*|DEST_IP|*, *|SOURCE_IP|*, *|DEST_PORT|*, *|SOURCE_PORT|*',
   }
 }

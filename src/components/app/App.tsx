@@ -10,6 +10,7 @@ import Header from '../header/Header'
 import ErrorComponent from '../html/errorComponent/ErrorComponent'
 import IPStatistics from '../ipStatistics/IPStatistics'
 import PacketBrowser from '../packetBrowser/PacketBrowser'
+import Rules from '../rules/Rules'
 import Settings from '../settings/Settings'
 import TCP from '../tcp/TCP'
 import UDP from '../udp/UDP'
@@ -77,6 +78,7 @@ class App extends React.PureComponent<IAppProps, IAppState> {
             <Route path="/tcp" component={TCP} />
             <Route path="/uip" component={IPStatistics} />
             <Route path="/packets" component={PacketBrowser} />
+            <Route path="/rules" component={Rules} />
             <Route exact path="/" component={Dashboard} />
             <Redirect to="/" />
           </Switch>

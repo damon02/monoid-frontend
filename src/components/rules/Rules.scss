@@ -1,0 +1,49 @@
+@import '../../style/style.scss';
+
+.rules {
+  font-size: 12px;
+
+  .add-rule {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: $spaces-medium;
+    margin-bottom: $spaces-medium;
+    padding: $spaces-medium;
+    background-color: $color-white;
+    border: 1px solid $color-gray;
+    border-right: 4px solid $color-gray;
+    border-bottom: 4px solid $color-gray;
+
+    align-items: center;
+
+    i {
+      padding: $spaces-medium;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+
+      .inputComponent {
+        margin-bottom: 0;
+      }
+
+      .allowed-vars {
+        width: 100%;
+        background-color: $color-gray;
+        padding: $spaces-medium;
+        font-size: 14px;
+      }
+    }
+  }
+}
