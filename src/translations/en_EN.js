@@ -19,10 +19,7 @@ export default {
 
   header: {
     home: 'Home',
-    udp: 'UDP',
-    tcp: 'TCP',
-    uip: 'IP statistics',
-    daily: 'Daily statistics',
+    statistics: 'Statistics',
     packets: 'Packets',
     rules: 'Rules',
   },

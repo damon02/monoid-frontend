@@ -4,27 +4,24 @@ import { I18n } from 'react-redux-i18n'
 import { Redirect, Route, RouteComponentProps, Switch, withRouter } from 'react-router'
 import { Dispatch } from 'redux'
 
-import DailyStatistics from '../dailyStatistics/DailyStatistics'
 import Dashboard from '../dashboard/Dashboard'
 import Header from '../header/Header'
 import ErrorComponent from '../html/errorComponent/ErrorComponent'
-import IPStatistics from '../ipStatistics/IPStatistics'
 import PacketBrowser from '../packetBrowser/PacketBrowser'
 import Rules from '../rules/Rules'
 import Settings from '../settings/Settings'
-import TCP from '../tcp/TCP'
-import UDP from '../udp/UDP'
+import Statistics from '../statistics/Statistics'
 
 import { IRootProps } from '../../statics/types'
-import { getPackets, getRules, getSettings } from '../../utils/rest'
+import { getRules, getSettings } from '../../utils/rest'
 import { clearAuth } from '../login/actions'
 import { setPackets, setRules, setSettings } from './actions'
 import './App.scss'
 
 interface IAppProps extends IRootProps, RouteComponentProps<any> {
   clearAuth : () => void
-  setSettings : (settings : IRootProps['app']['settings']) => void
   setRules : (rules : IRootProps['app']['rules']) => void
+  setSettings : (settings : IRootProps['app']['settings']) => void
   setPackets : (packets: IRootProps['app']['packets']) => void
 }
 
@@ -40,15 +37,15 @@ class App extends React.PureComponent<IAppProps, IAppState> {
     this.state = {
       error: '',
       loading: false,
-      initialized: false,
+      initialized: true,
     }
   }
 
   public async componentDidMount() {
     if (this.props.login.auth.token) {
       await this.fetchSettings()
-      await this.handleRules()
-      await this.handlePackets()
+      await this.fetchRules()
+      // await this.fetchPackets()
     }
   }
 
@@ -73,10 +70,7 @@ class App extends React.PureComponent<IAppProps, IAppState> {
         <div className="content">
           <Switch>
             <Route path="/settings" component={Settings} />
-            <Route path="/daily" component={DailyStatistics} />
-            <Route path="/udp" component={UDP} />
-            <Route path="/tcp" component={TCP} />
-            <Route path="/uip" component={IPStatistics} />
+            <Route path="/statistics" component={Statistics} />
             <Route path="/packets" component={PacketBrowser} />
             <Route path="/rules" component={Rules} />
             <Route exact path="/" component={Dashboard} />
@@ -112,36 +106,36 @@ class App extends React.PureComponent<IAppProps, IAppState> {
     }
   }
 
-  /**
-   * Fetch packets from the backend
-   */
-  private handlePackets = async () => {
-    if (this.props.login.auth.token) {
-      try {
-        this.setState({ loading: true, error: '' })
-        const response = await getPackets(this.props.login.auth.token)
+  // /**
+  //  * Fetch packets from the backend
+  //  */
+  // private fetchPackets = async () => {
+  //   if (this.props.login.auth.token) {
+  //     try {
+  //       this.setState({ loading: true, error: '' })
+  //       const response = await getPackets(this.props.login.auth.token)
         
-        if (response) {
-          this.props.setPackets(response)
-          this.setState({ loading: false, initialized: true })
-        } else {
-          this.setState({ loading: false, error: 'packetError', initialized: true })
-          throw new Error('No data packets found')
-        }
+  //       if (response) {
+  //         this.props.setPackets(response)
+  //         this.setState({ loading: false, initialized: true })
+  //       } else {
+  //         this.setState({ loading: false, error: 'packetError', initialized: true })
+  //         throw new Error('No data packets found')
+  //       }
         
-      } catch (error) {
-        this.setState({ loading: false, error: 'packetError', initialized: true })
-        console.error()
-      }
-    } else {
-      this.props.clearAuth()
-    }
-  }
+  //     } catch (error) {
+  //       this.setState({ loading: false, error: 'packetError', initialized: true })
+  //       console.error()
+  //     }
+  //   } else {
+  //     this.props.clearAuth()
+  //   }
+  // }
 
   /**
    * Fetch rules 
    */
-  private handleRules = async () => {
+  private fetchRules = async () => {
     if (this.props.login.auth.token) {
       try {
         this.setState({ loading: true, error: '' })

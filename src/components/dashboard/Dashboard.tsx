@@ -68,6 +68,13 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
             <TableComponent dataSet={this.getUniqueDestinationIP()} rows={[{ key: 'IP', txt: 'IP Address' }, { key: 'amount', txt: 'Amount of packets'}]} showHeader direction={'vertical'} />
           </div>
         </div>
+        <div className="chart">
+          <span className="title">{I18n.t('dashboard.graphs.uniqueSourceIPSize')}</span>
+          <div className="inner">
+            <BarChartComponent dataSet={this.getUniqueSizeIP()} xkey={'amount'} responsive={{ width: '100%', height: 320 }} />
+            <TableComponent dataSet={this.getUniqueSizeIP()} rows={[{ key: 'IP', txt: 'IP Address' }, { key: 'amount', txt: 'Amount of packets'}]} showHeader direction={'vertical'} />
+          </div>
+        </div>
       </div>
     )
   }
@@ -83,6 +90,33 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
           dataKey: 'amount',
           nameKey: 'IP',
           data: uniqueArray,
+          label: true
+        }
+      ]
+    } else {
+      return []
+    }
+  }
+
+  private getUniqueSizeIP = () : IGraphComponentData[] => {
+    if (this.props.app.packets) {
+      const uniqueIPDict = this.props.app.packets.map(p => ({ IP: p.SourceIp, size: p.PacketSize }))
+      const accum = uniqueIPDict.reduce((acc, current) => {
+        const IP = current.IP || 'null'
+        const sizeCount = acc[IP] ? acc[IP] + current.size : current.size
+        console.log(IP, sizeCount)
+
+        return { IP: '1', size: 1 }
+      })
+
+      console.log(accum)
+      
+      return [
+        {
+          color: '#FF0000',
+          dataKey: 'amount',
+          nameKey: 'IP',
+          data: [],
           label: true
         }
       ]

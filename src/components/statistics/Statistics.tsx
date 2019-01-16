@@ -5,19 +5,19 @@ import { RouteComponentProps, withRouter } from 'react-router'
 
 import { IRootProps } from '../../statics/types'
 
-import './DailyStatistics.scss'
+import './Statistics.scss'
 
-interface IDailyStatisticsProps extends IRootProps, RouteComponentProps<any> {
+interface IStatisticsProps extends IRootProps, RouteComponentProps<any> {
 
 }
 
-interface IDailyStatisticsState {
+interface IStatisticsState {
   loading: boolean
   error: string
 }
 
-class DailyStatistics extends React.PureComponent<IDailyStatisticsProps, IDailyStatisticsState> {
-  constructor(props: IDailyStatisticsProps) {
+class Statistics extends React.PureComponent<IStatisticsProps, IStatisticsState> {
+  constructor(props: IStatisticsProps) {
     super(props)
 
     this.state = {
@@ -33,9 +33,9 @@ class DailyStatistics extends React.PureComponent<IDailyStatisticsProps, IDailyS
     }
     
     return (
-      <h1>Daily statistics</h1>
+      <h1>Statistics</h1>
     )
   }
 }
 
-export default withRouter(connect(s => s)(DailyStatistics))
+export default withRouter(connect(s => s)(Statistics))

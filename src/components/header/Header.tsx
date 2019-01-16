@@ -43,10 +43,7 @@ class Header extends React.PureComponent<IHeaderProps, {}> {
         <div className="bottom">
           <div className="links">
             <button className={`linkbutton${location === '/' ? ' active' : ''}`} onClick={() => this.handleRouting('/')}>{I18n.t('header.home')}</button>
-            <button className={`linkbutton${location === '/daily' ? ' active' : ''}`} onClick={() => this.handleRouting('/daily')}>{I18n.t('header.daily')}</button>
-            <button className={`linkbutton${location === '/udp' ? ' active' : ''}`} onClick={() => this.handleRouting('/udp')}>{I18n.t('header.udp')}</button>
-            <button className={`linkbutton${location === '/tcp' ? ' active' : ''}`} onClick={() => this.handleRouting('/tcp')}>{I18n.t('header.tcp')}</button>
-            <button className={`linkbutton${location === '/uip' ? ' active' : ''}`} onClick={() => this.handleRouting('/uip')}>{I18n.t('header.uip')}</button>
+            <button className={`linkbutton${location === '/statistics' ? ' active' : ''}`} onClick={() => this.handleRouting('/statistics')}>{I18n.t('header.statistics')}</button>
             <button className={`linkbutton${location === '/packets' ? ' active' : ''}`} onClick={() => this.handleRouting('/packets')}>{I18n.t('header.packets')}</button>
             <button className={`linkbutton${location === '/rules' ? ' active' : ''}`} onClick={() => this.handleRouting('/rules')}>{I18n.t('header.rules')}</button>
           </div>

@@ -1,19 +1,23 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { RouteComponentProps } from 'react-router'
-
 import { I18n } from 'react-redux-i18n'
+import { RouteComponentProps, withRouter } from 'react-router'
 import ReactTable from 'react-table'
-import { IRootProps, IRule } from '../../statics/types'
+import { Dispatch } from 'redux'
 
+import ErrorComponent from '../html/errorComponent/ErrorComponent'
 import InputComponent from '../html/inputComponent/InputComponent'
 
-import { addRule } from '../../utils/rest'
-import ErrorComponent from '../html/errorComponent/ErrorComponent'
+import { IRootProps, IRule } from '../../statics/types'
+import { addRule, getRules } from '../../utils/rest'
+import { setRules } from '../app/actions'
+import { clearAuth } from '../login/actions'
+
 import './Rules.scss'
 
 interface IRulesProps extends IRootProps, RouteComponentProps<any> {
-
+  clearAuth : () => void
+  setRules : (rules : IRootProps['app']['rules']) => void
 }
 
 interface IRulesState {
@@ -175,6 +179,7 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
         }
 
         await addRule(this.props.login.auth.token, rule)
+        await this.fetchRules()
         
       } catch (error) {
         console.error(error)
@@ -182,6 +187,29 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
     } else {
       console.log(this.state.Protocol, this.state.Notify, this.state.Log, this.state.Message, this.state.Risk)
       this.setState({ error: 'Invalid rule' })
+    }
+  }
+
+  /**
+   * Fetch rules 
+   */
+  private fetchRules = async () => {
+    if (this.props.login.auth.token) {
+      try {
+        this.setState({ error: '' })
+        const response = await getRules(this.props.login.auth.token)
+        if (response) {
+          this.props.setRules(response)
+        } else {
+          this.setState({error: 'rulesError'})
+        }
+        
+      } catch (error) {
+        this.setState({ error: 'rulesError' })
+        console.error()
+      }
+    } else {
+      this.props.clearAuth()
     }
   }
 
@@ -233,4 +261,12 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
   }
 }
 
-export default connect(s => s)(Rules)
+const mapStateToProps = (state : IRootProps, ownProps : {}) => state
+const mapDispatchToProps = (dispatch : Dispatch) => {
+  return {
+    clearAuth : () => { dispatch(clearAuth()) },
+    setRules : (rules : IRootProps['app']['rules']) => { dispatch(setRules(rules)) }
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Rules))
