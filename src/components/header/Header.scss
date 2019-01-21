@@ -68,6 +68,11 @@
           font-family: 'Open Sans';
           border-width: 0px;
           border-bottom: 2px solid $color-primary;
+          background-color: unset;
+
+          .dark & {
+            color: $color-white;
+          }
         }
       }
       .whois {
