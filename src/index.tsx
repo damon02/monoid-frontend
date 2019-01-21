@@ -28,7 +28,7 @@ ReactDOM.render(
       <Switch>
         <Route path="/terminal" component={Terminal} />
         <Route path="/register" component={Register} />
-        <Route path="/recover/:token?" component={RecoverPassword} />
+        <Route path="/recovery/:token?" component={RecoverPassword} />
         <Route path="/activate/:token" component={ActivateAccount} />
         <Route path="/login" component={Login} />
         <Route path="/" component={App} />

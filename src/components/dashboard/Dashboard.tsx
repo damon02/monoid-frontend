@@ -151,7 +151,6 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
         const fixedArray : any[] = []
         const coeff = 1000 * 60 * 10
         let tempTime : Date = new Date(Math.round(this.props.app.times.startDate.getTime() / coeff) * coeff)
-        console.log(unixData)
         for (let index = 0; tempTime.getTime() < this.props.app.times.endDate.getTime(); index++) {
           const filtered = unixData.filter(x => x.DateTime === tempTime.getTime())
 
@@ -163,7 +162,6 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
 
 
           // Set the temptime to be 10min ahead
-          console.log(tempTime.getTime())
           tempTime = new Date(tempTime.getTime() + 600000)
         }
 

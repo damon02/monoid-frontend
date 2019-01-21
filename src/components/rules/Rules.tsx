@@ -185,7 +185,6 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
         console.error(error)
       }
     } else {
-      console.log(this.state.Protocol, this.state.Notify, this.state.Log, this.state.Message, this.state.Risk)
       this.setState({ error: 'Invalid rule' })
     }
   }
