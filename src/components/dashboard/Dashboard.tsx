@@ -95,22 +95,22 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
               </div>
             </div>
             <div className="chart number">
+              <span className="title">{I18n.t('dashboard.graphs.uniqueProtocols')}</span>
               <div className="inner">
                 <h1>{this.state.counters.UniqueProtocols || 0}</h1>
               </div>
-              <span className="title">{I18n.t('dashboard.graphs.uniqueProtocols')}</span>
             </div>
             <div className="chart number">
+              <span className="title">{I18n.t('dashboard.graphs.packets')}</span>
               <div className="inner">
                 <h1>{this.state.counters.Packets || 0}</h1>
               </div>
-              <span className="title">{I18n.t('dashboard.graphs.packets')}</span>
             </div>
             <div className="chart number">
+              <span className="title">{I18n.t('dashboard.graphs.rulesAmount')}</span>
               <div className="inner">
                 <h1>{this.state.counters.Rules || 0}</h1>
               </div>
-              <span className="title">{I18n.t('dashboard.graphs.rulesAmount')}</span>
             </div>
           </div>
           <div className="chart">

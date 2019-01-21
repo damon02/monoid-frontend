@@ -33,7 +33,7 @@ export default class PieChartComponent extends React.PureComponent<IPieComponent
     )
 
     return responsive ? (
-        <ResponsiveContainer minHeight={150} minWidth={250} width={responsive.width} height={responsive.height}>
+        <ResponsiveContainer minHeight={150} minWidth={250} maxHeight={150} width={responsive.width} height={responsive.height}>
           <PieChart>
             {pies}
             <Tooltip />
