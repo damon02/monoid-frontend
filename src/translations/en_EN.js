@@ -104,7 +104,7 @@ export default {
       packets: 'Packets',
       risks: 'Alerts per risks level',
       uniqueProtocols: 'Unique protocols',
-      rulesAmount: 'Amount of rules',
+      rulesAmount: 'Active rules',
       packetsTime: 'Packets per 10 minutes',
     }
   },

@@ -87,6 +87,13 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
         <ErrorComponent message={this.state.error} onClick={() => this.setState({ error: '' })} />
         <div className={'dashboard-wrapper'}>
           <div className="left">
+            <div className="chart">
+              <span className="title">{I18n.t('dashboard.graphs.risks')}</span>
+              <div className="inner">
+                <PieChartComponent dataSet={this.getRisksObjects()} responsive={{ width: 306, height: '100%' }} />
+                <TableComponent dataSet={this.getRisksObjects()} rows={[{ key: 'risk', txt: 'Risk' }, { key: 'amount', txt: 'Amount'}]} showHeader direction={'vertical'} />
+              </div>
+            </div>
             <div className="chart number">
               <div className="inner">
                 <h1>{this.state.counters.UniqueProtocols || 0}</h1>
@@ -105,18 +112,11 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
               </div>
               <span className="title">{I18n.t('dashboard.graphs.rulesAmount')}</span>
             </div>
-            <div className="chart small">
-              <span className="title">{I18n.t('dashboard.graphs.risks')}</span>
-              <div className="inner">
-                <PieChartComponent dataSet={this.getRisksObjects()} responsive={{ width: 306, height: '100%' }} />
-                <TableComponent dataSet={this.getRisksObjects()} rows={[{ key: 'risk', txt: 'Risk' }, { key: 'amount', txt: 'Amount'}]} showHeader direction={'vertical'} />
-              </div>
-            </div>
           </div>
           <div className="chart">
             <span className="title">{I18n.t('dashboard.graphs.packetsTime')}</span>
             <div className="inner">
-              <ResponsiveContainer minHeight={250} minWidth={250} width={'100%'} height={600}>
+              <ResponsiveContainer minHeight={200} minWidth={250} width={'100%'} height={600}>
                 <LineChart data={this.state.lineGraphStuff}>
                   <XAxis dataKey={'DateTime'} tickFormatter={(ti) => moment(ti).format('DD-MM HH:mm')} />
                   <YAxis />
