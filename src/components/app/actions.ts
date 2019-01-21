@@ -27,3 +27,10 @@ export function setPackets(packets: IAppProps['packets']) {
     packets
   }
 }
+
+export function setTimes(times: IAppProps['times']) {
+  return {
+    type: 'SET_DATES',
+    times
+  }
+}

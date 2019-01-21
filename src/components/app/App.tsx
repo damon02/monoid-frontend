@@ -106,32 +106,6 @@ class App extends React.PureComponent<IAppProps, IAppState> {
     }
   }
 
-  // /**
-  //  * Fetch packets from the backend
-  //  */
-  // private fetchPackets = async () => {
-  //   if (this.props.login.auth.token) {
-  //     try {
-  //       this.setState({ loading: true, error: '' })
-  //       const response = await getPackets(this.props.login.auth.token)
-        
-  //       if (response) {
-  //         this.props.setPackets(response)
-  //         this.setState({ loading: false, initialized: true })
-  //       } else {
-  //         this.setState({ loading: false, error: 'packetError', initialized: true })
-  //         throw new Error('No data packets found')
-  //       }
-        
-  //     } catch (error) {
-  //       this.setState({ loading: false, error: 'packetError', initialized: true })
-  //       console.error()
-  //     }
-  //   } else {
-  //     this.props.clearAuth()
-  //   }
-  // }
-
   /**
    * Fetch rules 
    */

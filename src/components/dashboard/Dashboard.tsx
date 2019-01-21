@@ -1,15 +1,16 @@
-import { countBy } from 'lodash'
 import * as React from 'react'
 import { connect } from 'react-redux'
+import { I18n } from 'react-redux-i18n'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { Dispatch } from 'redux'
 
-import BarChartComponent from './graphs/bar/BarChartComponent'
+// import BarChartComponent from './graphs/bar/BarChartComponent'
 // import PieChartComponent from './graphs/pie/PieChartComponent'
-import TableComponent from './graphs/table/TableComponent'
+// import TableComponent from './graphs/table/TableComponent'
 
-import { I18n } from 'react-redux-i18n'
-import { IGraphComponentData, IRootProps } from '../../statics/types'
+import { IRootProps } from '../../statics/types'
+import { getCounters } from '../../utils/rest'
+
 import './Dashboard.scss'
 
 interface IDashboardComponentProps extends IRootProps, RouteComponentProps<any> {
@@ -28,100 +29,47 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
     }
   }
 
-  public render() {
-    const data = this.props.app.packets
-    if (data === null) {
-      return <h2>{I18n.t('noData')}</h2>
-    }
+  public componentDidMount() {
+    this.getAllCounters()
+  }
 
-    const uniqueDestinationIP = countBy(data.map(p => p.DestinationIp))
-    const uniqueDestinations = Object.keys(uniqueDestinationIP).sort().map(key => ({ IP: key, amount: uniqueDestinationIP[key] }))
-    const uniqueDestinationMAC = countBy(data.map(p => p.DestinationMacAddress))
-    const uniqueMACDestinations = Object.keys(uniqueDestinationMAC).sort().map(key => ({ MAC: key, amount: uniqueDestinationMAC[key] }))
-  
+  public render() {  
     return (
       <div className={'dashboard-wrapper'}>
         <div className="left">
           <div className="chart number">
             <div className="inner">
-              <h1>{uniqueDestinations.length}</h1>
+              <h1>0</h1>
             </div>
             <span className="title">{I18n.t('dashboard.graphs.uniqueDestinationIP')}</span>
           </div>
           <div className="chart number">
             <div className="inner">
-              <h1>{data.length}</h1>
+              <h1>1</h1>
             </div>
             <span className="title">{I18n.t('dashboard.graphs.dataLength')}</span>
           </div>
           <div className="chart number">
             <div className="inner">
-              <h1>{uniqueMACDestinations.length}</h1>
+              <h1>2</h1>
             </div>
             <span className="title">{I18n.t('dashboard.graphs.uniqueDestinationMAC')}</span>
           </div>
         </div>
-        <div className="chart">
-          <span className="title">{I18n.t('dashboard.graphs.uniqueDestinationIPamount')}</span>
-          <div className="inner">
-            <BarChartComponent dataSet={this.getUniqueDestinationIP()} xkey={'amount'} responsive={{ width: '100%', height: 320 }} />
-            <TableComponent dataSet={this.getUniqueDestinationIP()} rows={[{ key: 'IP', txt: 'IP Address' }, { key: 'amount', txt: 'Amount of packets'}]} showHeader direction={'vertical'} />
-          </div>
-        </div>
-        <div className="chart">
-          <span className="title">{I18n.t('dashboard.graphs.uniqueSourceIPSize')}</span>
-          <div className="inner">
-            <BarChartComponent dataSet={this.getUniqueSizeIP()} xkey={'amount'} responsive={{ width: '100%', height: 320 }} />
-            <TableComponent dataSet={this.getUniqueSizeIP()} rows={[{ key: 'IP', txt: 'IP Address' }, { key: 'amount', txt: 'Amount of packets'}]} showHeader direction={'vertical'} />
-          </div>
-        </div>
+
       </div>
     )
   }
 
-  private getUniqueDestinationIP = () : IGraphComponentData[] => {
-    if (this.props.app.packets) {
-      const uniqueIPDict = countBy(this.props.app.packets.map(p => p.DestinationIp))
-      const uniqueArray = Object.keys(uniqueIPDict).sort().map(key => ({ IP: key, amount: uniqueIPDict[key] }))
-      
-      return [
-        {
-          color: '#FF0000',
-          dataKey: 'amount',
-          nameKey: 'IP',
-          data: uniqueArray,
-          label: true
-        }
-      ]
-    } else {
-      return []
-    }
-  }
+  private getAllCounters = async () => {
+    if (this.props.login.auth.token) {
+      try {
+        const counters = await getCounters(this.props.login.auth.token)
 
-  private getUniqueSizeIP = () : IGraphComponentData[] => {
-    if (this.props.app.packets) {
-      const uniqueIPDict = this.props.app.packets.map(p => ({ IP: p.SourceIp, size: p.PacketSize }))
-      const accum = uniqueIPDict.reduce((acc, current) => {
-        const IP = current.IP || 'null'
-        const sizeCount = acc[IP] ? acc[IP] + current.size : current.size
-        console.log(IP, sizeCount)
-
-        return { IP: '1', size: 1 }
-      })
-
-      console.log(accum)
-      
-      return [
-        {
-          color: '#FF0000',
-          dataKey: 'amount',
-          nameKey: 'IP',
-          data: [],
-          label: true
-        }
-      ]
-    } else {
-      return []
+        console.log(counters)
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 }

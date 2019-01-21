@@ -14,6 +14,10 @@ export interface IAppProps {
     notificationRecipients: string[]
   }
   theme: 'light' | 'dark' | 'lsd'
+  times: {
+    startDate: Date
+    endDate: Date
+  }
 }
 
 export interface ILoginProps {

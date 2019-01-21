@@ -1,34 +1,48 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
-import { RouteComponentProps } from 'react-router'
+import { RouteComponentProps, withRouter } from 'react-router'
 import ReactTable from 'react-table'
+import { Dispatch } from 'redux'
 
-import { IRootProps } from '../../statics/types'
+import ErrorComponent from '../html/errorComponent/ErrorComponent'
+
+import { IPacketsResponse, IRootProps } from '../../statics/types'
+import { getPackets } from '../../utils/rest'
+import { setPackets } from '../app/actions'
+import { clearAuth } from '../login/actions'
 
 import 'react-table/react-table.css'
 import './PacketBrowser.scss'
 
 interface IPacketBrowserProps extends IRootProps, RouteComponentProps<any> {
-
+  clearAuth: () => void
+  setPackets: (packets: IPacketsResponse) => void
 }
 
 interface IPacketBrowserState {
-  x: null
+  error: string
+  loading: boolean
 }
 
 class PacketBrowser extends React.PureComponent<IPacketBrowserProps, IPacketBrowserState> {
   constructor(props : IPacketBrowserProps) {
     super(props)
     this.state = {
-      x: null
+      error: '',
+      loading: false
     }
+  }
+
+  public componentDidMount() {
+    this.fetchPackets()
   }
 
   public render() {
     const data = this.props.app.packets || []
     return (
       <div className="packetBrowser">
+        <ErrorComponent message={this.state.error} onClick={() => this.setState({ error: '' })} />
         <div className="filters">
           <h1>{I18n.t('packetBrowser.title')}</h1>
         </div>
@@ -298,6 +312,40 @@ class PacketBrowser extends React.PureComponent<IPacketBrowserProps, IPacketBrow
       },
     ]
   }
+
+  /**
+   * Fetch packets from the backend
+   */
+  private fetchPackets = async () => {
+    if (this.props.login.auth.token) {
+      try {
+        this.setState({ error: '' })
+        const response = await getPackets(this.props.login.auth.token)
+        
+        if (response) {
+          this.props.setPackets(response)
+          this.setState({ loading: false })
+        } else {
+          this.setState({ loading: false, error: 'packetError' })
+          throw new Error('No data packets found')
+        }
+        
+      } catch (error) {
+        this.setState({ loading: false, error: 'packetError' })
+        console.error()
+      }
+    } else {
+      this.props.clearAuth()
+    }
+  }
 }
 
-export default connect(s => s)(PacketBrowser)
+const mapStateToProps = (state : IRootProps, ownProps : {}) => state
+const mapDispatchToProps = (dispatch : Dispatch) => {
+  return {
+    clearAuth : () => { dispatch(clearAuth()) },
+    setPackets : (packets : IRootProps['app']['packets']) => { dispatch(setPackets(packets)) },
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PacketBrowser))

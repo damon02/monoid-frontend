@@ -155,7 +155,7 @@ export function getPackets(token: string) : Promise<IPacketsResponse> {
     }
   }
 
-  const query = '?seconds=100000000'
+  const query = '?seconds=2000'
   return fetch(`${BASE_URL}/data/get-packets${query}`, options)
     .then(r => formatResponseFromBackend<IPacketsResponse>(r))
 }
@@ -185,6 +185,84 @@ export function addRule(token : string, rule: IRule) : Promise<null> {
 
   return fetch(`${BASE_URL}/data/store-rule`, options)
     .then(r => formatResponseFromBackend<null>(r))
+}
+
+export function getCounters(token: string) : Promise<any> {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    }
+  }
+
+  return fetch(`${BASE_URL}/data/get-all-counters`, options)
+    .then(r => formatResponseFromBackend<any>(r))
+}
+
+export function getPacketsOverTime(token: string, startDateTime: number, endDateTime: number) : Promise<any> {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  }
+
+  return fetch(`${BASE_URL}/data/get-line-graph-data?startDateTime=${startDateTime}&endDateTime=${endDateTime}`, options)
+    .then(r => formatResponseFromBackend<any>(r))
+}
+
+export function getTrafficCountIP(token: string, startDateTime: number, endDateTime: number) : Promise<any> {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  }
+
+  return fetch(`${BASE_URL}/data/get-traffic-count-ip?startDateTime=${startDateTime}&endDateTime=${endDateTime}`, options)
+    .then(r => formatResponseFromBackend<any>(r))
+}
+
+export function getTrafficSizeIP(token: string, startDateTime: number, endDateTime: number) : Promise<any> {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  }
+
+  return fetch(`${BASE_URL}/data/get-traffic-size-ip?startDateTime=${startDateTime}&endDateTime=${endDateTime}`, options)
+    .then(r => formatResponseFromBackend<any>(r))
+}
+
+export function getTrafficProtocol(token: string, startDateTime: number, endDateTime: number) : Promise<any> {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  }
+
+  return fetch(`${BASE_URL}/data/get-traffic-by-protocol?startDateTime=${startDateTime}&endDateTime=${endDateTime}`, options)
+    .then(r => formatResponseFromBackend<any>(r))
+}
+
+export function getTrafficTLS(token: string, startDateTime: number, endDateTime: number) : Promise<any> {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  }
+
+  return fetch(`${BASE_URL}/data/get-traffic-by-tlsversion?startDateTime=${startDateTime}&endDateTime=${endDateTime}`, options)
+    .then(r => formatResponseFromBackend<any>(r))
 }
 
 /**

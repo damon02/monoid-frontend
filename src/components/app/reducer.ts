@@ -18,6 +18,9 @@ export function appReducer(state : IAppProps = initialState.app, action: AnyActi
     case 'SET_RULES':
       return Object.assign({}, state, { rules: action.rules })
 
+    case 'SET_DATES':
+      return Object.assign({}, state, { times: action.times })
+
     default:
       return state
   }

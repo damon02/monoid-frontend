@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { i18nReducer } from 'react-redux-i18n'
 import { combineReducers } from 'redux'
 
@@ -25,6 +26,10 @@ export const initialState : IRootProps = {
       notificationRecipients: [],
     },
     theme: loadProperty('theme', 'light'),
+    times: {
+      startDate: new Date(moment().subtract(1, 'hour').unix() * 1000),
+      endDate: new Date(moment().unix() * 1000),
+    }
   },
   login: {
     auth: loadProperty('auth', emptyAuthObject)
