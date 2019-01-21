@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash'
 import * as React from 'react'
 import DatePicker from 'react-datepicker'
 import { connect } from 'react-redux'
@@ -41,8 +42,8 @@ class Header extends React.PureComponent<IHeaderProps, {}> {
                   onChange={(d) => this.handleDateChange('start', d)}
                   showTimeSelect
                   timeFormat="HH:mm"
-                  timeIntervals={15}
-                  dateFormat="MMMM d, yyyy hh:mm"
+                  timeIntervals={10}
+                  dateFormat="MMMM d, yyyy HH:mm"
                   timeCaption="time"
                   maxDate={this.props.app.times.endDate}
                 />
@@ -57,9 +58,9 @@ class Header extends React.PureComponent<IHeaderProps, {}> {
                   onChange={(d) => this.handleDateChange('end', d)}
                   showTimeSelect
                   timeFormat="HH:mm"
-                  timeIntervals={15}
+                  timeIntervals={10}
                   minDate={new Date(this.props.app.times.startDate)}
-                  dateFormat="MMMM d, yyyy hh:mm"
+                  dateFormat="MMMM d, yyyy HH:mm"
                   timeCaption="time"
                 />
               </div>
@@ -94,12 +95,11 @@ class Header extends React.PureComponent<IHeaderProps, {}> {
   }
 
   private handleDateChange = (type: 'start' | 'end', time: Date | null) => {
-    console.log(time && time.getTime())
     const dates = this.props.app.times
     if (type === 'start') {
-      dates.startDate = time || new Date(0)
+      dates.startDate = cloneDeep(time) || new Date(0)
     } else {
-      dates.endDate = time || new Date
+      dates.endDate = cloneDeep(time) || new Date()
     }
     this.props.setTimes(dates)
 

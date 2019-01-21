@@ -6,7 +6,9 @@ export default {
   copyright: `© Monoid Inc | 2018-2019`,
   loading: 'Loading data...',
   noData: 'There is no data to be displayed. Make sure there are packets present inside the system in order to view statistics.',
-  
+  from: 'From',
+  end: 'To',
+
   login: {
     title: 'Login',
     username: 'Username',
@@ -61,7 +63,8 @@ export default {
     mailError: 'Something went wrong while resetting your password, please try again.',
     tokenFetchError: 'Something went wrong while trying to fetch a token',
     localMailError: 'Fill in your e-mail address',
-    getSettingsError: 'Unable to fetch user settings'
+    getSettingsError: 'Unable to fetch user settings',
+    lineGraphError: 'Something went wrong while trying to fetch the amount of packets/10min, please try again.',
   },
 
   settings: {
@@ -98,12 +101,11 @@ export default {
 
   dashboard: {
     graphs: {
-      httpMethods: 'HTTP methods',
-      uniqueDestinationIP: 'Unique Destination IP addresses',
-      uniqueDestinationIPamount: 'Packets per unique IP address destinations',
-      uniqueSourceIP: 'Unique IP addresses sources',
-      uniqueDestinationMAC: 'Unique MAC Address destinations',
-      dataLength: 'Packets'
+      packets: 'Packets',
+      risks: 'Alerts per risks level',
+      uniqueProtocols: 'Unique protocols',
+      rulesAmount: 'Amount of rules',
+      packetsTime: 'Packets per 10 minutes',
     }
   },
   

@@ -1,5 +1,5 @@
 import { BASE_URL } from '../statics/constants'
-import { IGenericAPIResponse, ILoginResponse, IPacketsResponse, IRegisterResponse, IRule, IRulesResponse, ISettingsResponse, ITokenResponse } from '../statics/types'
+import { ICountersResponse, IGenericAPIResponse, ILoginResponse, IPacketsResponse, IRegisterResponse, IRule, IRulesResponse, ISettingsResponse, ITokenResponse } from '../statics/types'
 
 /**
  * Registers a user inside the backend
@@ -187,7 +187,7 @@ export function addRule(token : string, rule: IRule) : Promise<null> {
     .then(r => formatResponseFromBackend<null>(r))
 }
 
-export function getCounters(token: string) : Promise<any> {
+export function getCounters(token: string) : Promise<ICountersResponse> {
   const options = {
     method: 'GET',
     headers: {
@@ -197,10 +197,10 @@ export function getCounters(token: string) : Promise<any> {
   }
 
   return fetch(`${BASE_URL}/data/get-all-counters`, options)
-    .then(r => formatResponseFromBackend<any>(r))
+    .then(r => formatResponseFromBackend<ICountersResponse>(r))
 }
 
-export function getPacketsOverTime(token: string, startDateTime: number, endDateTime: number) : Promise<any> {
+export function getPacketsOverTime(token: string, startDateTime: string, endDateTime: string) : Promise<any> {
   const options = {
     method: 'GET',
     headers: {
@@ -213,7 +213,7 @@ export function getPacketsOverTime(token: string, startDateTime: number, endDate
     .then(r => formatResponseFromBackend<any>(r))
 }
 
-export function getTrafficCountIP(token: string, startDateTime: number, endDateTime: number) : Promise<any> {
+export function getTrafficCountIP(token: string, startDateTime: string, endDateTime: string) : Promise<any> {
   const options = {
     method: 'GET',
     headers: {
@@ -226,7 +226,7 @@ export function getTrafficCountIP(token: string, startDateTime: number, endDateT
     .then(r => formatResponseFromBackend<any>(r))
 }
 
-export function getTrafficSizeIP(token: string, startDateTime: number, endDateTime: number) : Promise<any> {
+export function getTrafficSizeIP(token: string, startDateTime: string, endDateTime: string) : Promise<any> {
   const options = {
     method: 'GET',
     headers: {
@@ -239,7 +239,7 @@ export function getTrafficSizeIP(token: string, startDateTime: number, endDateTi
     .then(r => formatResponseFromBackend<any>(r))
 }
 
-export function getTrafficProtocol(token: string, startDateTime: number, endDateTime: number) : Promise<any> {
+export function getTrafficProtocol(token: string, startDateTime: string, endDateTime: string) : Promise<any> {
   const options = {
     method: 'GET',
     headers: {
@@ -252,7 +252,7 @@ export function getTrafficProtocol(token: string, startDateTime: number, endDate
     .then(r => formatResponseFromBackend<any>(r))
 }
 
-export function getTrafficTLS(token: string, startDateTime: number, endDateTime: number) : Promise<any> {
+export function getTrafficTLS(token: string, startDateTime: string, endDateTime: string) : Promise<any> {
   const options = {
     method: 'GET',
     headers: {

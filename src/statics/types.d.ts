@@ -112,3 +112,19 @@ export type IPacketsResponse = Array<{
   SourceMacAddress: null | string
   SourcePort: number
 }> | null
+
+
+export type ICountersResponse = {
+  LowRisks: number
+  MediumRisks: number
+  HighRisks: number
+  CriticalRisks: number
+  Packets: number
+  Rules: number
+  UniqueProtocols: number
+} | null
+
+export type ILineGraphResponse = {
+  DateTime: string
+  Count: number
+}[] | null
