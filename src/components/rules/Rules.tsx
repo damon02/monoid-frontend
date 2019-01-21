@@ -66,39 +66,48 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
           <div className="row">
             <h2>{I18n.t('rules.addRule')}</h2>
           </div>
-          <div className="row">
-            <select
-              onChange={(e) => this.setState({ Protocol: parseInt(e.target.value, 10) })}
-              value={this.state.Protocol}
-              className="inputComponent field"
-              placeholder={'Protocol'}
-            >
-              <option value={0}>{I18n.t('rules.Undefined')}</option>
-              <option value={1}>{I18n.t('rules.ICMP')}</option>
-              <option value={6}>{I18n.t('rules.TCP')}</option>
-              <option value={17}>{I18n.t('rules.UDP')}</option>
-            </select>
-            <select
-              onChange={(e) => this.setState({ Log: e.target.value === 'true' ? true : false })}
-              value={this.state.Log === true ? 'true' : 'false'}
-              className="inputComponent field"
-              placeholder={'Log'}
-            >
-              <option value={'true'}>{I18n.t('rules.true')}</option>
-              <option value={'false'}>{I18n.t('rules.false')}</option>
-            </select>
-            <select
-              onChange={(e) => this.setState({ Notify: e.target.value === 'true' ? true : false })}
-              value={this.state.Notify === true ? 'true' : 'false'}
-              className="inputComponent field"
-              placeholder={'Notify'}
-            >
-              <option value={'true'}>{I18n.t('rules.true')}</option>
-              <option value={'false'}>{I18n.t('rules.false')}</option>
-            </select>
+          <div className="row toggleRow">
+            <div className="select-wrap">
+              <span>{I18n.t('rules.Protocol')}</span>
+              <select
+                onChange={(e) => this.setState({ Protocol: parseInt(e.target.value, 10) })}
+                value={this.state.Protocol}
+                className="inputComponent field"
+                placeholder={'Protocol'}
+              >
+                <option value={0}>{I18n.t('rules.Undefined')}</option>
+                <option value={1}>{I18n.t('rules.ICMP')}</option>
+                <option value={6}>{I18n.t('rules.TCP')}</option>
+                <option value={17}>{I18n.t('rules.UDP')}</option>
+              </select>
+            </div>
+            <div className="select-wrap">
+              <span>{I18n.t('rules.Log')}</span>
+              <select
+                onChange={(e) => this.setState({ Log: e.target.value === 'true' ? true : false })}
+                value={this.state.Log === true ? 'true' : 'false'}
+                className="inputComponent field"
+                placeholder={'Log'}
+              >
+                <option value={'true'}>{I18n.t('rules.true')}</option>
+                <option value={'false'}>{I18n.t('rules.false')}</option>
+              </select>
+            </div>
+            <div className="select-wrap">
+              <span>{I18n.t('rules.Notify')}</span>
+              <select
+                onChange={(e) => this.setState({ Notify: e.target.value === 'true' ? true : false })}
+                value={this.state.Notify === true ? 'true' : 'false'}
+                className="inputComponent field"
+                placeholder={'Notify'}
+              >
+                <option value={'true'}>{I18n.t('rules.true')}</option>
+                <option value={'false'}>{I18n.t('rules.false')}</option>
+              </select>
+            </div>
           </div>
 
-          <div className="row">
+          <div className="row ipRow">
             <InputComponent 
               label={I18n.t('rules.sourceIP')}
               value={this.state.SourceIp[0]}
@@ -110,6 +119,7 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
               value={this.state.SourcePort[0]}
               type={'number'}
               onChange={(value) => this.setState({ SourcePort: [parseInt(value, 10)] })}
+              numberLimits={[0,65565]}
             />
             <i className="fas fa-arrow-right"/>
             <InputComponent 
@@ -123,6 +133,7 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
               value={this.state.DestPort[0]}
               type={'number'}
               onChange={(value) => this.setState({ DestPort: [parseInt(value, 10)] })}
+              numberLimits={[0,65565]}
             />
           </div>
           <div className="column">

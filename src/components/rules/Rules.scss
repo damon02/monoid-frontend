@@ -28,6 +28,12 @@
       flex-direction: row;
       align-items: center;
       width: 100%;
+
+      .select-wrap {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
     }
 
     .column {
@@ -56,6 +62,18 @@
 
       .allowed-vars {
         background-color: $color-darkest;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .rules {
+    .add-rule {
+      .row {
+        &.ipRow, &.toggleRow {
+          flex-direction: column;
+        }
       }
     }
   }

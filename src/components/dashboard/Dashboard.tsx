@@ -113,10 +113,27 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
               </div>
             </div>
           </div>
-          <div className="chart">
+          <div className="chart noMobile">
             <span className="title">{I18n.t('dashboard.graphs.packetsTime')}</span>
             <div className="inner">
-              <ResponsiveContainer minHeight={200} minWidth={250} width={'100%'} height={600}>
+              <ResponsiveContainer minHeight={200} minWidth={306} width={'100%'} height={600}>
+                <LineChart data={this.state.lineGraphStuff}>
+                  <XAxis dataKey={'DateTime'} tickFormatter={(ti) => moment(ti).format('DD-MM HH:mm')} />
+                  <YAxis />
+                  <Tooltip                   
+                    labelFormatter={(date) => `${moment(date).format('DD MMMM YYYY HH:mm')} (${moment(date).fromNow()})`}
+                  />
+                  <Legend />
+                  <Line type="monotone" dataKey="Count" stroke="#8884d8" activeDot={{r: 8}}/>
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          <div className="chart mobileOnly">
+            <span className="title">{I18n.t('dashboard.graphs.packetsTime')}</span>
+            <div className="inner">
+              <ResponsiveContainer minHeight={200} minWidth={306} width={'100%'} height={300}>
                 <LineChart data={this.state.lineGraphStuff}>
                   <XAxis dataKey={'DateTime'} tickFormatter={(ti) => moment(ti).format('DD-MM HH:mm')} />
                   <YAxis />

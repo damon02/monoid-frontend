@@ -65,14 +65,16 @@ class Header extends React.PureComponent<IHeaderProps, {}> {
                 />
               </div>
             </div>
-            <div className="whois">{this.props.login.auth.username}</div>
-            <div className="buttons">
-              <button className={`alt${location === '/settings' ? ' active' : ''}`} onClick={() => this.handleRouting('/settings')}>
-                <span className="text"><i className="fas fa-cog"/></span>
-              </button>
-              <button className="alt" onClick={() => this.props.clearAuth()}>
-                <span className="text"><i className="fas fa-sign-out-alt"/></span>
-              </button>
+            <div className="userThings">
+              <div className="whois">{this.props.login.auth.username}</div>
+              <div className="buttons">
+                <button className={`alt${location === '/settings' ? ' active' : ''}`} onClick={() => this.handleRouting('/settings')}>
+                  <span className="text"><i className="fas fa-cog"/></span>
+                </button>
+                <button className="alt" onClick={() => this.props.clearAuth()}>
+                  <span className="text"><i className="fas fa-sign-out-alt"/></span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -123,7 +123,7 @@ export default {
     protocol: 'Protocol',
     reason: 'Reason',
     risk: 'Risk',
-    ruleApplied: 'RuleApplied',
+    ruleApplied: 'Rule Applied',
     srcIP: 'Source IP',
     srcMAC: 'Source Mac Address', 
     srcPORT: 'Source Port'

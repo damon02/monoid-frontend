@@ -52,7 +52,7 @@ class PacketBrowser extends React.PureComponent<IPacketBrowserProps, IPacketBrow
           defaultFilterMethod={(filter, row) => String(row[filter.id]) === filter.value}
           columns={this.getTableColumns()}
           className="-striped"
-          defaultPageSize={15}
+          defaultPageSize={5}
         />
       </div>
     )

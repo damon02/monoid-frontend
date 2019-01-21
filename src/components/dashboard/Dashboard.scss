@@ -63,5 +63,40 @@
         }
       }
     }
+
+    &.noMobile {
+      display: flex;
+    }
+    
+    &.mobileOnly {
+      display: none;
+    }
+  }
+}
+
+
+@media screen and (max-width: 1000px) {
+  .dashboard-wrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .left {
+      max-width: 100%;
+      width: 100%;
+      align-items: center;
+      
+    }
+    .chart {
+      margin: 0;
+      margin-top: $spaces-medium;
+
+      &.noMobile {
+        display: none;
+      }
+      
+      &.mobileOnly {
+        display: flex;
+      }
+    }
   }
 }

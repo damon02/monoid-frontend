@@ -193,3 +193,43 @@
     }
   }
 }
+
+
+@media screen and (max-width: 650px) {
+  .settings .options {
+    font-size: 12px;
+    height: 100%;
+
+    .dropdown-component, .refreshToken, .recipients {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100%;
+
+      border-bottom: 1px solid $color-primary;
+      margin-bottom: $spaces-medium;
+      padding-bottom: $spaces-small;
+
+      .setting-label {
+        max-width: unset;
+        height: auto;
+        width: 100%;
+        margin-bottom: $spaces-medium;
+      }
+
+      .frame {
+        width: 100%;
+        .inputComponent input {
+          min-width: unset;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .settings {
+    margin: $spaces-small;
+  }
+}

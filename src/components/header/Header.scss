@@ -75,39 +75,45 @@
           }
         }
       }
-      .whois {
+      .userThings {
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: 'Proxima Nova', sans-serif;
-        margin-right: $spaces-small;
-      }
-      .buttons {
-        display: flex;
-        button {
-          height: 42px;
-          width: 42px;
-          border-radius: 50%;
-          margin: 3px;
-          .text {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 50px;
-            margin: 0;
-    
-          }
-          &:hover .text {
-            color: $color-black;
-          }
-          &:focus .text {
-            color: $color-primary;
-          }
 
-          .dark & {
-            color: $color-darktext;
+        .whois {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: 'Proxima Nova', sans-serif;
+          margin-right: $spaces-small;
+        }
+        .buttons {
+          display: flex;
+          button {
+            height: 42px;
+            width: 42px;
+            border-radius: 50%;
+            margin: 3px;
+            .text {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 50px;
+              margin: 0;
+      
+            }
             &:hover .text {
               color: $color-black;
+            }
+            &:focus .text {
+              color: $color-primary;
+            }
+  
+            .dark & {
+              color: $color-darktext;
+              &:hover .text {
+                color: $color-black;
+              }
             }
           }
         }
@@ -172,4 +178,32 @@
       }
     }
   }
+}
+
+@media screen and (max-width: 700px) {
+  .header {
+    .top {
+      height: auto;
+      flex-direction: column;
+      .logo {
+        margin: $spaces-medium;
+      }
+    }  
+  }  
+}
+
+@media screen and (max-width: 550px) {
+  .header {
+    .top {
+      .right {
+        flex-direction: column; 
+        .datepickers {
+          margin: 0;
+           .item input {
+              font-size: 12px;
+           }
+        }
+      }
+    }  
+  }  
 }
