@@ -4,12 +4,13 @@ import { I18n } from 'react-redux-i18n'
 import { RouteComponentProps, withRouter } from 'react-router'
 import ReactTable from 'react-table'
 import { Dispatch } from 'redux'
+import { toast } from 'react-toastify'
 
 import ErrorComponent from '../html/errorComponent/ErrorComponent'
 import InputComponent from '../html/inputComponent/InputComponent'
 
 import { IRootProps, IRule } from '../../statics/types'
-import { addRule, getRules } from '../../utils/rest'
+import { addRule, getRules, deleteRule } from '../../utils/rest'
 import { setRules } from '../app/actions'
 import { clearAuth } from '../login/actions'
 
@@ -60,7 +61,7 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
 
     return (
       <div className="rules">
-        <ErrorComponent message={this.state.error} onClick={() => this.setState({ error: '' })} />
+        <ErrorComponent message={this.state.error ? I18n.t(`error.${this.state.error}`) : ''} onClick={() => this.setState({ error: '' })} />
         <h1>{I18n.t('rules.title')}</h1>
         <div className="add-rule">
           <div className="row">
@@ -193,7 +194,7 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
         await this.fetchRules()
         
       } catch (error) {
-        console.error(error)
+        toast.error(I18n.t('error.ruleAddError'), { position: toast.POSITION.BOTTOM_LEFT })
       }
     } else {
       this.setState({ error: 'Invalid rule' })
@@ -211,15 +212,26 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
         if (response) {
           this.props.setRules(response)
         } else {
-          this.setState({error: 'rulesError'})
+          toast.error(I18n.t('error.rulesError'), { position: toast.POSITION.BOTTOM_LEFT })
         }
         
       } catch (error) {
-        this.setState({ error: 'rulesError' })
-        console.error()
+        toast.error(I18n.t('error.rulesError'), { position: toast.POSITION.BOTTOM_LEFT })
       }
     } else {
       this.props.clearAuth()
+    }
+  }
+
+  private deleteRule = async (rule: string) => {
+    if (this.props.login.auth.token) {
+      try {
+        await deleteRule(this.props.login.auth.token, rule)
+        this.fetchRules()
+        toast.warn(I18n.t('notifications.ruleDeleted'), { position: toast.POSITION.BOTTOM_LEFT })
+      } catch (error) {
+        toast.error(I18n.t('error.ruleDeleteError'), { position: toast.POSITION.BOTTOM_LEFT })
+      }
     }
   }
 
@@ -232,6 +244,7 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
       {
         Header: I18n.t('rules.destPort'),
         accessor: 'DestPort',
+        maxWidth: 100,
       },
       {
         Header: I18n.t('rules.log'),
@@ -239,6 +252,7 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
         Cell: (value : any) => {
           return <i className={`fas fa-${value.value ? 'check' : 'times'}`}/>
         },
+        maxWidth: 64,
       },
       {
         Header: I18n.t('rules.message'),
@@ -250,14 +264,17 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
         Cell: (value : any) => {
           return <i className={`fas fa-${value.value ? 'check' : 'times'}`}/>
         },
+        maxWidth: 64,
       },
       {
         Header: I18n.t('rules.protocol'),
         accessor: 'Protocol',
+        maxWidth: 64,
       },
       {
         Header: I18n.t('rules.risk'),
         accessor: 'Risk',
+        maxWidth: 64,
       },
       {
         Header: I18n.t('rules.sourceIP'),
@@ -266,6 +283,15 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
       {
         Header: I18n.t('rules.sourcePort'),
         accessor: 'SourcePort',
+        maxWidth: 64,
+      },
+      {
+        Header: I18n.t('rules.delete'),
+        Cell: (value: any) => {
+          return <button className="button red" onClick={() => this.deleteRule(value.original.Id)}>
+            <i className="fas fa-times"/>{I18n.t('rules.deleteRule')}
+          </button>
+        }
       },
     ]
   }

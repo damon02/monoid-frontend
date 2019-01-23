@@ -14,6 +14,7 @@ import { clearAuth } from '../login/actions'
 
 import 'react-table/react-table.css'
 import './PacketBrowser.scss'
+import { toast } from 'react-toastify';
 
 interface IPacketBrowserProps extends IRootProps, RouteComponentProps<any> {
   clearAuth: () => void
@@ -42,7 +43,7 @@ class PacketBrowser extends React.PureComponent<IPacketBrowserProps, IPacketBrow
     const data = this.props.app.packets || []
     return (
       <div className="packetBrowser">
-        <ErrorComponent message={this.state.error} onClick={() => this.setState({ error: '' })} />
+        <ErrorComponent message={this.state.error ? I18n.t(`error.${this.state.error}`) : ''} onClick={() => this.setState({ error: '' })} />
         <div className="filters">
           <h1>{I18n.t('packetBrowser.title')}</h1>
         </div>
@@ -319,20 +320,22 @@ class PacketBrowser extends React.PureComponent<IPacketBrowserProps, IPacketBrow
   private fetchPackets = async () => {
     if (this.props.login.auth.token) {
       try {
-        this.setState({ error: '' })
+        this.setState({ loading: true, error: '' })
         const response = await getPackets(this.props.login.auth.token)
         
         if (response) {
           this.props.setPackets(response)
           this.setState({ loading: false })
-        } else {
-          this.setState({ loading: false, error: 'packetError' })
-          throw new Error('No data packets found')
         }
         
       } catch (error) {
-        this.setState({ loading: false, error: 'packetError' })
-        console.error()
+        if (error.toString().indexOf('No data found') !== -1) {
+          this.setState({ loading: false })
+          toast.error(I18n.t('error.noPackets'), { position: toast.POSITION.BOTTOM_LEFT })
+        } else {
+          this.setState({ loading: false })
+          toast.error(I18n.t('error.packetError'), { position: toast.POSITION.BOTTOM_LEFT })
+        }
       }
     } else {
       this.props.clearAuth()

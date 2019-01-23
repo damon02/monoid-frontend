@@ -34,3 +34,10 @@ export function setTimes(times: IAppProps['times']) {
     times
   }
 }
+
+export function setNotifications(notifications: IAppProps['notifications']) {
+  return {
+    type: 'SET_NOTIFICATIONS',
+    notifications
+  }
+}

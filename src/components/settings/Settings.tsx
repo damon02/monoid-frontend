@@ -14,6 +14,7 @@ import { setSettings, setTheme } from '../app/actions'
 import { setAuth } from '../login/actions'
 
 import './Settings.scss'
+import { toast } from 'react-toastify';
 
 interface ISettingsState {
   error: string
@@ -181,13 +182,13 @@ class Settings extends React.PureComponent<ISettingsProps, ISettingsState> {
         if (response) {
           this.setState({ token: response.token })
         } else {
-          this.setState({ error: 'tokenFetchError' })
+          toast.error(I18n.t('error.tokenFetchError'), { position: toast.POSITION.BOTTOM_LEFT })
         }
       } catch (error) {
         if (error.message === '401') {
           this.props.logout()
         } else {
-          this.setState({ error: 'tokenFetchError' })
+          toast.error(I18n.t('error.tokenFetchError'), { position: toast.POSITION.BOTTOM_LEFT })
         }
       }
     }
@@ -226,10 +227,11 @@ class Settings extends React.PureComponent<ISettingsProps, ISettingsState> {
         await saveSettings(this.props.login.auth.token, settings)
         this.props.setSettings(settings)
 
+        toast.success(I18n.t('notifications.settingsSuccess'), { position: toast.POSITION.BOTTOM_LEFT })
         this.setState({ loading: false })
       } catch (error) {
-        this.setState({ error, loading: false })
-        console.error(error)
+        this.setState({ loading: false })
+        toast.error(I18n.t('error.settingsApply'), { position: toast.POSITION.BOTTOM_LEFT })
       }
     } else {
       this.props.logout()

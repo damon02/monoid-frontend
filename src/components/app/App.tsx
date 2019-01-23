@@ -3,19 +3,24 @@ import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import { Redirect, Route, RouteComponentProps, Switch, withRouter } from 'react-router'
 import { Dispatch } from 'redux'
+import { ToastContainer, toast } from 'react-toastify'
+import { isEqual } from 'lodash'
 
 import Dashboard from '../dashboard/Dashboard'
 import Header from '../header/Header'
 import ErrorComponent from '../html/errorComponent/ErrorComponent'
+import Notifications from '../notifications/Notifications'
 import PacketBrowser from '../packetBrowser/PacketBrowser'
 import Rules from '../rules/Rules'
 import Settings from '../settings/Settings'
 import Statistics from '../statistics/Statistics'
 
 import { IRootProps } from '../../statics/types'
-import { getRules, getSettings } from '../../utils/rest'
+import { getRules, getSettings, getNotifications } from '../../utils/rest'
 import { clearAuth } from '../login/actions'
-import { setPackets, setRules, setSettings } from './actions'
+import { setPackets, setRules, setSettings, setNotifications } from './actions'
+
+import 'react-toastify/dist/ReactToastify.css'
 import './App.scss'
 
 interface IAppProps extends IRootProps, RouteComponentProps<any> {
@@ -23,6 +28,7 @@ interface IAppProps extends IRootProps, RouteComponentProps<any> {
   setRules : (rules : IRootProps['app']['rules']) => void
   setSettings : (settings : IRootProps['app']['settings']) => void
   setPackets : (packets: IRootProps['app']['packets']) => void
+  setNotifications : (packets: IRootProps['app']['notifications']) => void
 }
 
 interface IAppState {
@@ -32,6 +38,7 @@ interface IAppState {
 }
 
 class App extends React.PureComponent<IAppProps, IAppState> {
+  public infoInterval: NodeJS.Timeout
   constructor(props: IAppProps) {
     super(props)
     this.state = {
@@ -39,14 +46,21 @@ class App extends React.PureComponent<IAppProps, IAppState> {
       loading: false,
       initialized: true,
     }
-  }
 
+    this.infoInterval = setInterval(this.fetchNotifications, 60000)
+  }
+  
   public async componentDidMount() {
     if (this.props.login.auth.token) {
       await this.fetchSettings()
       await this.fetchRules()
-      // await this.fetchPackets()
+      await this.fetchNotifications()
     }
+
+  }
+
+  public componentWillUnmount() {
+    clearInterval(this.infoInterval)
   }
 
   public render() {
@@ -65,13 +79,15 @@ class App extends React.PureComponent<IAppProps, IAppState> {
 
     return (
       <div className={`app ${this.props.app.theme}`}>
+        <ToastContainer autoClose={5000} />
         <Header />
-        <ErrorComponent message={this.state.error} onClick={() => this.setState({ error: '' })}/>
+        <ErrorComponent message={this.state.error ? I18n.t(`error.${this.state.error}`) : ''} onClick={() => this.setState({ error: '' })}/>
         <div className="content">
           <Switch>
             <Route path="/settings" component={Settings} />
             <Route path="/statistics" component={Statistics} />
             <Route path="/packets" component={PacketBrowser} />
+            <Route path="/notifications" component={Notifications} />
             <Route path="/rules" component={Rules} />
             <Route exact path="/" component={Dashboard} />
             <Redirect to="/" />
@@ -115,18 +131,30 @@ class App extends React.PureComponent<IAppProps, IAppState> {
         this.setState({ loading: true, error: '' })
         const response = await getRules(this.props.login.auth.token)
         this.setState({ loading: false })
-        if (response) {
-          this.props.setRules(response)
-        } else {
-          this.setState({error: 'rulesError'})
-        }
-        
+        this.props.setRules(response || [])
       } catch (error) {
-        this.setState({ loading: false, error: 'rulesError' })
-        console.error()
+        this.setState({ loading: false })
+        toast.error(I18n.t('error.rulesError'), { position: toast.POSITION.BOTTOM_LEFT })
       }
     } else {
       this.props.clearAuth()
+    }
+  }
+
+  private fetchNotifications = async () => {
+    if (this.props.login.auth.token) {
+      try {
+        this.setState({ loading: true, error: '' })
+        const notifications = await getNotifications(this.props.login.auth.token)
+        if (!isEqual(notifications, this.props.app.notifications) && this.props.app.notifications !== null) {
+          toast.info(I18n.t('notifications.newNotifications'), { position: toast.POSITION.BOTTOM_LEFT })
+        }
+        this.props.setNotifications(notifications)
+        this.setState({ loading: false })
+      } catch (error) {
+        this.setState({ loading: false })
+        toast.error(I18n.t('error.notificationsError'), { position: toast.POSITION.BOTTOM_LEFT })
+      }
     }
   }
 }
@@ -137,7 +165,8 @@ const mapDispatchToProps = (dispatch : Dispatch) => {
     clearAuth : () => { dispatch(clearAuth()) },
     setSettings : (settings : IRootProps['app']['settings']) => { dispatch(setSettings(settings)) },
     setPackets : (packets : IRootProps['app']['packets']) => { dispatch(setPackets(packets)) },
-    setRules : (rules : IRootProps['app']['rules']) => { dispatch(setRules(rules)) }
+    setRules : (rules : IRootProps['app']['rules']) => { dispatch(setRules(rules)) },
+    setNotifications : (notifications : IRootProps['app']['notifications']) => { dispatch(setNotifications(notifications)) }
   }
 }
 

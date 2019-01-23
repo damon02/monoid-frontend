@@ -19,6 +19,7 @@ const emptyAuthObject : IAuthObject = {
 
 export const initialState : IRootProps = {
   app: {
+    notifications: null,
     rules: null,
     packets: null,
     settings: {
@@ -27,8 +28,8 @@ export const initialState : IRootProps = {
     },
     theme: loadProperty('theme', 'light'),
     times: {
-      startDate: new Date(moment().subtract(1, 'hour').unix() * 1000),
-      endDate: new Date(moment().unix() * 1000),
+      startDate: new Date(loadProperty('startDate', moment().subtract(1, 'hour').unix() * 1000)),
+      endDate: new Date(loadProperty('endDate', moment().unix() * 1000)),
     }
   },
   login: {

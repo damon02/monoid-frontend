@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'  
+//import { I18n } from 'react-redux-i18n'
+import { Pie, PieChart, ResponsiveContainer, Tooltip, Cell } from 'recharts'  
 import { IGraphComponentData } from '../../../../statics/types'
 
 interface IPieComponentProps {
@@ -15,7 +16,15 @@ export default class PieChartComponent extends React.PureComponent<IPieComponent
   }
 
   public render() {
-    const { dataSet, responsive, dimensions } = this.props
+    const { dataSet, responsive, dimensions } = this.props  
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    const colorIndex = {
+      'Low': 'rgb(159, 197, 232)',
+      'Medium': 'rgb(255, 229, 153)',
+      'High': 'rgb(224, 102, 102)',
+      'Critical': 'rgb(103, 78, 167)',
+    }
+
     const pies = dataSet.map((data, key) => {
       return (
         <Pie 
@@ -25,10 +34,12 @@ export default class PieChartComponent extends React.PureComponent<IPieComponent
           nameKey={data.nameKey} 
           label={true} 
           labelLine={true}
-          fill={data.color}
+          //fill={data.color || '#32b4f1'}
           cx={'50%'}
           cy={'50%'}
-        />
+        >
+          {data.data.map((entry, index) => <Cell key={index} fill={colorIndex[entry.risk] || COLORS[index % 4] }/>)}
+        </Pie>
       )}
     )
 

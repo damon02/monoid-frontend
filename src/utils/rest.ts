@@ -1,5 +1,5 @@
 import { BASE_URL } from '../statics/constants'
-import { ICountersResponse, IGenericAPIResponse, ILoginResponse, IPacketsResponse, IRegisterResponse, IRule, IRulesResponse, ISettingsResponse, ITokenResponse } from '../statics/types'
+import { ICountersResponse, IGenericAPIResponse, ILoginResponse, IPacketsResponse, IRegisterResponse, IRule, IRulesResponse, ISettingsResponse, ITokenResponse, ITLSCountResponse, IProtocolCountResponse, ITrafficCountResponse, ITrafficSizeResponse, INotificationResponse } from '../statics/types'
 
 /**
  * Registers a user inside the backend
@@ -132,7 +132,7 @@ export function getSettings(token: string) : Promise<ISettingsResponse> {
     .then(r => formatResponseFromBackend<ISettingsResponse>(r))
 }
 
-export function saveSettings(token : string, settings : ISettingsResponse) : Promise<any> {
+export function saveSettings(token : string, settings : ISettingsResponse) : Promise<null> {
   const options = {
     method: 'POST',
     headers: {
@@ -143,7 +143,7 @@ export function saveSettings(token : string, settings : ISettingsResponse) : Pro
   }
 
   return fetch(`${BASE_URL}/user/save-settings`, options)
-    .then(r => formatResponseFromBackend<any>(r))
+    .then(r => formatResponseFromBackend<null>(r))
 }
 
 export function getPackets(token: string) : Promise<IPacketsResponse> {
@@ -187,6 +187,20 @@ export function addRule(token : string, rule: IRule) : Promise<null> {
     .then(r => formatResponseFromBackend<null>(r))
 }
 
+export function deleteRule(token: string, ruleId: string) : Promise<null> {
+  const options = {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ ruleId })
+  }
+
+  return fetch(`${BASE_URL}/data/delete-rule`, options)
+    .then(r => formatResponseFromBackend<null>(r))
+}
+
 export function getCounters(token: string) : Promise<ICountersResponse> {
   const options = {
     method: 'GET',
@@ -213,7 +227,7 @@ export function getPacketsOverTime(token: string, startDateTime: string, endDate
     .then(r => formatResponseFromBackend<any>(r))
 }
 
-export function getTrafficCountIP(token: string, startDateTime: string, endDateTime: string) : Promise<any> {
+export function getTrafficCountIP(token: string, startDateTime: string, endDateTime: string) : Promise<ITrafficCountResponse> {
   const options = {
     method: 'GET',
     headers: {
@@ -223,10 +237,10 @@ export function getTrafficCountIP(token: string, startDateTime: string, endDateT
   }
 
   return fetch(`${BASE_URL}/data/get-traffic-count-ip?startDateTime=${startDateTime}&endDateTime=${endDateTime}`, options)
-    .then(r => formatResponseFromBackend<any>(r))
+    .then(r => formatResponseFromBackend<ITrafficCountResponse>(r))
 }
 
-export function getTrafficSizeIP(token: string, startDateTime: string, endDateTime: string) : Promise<any> {
+export function getTrafficSizeIP(token: string, startDateTime: string, endDateTime: string) : Promise<ITrafficSizeResponse> {
   const options = {
     method: 'GET',
     headers: {
@@ -236,10 +250,10 @@ export function getTrafficSizeIP(token: string, startDateTime: string, endDateTi
   }
 
   return fetch(`${BASE_URL}/data/get-traffic-size-ip?startDateTime=${startDateTime}&endDateTime=${endDateTime}`, options)
-    .then(r => formatResponseFromBackend<any>(r))
+    .then(r => formatResponseFromBackend<ITrafficSizeResponse>(r))
 }
 
-export function getTrafficProtocol(token: string, startDateTime: string, endDateTime: string) : Promise<any> {
+export function getTrafficProtocol(token: string, startDateTime: string, endDateTime: string) : Promise<IProtocolCountResponse> {
   const options = {
     method: 'GET',
     headers: {
@@ -249,10 +263,10 @@ export function getTrafficProtocol(token: string, startDateTime: string, endDate
   }
 
   return fetch(`${BASE_URL}/data/get-traffic-by-protocol?startDateTime=${startDateTime}&endDateTime=${endDateTime}`, options)
-    .then(r => formatResponseFromBackend<any>(r))
+    .then(r => formatResponseFromBackend<IProtocolCountResponse>(r))
 }
 
-export function getTrafficTLS(token: string, startDateTime: string, endDateTime: string) : Promise<any> {
+export function getTrafficTLS(token: string, startDateTime: string, endDateTime: string) : Promise<ITLSCountResponse> {
   const options = {
     method: 'GET',
     headers: {
@@ -262,7 +276,20 @@ export function getTrafficTLS(token: string, startDateTime: string, endDateTime:
   }
 
   return fetch(`${BASE_URL}/data/get-traffic-by-tlsversion?startDateTime=${startDateTime}&endDateTime=${endDateTime}`, options)
-    .then(r => formatResponseFromBackend<any>(r))
+    .then(r => formatResponseFromBackend<ITLSCountResponse>(r))
+  }
+  
+export function getNotifications(token: string) : Promise<INotificationResponse> {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  }
+
+  return fetch(`${BASE_URL}/data/get-all-notifications`, options)
+    .then(r => formatResponseFromBackend<INotificationResponse>(r))
 }
 
 /**

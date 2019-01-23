@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { Dispatch } from 'redux'
+import moment from 'moment'
 
 import { IAppProps, IRootProps } from '../../statics/types'
 import { setTimes } from '../app/actions'
@@ -34,6 +35,11 @@ class Header extends React.PureComponent<IHeaderProps, {}> {
             <div className="logotext">{I18n.t('title_short')}</div>
           </div>
           <div className="right">
+            <div className="prefixDatePickers">
+              <button className="prefixButton" onClick={() => this.handlePrefixDate('hour')}>{I18n.t('header.hour')}</button>
+              <button className="prefixButton" onClick={() => this.handlePrefixDate('day')}>{I18n.t('header.day')}</button>
+              <button className="prefixButton" onClick={() => this.handlePrefixDate('week')}>{I18n.t('header.week')}</button>
+            </div>
             <div className="datepickers">
               <div className="item">  
                 <span className="text">{I18n.t('from')}</span>
@@ -60,6 +66,7 @@ class Header extends React.PureComponent<IHeaderProps, {}> {
                   timeFormat="HH:mm"
                   timeIntervals={10}
                   minDate={new Date(this.props.app.times.startDate)}
+                  maxDate={new Date()}
                   dateFormat="MMMM d, yyyy HH:mm"
                   timeCaption="time"
                 />
@@ -68,6 +75,9 @@ class Header extends React.PureComponent<IHeaderProps, {}> {
             <div className="userThings">
               <div className="whois">{this.props.login.auth.username}</div>
               <div className="buttons">
+                <button className={`alt${location === '/notifications' ? ' active' : ''}`} onClick={() => this.handleRouting('/notifications')}>
+                  <span className="text"><i className="fas fa-bell"/></span>
+                </button>
                 <button className={`alt${location === '/settings' ? ' active' : ''}`} onClick={() => this.handleRouting('/settings')}>
                   <span className="text"><i className="fas fa-cog"/></span>
                 </button>
@@ -105,6 +115,34 @@ class Header extends React.PureComponent<IHeaderProps, {}> {
     }
     this.props.setTimes(dates)
 
+  }
+
+  private handlePrefixDate = (type : 'hour' | 'day' | 'week') => {
+    switch(type) {
+      case 'hour':{
+        this.props.setTimes({
+          startDate: new Date(moment().subtract(1, 'hour').unix() * 1000),
+          endDate: new Date()
+        })
+        break
+      }
+
+      case 'day':
+        this.props.setTimes({
+          startDate: new Date(moment().subtract(1, 'day').unix() * 1000),
+          endDate: new Date()
+        })
+        break
+
+      case 'week':
+        this.props.setTimes({
+          startDate: new Date(moment().subtract(1, 'week').unix() * 1000),
+          endDate: new Date()
+        })
+        break
+      default:
+        break
+    }
   }
 }
 

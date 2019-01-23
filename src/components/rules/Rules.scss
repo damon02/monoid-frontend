@@ -3,6 +3,20 @@
 .rules {
   font-size: 12px;
 
+  .button.red {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    background-color: red;
+    font-size: 11px;
+    i {
+      margin-right: $spaces-small;
+    }
+  }
+
   .add-rule {
     display: flex;
     flex-direction: column;

@@ -96,7 +96,7 @@ class Login extends React.PureComponent<ILoginComponentProps, ILoginState> {
               <span className="text">{I18n.t('login.register')}</span>
             </button>
           </div>
-          <button className="hyperlink" onClick={() => this.props.history.push(`/recover/`)}>{I18n.t('login.forgot')}</button>
+          <button className="hyperlink" onClick={() => this.props.history.push(`/recovery/`)}>{I18n.t('login.forgot')}</button>
           {/* {this.state.passwordForgot
             ? <div className="forgotpass">
               <InputComponent
@@ -136,7 +136,7 @@ class Login extends React.PureComponent<ILoginComponentProps, ILoginState> {
       
     } catch (error) {
       this.setState({ loading: false, error: 'loginError' })
-      console.error()
+      console.error(error)
     }
   }
 }

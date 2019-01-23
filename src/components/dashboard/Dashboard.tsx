@@ -6,17 +6,15 @@ import { I18n } from 'react-redux-i18n'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { Dispatch } from 'redux'
+import { toast } from 'react-toastify'
 
-// import BarChartComponent from './graphs/bar/BarChartComponent'
-// import PieChartComponent from './graphs/pie/PieChartComponent'
-// import TableComponent from './graphs/table/TableComponent'
 import ErrorComponent from '../html/errorComponent/ErrorComponent'
 import PieChartComponent from './graphs/pie/PieChartComponent'
 import TableComponent from './graphs/table/TableComponent'
 
 import { IGraphComponentData, IRootProps } from '../../statics/types'
 import { getCounters, getPacketsOverTime } from '../../utils/rest'
-
+import { clearAuth } from '../login/actions'
 import { keysrt } from '../../utils/general'
 import './Dashboard.scss'
 
@@ -76,6 +74,9 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
         || this.props.app.times.endDate.getTime() !== this.state.dateFetched[1]
       ) {
         // Either starttime is different or enddate
+        this.setState({ dateFetched: [this.props.app.times.startDate.getTime(), this.props.app.times.endDate.getTime()] })
+        toast.info(I18n.t('notifications.changeDate'), { position: toast.POSITION.BOTTOM_LEFT })
+        await this.getAllCounters()
         await this.getLineGraph()
       }
     }
@@ -84,7 +85,7 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
   public render() {  
     return (
       <React.Fragment>
-        <ErrorComponent message={this.state.error} onClick={() => this.setState({ error: '' })} />
+        <ErrorComponent message={this.state.error ? I18n.t(`error.${this.state.error}`) : ''} onClick={() => this.setState({ error: '' })} />
         <div className={'dashboard-wrapper'}>
           <div className="left">
             <div className="chart">
@@ -185,8 +186,7 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
 
         this.setState({ lineGraphStuff: fixedArray, dateFetched: [this.props.app.times.startDate.getTime(), this.props.app.times.endDate.getTime()] })
       } catch (error) {
-        console.error(error)
-        this.setState({ error: 'lineGraphError' })
+        toast.error(I18n.t('error.lineGraphError'), { position: toast.POSITION.BOTTOM_LEFT })
       }
     }
   }
@@ -201,7 +201,7 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
         }
       } catch (error) {
         this.setState({ loading: false })
-        console.error(error)
+        toast.error(I18n.t('error.countersError'), { position: toast.POSITION.BOTTOM_LEFT })
       }
     }
   }
@@ -212,11 +212,10 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
       { risk: 'Medium', amount: this.state.counters.MediumRisks },
       { risk: 'High', amount: this.state.counters.HighRisks },
       { risk: 'Critical', amount: this.state.counters.CriticalRisks },
-    ] 
+    ]
 
     return [
       {
-        color: '#32b4f1',
         dataKey: 'amount',
         nameKey: 'risk',
         data: riskData,
@@ -229,7 +228,7 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
 const mapStateToProps = (state : IRootProps, ownProps : {}) => state
 const mapDispatchToProps = (dispatch : Dispatch) => {
   return {
-    clearAuth : () => { console.log('hello world') }
+    clearAuth : () => { dispatch(clearAuth()) },
   }
 }
 

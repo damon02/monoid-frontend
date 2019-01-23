@@ -6,6 +6,7 @@ export default {
   copyright: `© Monoid Inc | 2018-2019`,
   loading: 'Loading data...',
   noData: 'There is no data to be displayed. Make sure there are packets present inside the system in order to view statistics.',
+  noDataForDate: 'There is no data for the specified datetime range.',
   from: 'From',
   end: 'To',
 
@@ -24,6 +25,9 @@ export default {
     statistics: 'Statistics',
     packets: 'Packets',
     rules: 'Rules',
+    hour: '60 min',
+    day: '24 hours',
+    week: '7 days'
   },
 
   register: {
@@ -52,19 +56,6 @@ export default {
     loggedOut: 'You have logged out',
     notLoggedIn: 'You have to be logged in to execute this command',
     loginError: 'Something went wrong while logging in, please try again.',
-  },
-  
-  error: {
-    loginError: 'Something went wrong while logging in, please try again',
-    passNotStrong: 'Your password is not strong enough',
-    passMatch: 'Your passwords do not match',
-    userInvalid: 'Your username is invalid',
-    emailInvalid: 'Your e-mail address is invalid.',
-    mailError: 'Something went wrong while resetting your password, please try again.',
-    tokenFetchError: 'Something went wrong while trying to fetch a token',
-    localMailError: 'Fill in your e-mail address',
-    getSettingsError: 'Unable to fetch user settings',
-    lineGraphError: 'Something went wrong while trying to fetch the amount of packets/10min, please try again.',
   },
 
   settings: {
@@ -106,6 +97,10 @@ export default {
       uniqueProtocols: 'Unique protocols',
       rulesAmount: 'Active rules',
       packetsTime: 'Packets per 10 minutes',
+      protocolCounts: 'Amount of packets per protocol',
+      tlsVersions: 'Amount of packets per TLS version',
+      trafficCountIP: 'Amount of packets per IP Address',
+      trafficSizeIP: 'Total size of packets per IP Address',
     }
   },
   
@@ -143,5 +138,45 @@ export default {
     sourcePort: 'Source Port',
     allowedVars: 'Inside of the message the following variables can be used:',
     vars: '*|DEST_IP|*, *|SOURCE_IP|*, *|DEST_PORT|*, *|SOURCE_PORT|*',
-  }
+    deleteRule: 'Delete rule permanently',
+    delete: 'Delete',
+  },
+
+  notifications: {
+    title: 'Notifications',
+    loadedPackets: 'Initialized data successfully!',
+    changeDate: 'Fetching data for new date range...',
+    noNotifications: 'You have no notifications.',
+    settingsSuccess: 'Succesfully applied settings',
+    ruleDeleted: 'Rule successfully deleted',
+    newNotifications: 'You have new notifications!',
+    Timestamp: 'Timestamp', 
+    Risk: 'Risk',
+    Message: 'Message',
+  },
+
+   
+  error: {
+    loginError: 'Something went wrong while logging in, please try again',
+    passNotStrong: 'Your password is not strong enough',
+    passMatch: 'Your passwords do not match',
+    userInvalid: 'Your username is invalid',
+    emailInvalid: 'Your e-mail address is invalid.',
+    mailError: 'Something went wrong while resetting your password, please try again.',
+    tokenFetchError: 'Something went wrong while trying to fetch a token',
+    localMailError: 'Fill in your e-mail address',
+    getSettingsError: 'Unable to fetch user settings',
+    lineGraphError: 'Something went wrong while trying to fetch the amount of packets/10min, please try again.',
+    rulesError: 'Something went wrong while trying to fetch the rules, please try again.',
+    ruleAddError: 'An error occurred while trying to add a new rule.',
+    ruleDeleteError: 'Unable to delete the rule, please try again.',
+    packetError: 'An error has occurred while fetching packets.',
+    noPackets: 'There are no packets available to view.',
+    countersError: 'An error occured while trying to fetch the counters.',
+    settingsApply: 'An error has occured while trying to apply the settings.',
+    trafficSizeError: 'An error occurred while fetching traffic size data.',
+    trafficCountError: 'An error occurred while fetching traffic count data.',
+    tlsVersionCount: 'An error occurred while fetching TLS version count data.',
+    protocolCountError: 'An error occurred while fetching protocol count data.',
+  },
 }

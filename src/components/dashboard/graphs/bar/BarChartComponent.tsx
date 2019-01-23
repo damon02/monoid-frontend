@@ -2,13 +2,13 @@ import * as React from 'react'
 import { Bar, BarChart, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'  
 import { IGraphComponentData } from '../../../../statics/types'
 
-
 interface IBarComponentProps {
   dataSet: IGraphComponentData[]
   dimensions?: { width: number, height: number }
   responsive?: { width: '100%', height: number } | { width: number, height: '100%' }
   showLabel?: boolean
   xkey: string
+  valueFormatter? : (value: any) => any
 }
 
 export default class BarChartComponent extends React.PureComponent<IBarComponentProps, {}> {
@@ -17,7 +17,7 @@ export default class BarChartComponent extends React.PureComponent<IBarComponent
   }
 
   public render() {
-    const { dataSet, responsive, dimensions, xkey } = this.props
+    const { dataSet, responsive, dimensions, xkey, valueFormatter } = this.props
 
     const bars = dataSet.map((data, key) => {
       return (
@@ -37,7 +37,7 @@ export default class BarChartComponent extends React.PureComponent<IBarComponent
             <XAxis dataKey={dataSet[0].nameKey}/>
             <YAxis />
             <Legend />
-            <Tooltip />
+            <Tooltip formatter={(value) => valueFormatter ? valueFormatter(value) : value}/>
           </BarChart>
         </ResponsiveContainer>
       )
@@ -47,8 +47,8 @@ export default class BarChartComponent extends React.PureComponent<IBarComponent
           <XAxis dataKey={xkey}/>
           <YAxis/>
           <Legend />
-          <Tooltip />
-        </BarChart>
+          <Tooltip formatter={(value) => valueFormatter ? valueFormatter(value) : value}/>        
+          </BarChart>
       )
     }
 }

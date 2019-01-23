@@ -25,7 +25,7 @@ interface ITerminalState {
   history: IHistoryItem[]
   inputValue: string
   loginStep: 0 | 1 | 2
-  directories: []
+  directories: any
   activeDir: string[]
 }
 

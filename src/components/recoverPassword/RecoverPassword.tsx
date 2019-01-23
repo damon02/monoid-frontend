@@ -166,8 +166,8 @@ class RecoverPassword extends React.PureComponent<IRecoverPasswordProps, IRecove
           this.setState({ error: 'mailError' })
         }
 
-      } catch (err) {
-        console.error(err)
+      } catch (error) {
+        console.error(error)
         this.setState({ error: 'mailError' })
       }
     } else {

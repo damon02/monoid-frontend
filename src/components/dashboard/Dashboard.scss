@@ -14,63 +14,63 @@
     max-width: 50%;
     height: auto;
   }
+}
 
-  .chart {
-    display: flex;
-    flex: 1 0 auto;
-    margin: $spaces-small;
-    flex-direction: column;
-    justify-content: stretch;
-    align-items: stretch;
-    width: fit-content;
-    height: auto;
-    
-    .title {
-      background-color: $color-gray;
-      width: 100%;
-      padding: $spaces-small;
-      font-family: 'Proxima Nova';
+.chart {
+  display: flex;
+  flex: 1 0 auto;
+  margin: $spaces-small;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  width: auto;
+  height: auto;
+  
+  .title {
+    background-color: $color-gray;
+    width: 100%;
+    padding: $spaces-small;
+    font-family: 'Proxima Nova';
 
-      .dark & {
-        color: $color-darktext; 
-        background-color: $color-darkest;
-      }
+    .dark & {
+      color: $color-darktext; 
+      background-color: $color-darkest;
     }
-    
+  }
+  
+  .inner {
+    border: 1px solid $color-gray;
+    padding: $spaces-small;
+    width: 100%;
+
+    .dark & {
+      border: 1px solid $color-darkest;
+    }
+  }
+
+  &.tiny {
+    font-size: 13px;
+  }
+
+  &.number {
     .inner {
-      border: 1px solid $color-gray;
-      padding: $spaces-small;
-      width: 100%;
-
-      .dark & {
-        border: 1px solid $color-darkest;
-      }
-    }
-
-    &.tiny {
-      font-size: 13px;
-    }
-
-    &.number {
-      .inner {
-        display: flex;
-        min-width: 320px;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        h1 {
-          margin: $spaces-small 0;
-        }
-      }
-    }
-
-    &.noMobile {
       display: flex;
+      min-width: 320px;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      h1 {
+        margin: $spaces-small 0;
+      }
     }
-    
-    &.mobileOnly {
-      display: none;
-    }
+  }
+
+  &.noMobile {
+    display: flex;
+  }
+  
+  &.mobileOnly {
+    display: none;
   }
 }
 

@@ -7,6 +7,7 @@ export interface IRootProps {
 }
 
 export interface IAppProps {
+  notifications: INotificationResponse
   packets: IPacketsResponse
   rules: IRulesResponse
   settings: {
@@ -33,7 +34,8 @@ export interface IAuthObject {
 }
 
 export interface IGraphComponentData {
-  color: string
+  color?: string
+  colorObject?: Object
   data: Array<any>
   dataKey: string
   nameKey: string
@@ -127,4 +129,30 @@ export type ICountersResponse = {
 export type ILineGraphResponse = {
   DateTime: string
   Count: number
+}[] | null
+
+export type IProtocolCountResponse = { 
+  Protocol: string, 
+  Count: number 
+}[] | null
+
+export type ITLSCountResponse = {
+  TlsVersion: string,
+  Count: number
+}[] | null
+
+export type ITrafficCountResponse = {
+  UniqueIp: string,
+  Count: number
+}[] | null
+
+export type ITrafficSizeResponse = {
+  UniqueIp: string,
+  Size: number
+}[] | null
+
+export type INotificationResponse = {
+  Risk: number,
+  Message: string,
+  Timestamp: string
 }[] | null
