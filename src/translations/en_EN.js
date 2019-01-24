@@ -150,6 +150,7 @@ export default {
     settingsSuccess: 'Succesfully applied settings',
     ruleDeleted: 'Rule successfully deleted',
     newNotifications: 'You have new notifications!',
+    noNewNotifications: 'You have 0 new notifications',
     Timestamp: 'Timestamp', 
     Risk: 'Risk',
     Message: 'Message',
@@ -178,5 +179,6 @@ export default {
     trafficCountError: 'An error occurred while fetching traffic count data.',
     tlsVersionCount: 'An error occurred while fetching TLS version count data.',
     protocolCountError: 'An error occurred while fetching protocol count data.',
+    notificationsError: 'An error occurred while fetching your notifications',
   },
 }

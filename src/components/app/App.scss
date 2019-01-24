@@ -46,6 +46,26 @@
   }
 }
 
+.title-bar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  .refreshButton {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    background-color: $color-primary;
+    color: $color-black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-left: $spaces-medium;
+  }
+}
+
+
 @media screen and (max-width: 380px) {
   .app .content {
     margin: 0;

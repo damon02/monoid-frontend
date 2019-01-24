@@ -1,10 +1,11 @@
+import moment from 'moment'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import { RouteComponentProps, withRouter } from 'react-router'
 import ReactTable from 'react-table'
+import { toast } from 'react-toastify'
 import { Dispatch } from 'redux'
-import moment from 'moment'
 
 import ErrorComponent from '../html/errorComponent/ErrorComponent'
 
@@ -13,8 +14,8 @@ import { getNotifications } from '../../utils/rest'
 import { setNotifications } from '../app/actions'
 import { clearAuth } from '../login/actions'
 
+import { isEqual } from 'lodash'
 import 'react-table/react-table.css'
-import { toast } from 'react-toastify';
 
 interface INotificationsProps extends IRootProps, RouteComponentProps<any> {
   clearAuth: () => void
@@ -45,14 +46,19 @@ class Notifications extends React.PureComponent<INotificationsProps, INotificati
       <div className="notifications">
         <ErrorComponent message={this.state.error ? I18n.t(`error.${this.state.error}`) : ''} onClick={() => this.setState({ error: '' })} />
         <div className="filters">
-          <h1>{I18n.t('notifications.title')}</h1>
+          <div className="title-bar">
+            <h1>{I18n.t('notifications.title')}</h1>
+            <button className="refreshButton" onClick={() => this.fetchNotifications()}>
+              <i className={`fas fa-sync ${this.state.loading ? 'fa-spin' : ''}`}/>
+            </button>
+          </div>
         </div>
         <ReactTable
           data={data}
           defaultFilterMethod={(filter, row) => String(row[filter.id]) === filter.value}
           defaultSorted={[
             {
-              id: "TimeStamp",
+              id: 'TimeStamp',
               desc: true
             }
           ]}
@@ -92,10 +98,14 @@ class Notifications extends React.PureComponent<INotificationsProps, INotificati
   private fetchNotifications = async () => {
     if (this.props.login.auth.token) {
       try {
-        this.setState({ error: '' })
+        this.setState({ loading: true, error: '' })
         const response = await getNotifications(this.props.login.auth.token)
 
         if (response) {
+          if (isEqual(response, this.props.app.notifications)) {
+            toast.info(I18n.t('notifications.noNewNotifications'), { position: toast.POSITION.BOTTOM_LEFT })
+          }
+
           this.props.setNotifications(response)
           this.setState({ loading: false })
         } else {

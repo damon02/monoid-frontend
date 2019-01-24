@@ -1,18 +1,18 @@
+import moment from 'moment'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import { RouteComponentProps, withRouter } from 'react-router'
-import moment from 'moment'
 
 import { IRootProps } from '../../statics/types'
-import { getTrafficProtocol, getTrafficTLS, getTrafficCountIP, getTrafficSizeIP } from '../../utils/rest';
+import { getTrafficCountIP, getTrafficProtocol, getTrafficSizeIP, getTrafficTLS } from '../../utils/rest'
 
+import { toast } from 'react-toastify'
+import { invkeysrt, keysrt } from '../../utils/general'
+import BarChartComponent from '../dashboard/graphs/bar/BarChartComponent'
+import PieChartComponent from '../dashboard/graphs/pie/PieChartComponent'
+import TableComponent from '../dashboard/graphs/table/TableComponent'
 import './Statistics.scss'
-import PieChartComponent from '../dashboard/graphs/pie/PieChartComponent';
-import TableComponent from '../dashboard/graphs/table/TableComponent';
-import { keysrt, invkeysrt } from '../../utils/general';
-import BarChartComponent from '../dashboard/graphs/bar/BarChartComponent';
-import { toast } from 'react-toastify';
 
 interface IStatisticsProps extends IRootProps, RouteComponentProps<any> {
 
@@ -22,9 +22,9 @@ interface IStatisticsState {
   loading: boolean
   error: string
   dateFetched: [number, number]
-  protocolCount: { Protocol: string, Count: number }[]
-  tlsCount: { TlsVersion: string, Count: number }[]
-  trafficCountIP: { UniqueIp: string, Count: number }[]
+  protocolCount: Array<{ Protocol: string, Count: number }>
+  tlsCount: Array<{ TlsVersion: string, Count: number }>
+  trafficCountIP: Array<{ UniqueIp: string, Count: number }>
   trafficSizeIP: any
 }
 
@@ -75,7 +75,12 @@ class Statistics extends React.PureComponent<IStatisticsProps, IStatisticsState>
   public render() {   
     return (
       <div className="statistics">
-        <h1>Statistics</h1>
+        <div className="title-bar">
+          <h1>Statistics</h1>
+          <button className="refreshButton" onClick={() => this.componentDidMount()}>
+            <i className={`fas fa-sync ${this.state.loading ? 'fa-spin' : ''}`}/>
+          </button>
+        </div>
         <div className="main">
           <div className="left">
             <div className="chart">
@@ -150,7 +155,7 @@ class Statistics extends React.PureComponent<IStatisticsProps, IStatisticsState>
   }
 
   private convertBytesToSize = (bytes: number) => {
-    if (bytes === 0) return '0 Bytes'
+    if (bytes === 0) { return '0 Bytes' }
 
     const k = 1024
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']

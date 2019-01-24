@@ -3,14 +3,14 @@ import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import { RouteComponentProps, withRouter } from 'react-router'
 import ReactTable from 'react-table'
-import { Dispatch } from 'redux'
 import { toast } from 'react-toastify'
+import { Dispatch } from 'redux'
 
 import ErrorComponent from '../html/errorComponent/ErrorComponent'
 import InputComponent from '../html/inputComponent/InputComponent'
 
 import { IRootProps, IRule } from '../../statics/types'
-import { addRule, getRules, deleteRule } from '../../utils/rest'
+import { addRule, deleteRule, getRules } from '../../utils/rest'
 import { setRules } from '../app/actions'
 import { clearAuth } from '../login/actions'
 
@@ -23,6 +23,7 @@ interface IRulesProps extends IRootProps, RouteComponentProps<any> {
 
 interface IRulesState {
   error: string
+  loading: boolean
   
   DestIP: string[]
   DestPort: number[]
@@ -42,6 +43,7 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
 
     this.state = {
       error: '',
+      loading: false,
 
       DestIP: [],
       DestPort: [],
@@ -62,7 +64,12 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
     return (
       <div className="rules">
         <ErrorComponent message={this.state.error ? I18n.t(`error.${this.state.error}`) : ''} onClick={() => this.setState({ error: '' })} />
-        <h1>{I18n.t('rules.title')}</h1>
+        <div className="title-bar">
+          <h1>{I18n.t('rules.title')}</h1>
+          <button className="refreshButton" onClick={() => this.fetchRules()}>
+            <i className={`fas fa-sync ${this.state.loading ? 'fa-spin' : ''}`}/>
+          </button>
+        </div>
         <div className="add-rule">
           <div className="row">
             <h2>{I18n.t('rules.addRule')}</h2>
@@ -207,15 +214,18 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
   private fetchRules = async () => {
     if (this.props.login.auth.token) {
       try {
-        this.setState({ error: '' })
+        this.setState({ error: '', loading: true })
         const response = await getRules(this.props.login.auth.token)
         if (response) {
           this.props.setRules(response)
+          this.setState({ loading: false })
         } else {
+          this.setState({ loading: false })
           toast.error(I18n.t('error.rulesError'), { position: toast.POSITION.BOTTOM_LEFT })
         }
         
       } catch (error) {
+        this.setState({ loading: false })
         toast.error(I18n.t('error.rulesError'), { position: toast.POSITION.BOTTOM_LEFT })
       }
     } else {

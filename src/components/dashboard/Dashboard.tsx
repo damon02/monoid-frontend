@@ -4,18 +4,18 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import { RouteComponentProps, withRouter } from 'react-router'
+import { toast } from 'react-toastify'
 import { Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { Dispatch } from 'redux'
-import { toast } from 'react-toastify'
 
 import ErrorComponent from '../html/errorComponent/ErrorComponent'
 import PieChartComponent from './graphs/pie/PieChartComponent'
 import TableComponent from './graphs/table/TableComponent'
 
 import { IGraphComponentData, IRootProps } from '../../statics/types'
+import { keysrt } from '../../utils/general'
 import { getCounters, getPacketsOverTime } from '../../utils/rest'
 import { clearAuth } from '../login/actions'
-import { keysrt } from '../../utils/general'
 import './Dashboard.scss'
 
 interface IDashboardComponentProps extends IRootProps, RouteComponentProps<any> {
@@ -86,6 +86,12 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
     return (
       <React.Fragment>
         <ErrorComponent message={this.state.error ? I18n.t(`error.${this.state.error}`) : ''} onClick={() => this.setState({ error: '' })} />
+        <div className="title-bar">
+          <h1>Welcome</h1>
+          <button className="refreshButton" onClick={() => this.componentDidMount()}>
+            <i className={`fas fa-sync ${this.state.loading ? 'fa-spin' : ''}`}/>
+          </button>
+        </div>
         <div className={'dashboard-wrapper'}>
           <div className="left">
             <div className="chart">
@@ -184,8 +190,9 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
         }
 
 
-        this.setState({ lineGraphStuff: fixedArray, dateFetched: [this.props.app.times.startDate.getTime(), this.props.app.times.endDate.getTime()] })
+        this.setState({ loading: false, lineGraphStuff: fixedArray, dateFetched: [this.props.app.times.startDate.getTime(), this.props.app.times.endDate.getTime()] })
       } catch (error) {
+        this.setState({ loading: false })
         toast.error(I18n.t('error.lineGraphError'), { position: toast.POSITION.BOTTOM_LEFT })
       }
     }

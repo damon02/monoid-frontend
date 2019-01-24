@@ -13,8 +13,8 @@ import { getToken, saveSettings } from '../../utils/rest'
 import { setSettings, setTheme } from '../app/actions'
 import { setAuth } from '../login/actions'
 
+import { toast } from 'react-toastify'
 import './Settings.scss'
-import { toast } from 'react-toastify';
 
 interface ISettingsState {
   error: string

@@ -13,8 +13,8 @@ import { setPackets } from '../app/actions'
 import { clearAuth } from '../login/actions'
 
 import 'react-table/react-table.css'
+import { toast } from 'react-toastify'
 import './PacketBrowser.scss'
-import { toast } from 'react-toastify';
 
 interface IPacketBrowserProps extends IRootProps, RouteComponentProps<any> {
   clearAuth: () => void
@@ -45,7 +45,12 @@ class PacketBrowser extends React.PureComponent<IPacketBrowserProps, IPacketBrow
       <div className="packetBrowser">
         <ErrorComponent message={this.state.error ? I18n.t(`error.${this.state.error}`) : ''} onClick={() => this.setState({ error: '' })} />
         <div className="filters">
-          <h1>{I18n.t('packetBrowser.title')}</h1>
+          <div className="title-bar">
+            <h1>{I18n.t('packetBrowser.title')}</h1>
+            <button className="refreshButton" onClick={() => this.fetchPackets()}>
+              <i className={`fas fa-sync ${this.state.loading ? 'fa-spin' : ''}`}/>
+            </button>
+          </div>
         </div>
         <ReactTable 
           data={data}
