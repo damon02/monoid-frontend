@@ -37,6 +37,7 @@ export default {
     password: 'Password',
     repeatpassword: 'Repeat your password',
     submit: 'Register',
+    submitPass: 'Submit',
     backLogin: 'Go back to login',
 
     minimal: 'At least',
@@ -81,6 +82,8 @@ export default {
     mailSuccess: 'If your e-mail matches in our system, an e-mail has been sent with further instructions.',
     checkMail: 'View your e-mail for further instructions.',
     backToLogin: 'Go back to login',
+    resetSuccess: 'Your password has been changed!',
+    newPassLogin: 'Use your new password to log in to your account.',
   },
 
   activateAccount: {
@@ -180,6 +183,7 @@ export default {
     tlsVersionCount: 'An error occurred while fetching TLS version count data.',
     protocolCountError: 'An error occurred while fetching protocol count data.',
     notificationsError: 'An error occurred while fetching your notifications',
-    registrationFail: 'An error occurred while trying to register your account'
+    registrationFail: 'An error occurred while trying to register your account',
+    resetError: 'An error occurred while trying to reset your password',
   },
 }

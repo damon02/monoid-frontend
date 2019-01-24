@@ -8,7 +8,7 @@ import ErrorComponent from '../html/errorComponent/ErrorComponent'
 import InputComponent from '../html/inputComponent/InputComponent'
 
 import { IRootProps } from '../../statics/types'
-import { requestPasswordRecoveryEmail } from '../../utils/rest'
+import { requestPasswordRecoveryEmail, resetPassword } from '../../utils/rest'
 
 import './RecoverPassword.scss'
 
@@ -109,7 +109,7 @@ class RecoverPassword extends React.PureComponent<IRecoverPasswordProps, IRecove
                 <span className="text">
                   {this.state.loading 
                       ? <i className="fas fa-circle-notch"/>
-                      : I18n.t('register.submit')
+                      : I18n.t('register.submitPass')
                   }
                 </span>
               </button>
@@ -139,8 +139,8 @@ class RecoverPassword extends React.PureComponent<IRecoverPasswordProps, IRecove
           }
           {this.state.success === 'resetSuccess' && this.props.match.params.token &&
             <React.Fragment>
-              <h1>{I18n.t('recover.mailSuccess')}</h1>
-              <p>{I18n.t('recover.checkMail')}</p>
+              <h1>{I18n.t('recover.resetSuccess')}</h1>
+              <p>{I18n.t('recover.newPassLogin')}</p>
             </React.Fragment>
           }
           <button className="hyperlink" onClick={() => this.props.history.push(`/login`)}>{I18n.t('recover.backToLogin')}</button>
@@ -183,7 +183,7 @@ class RecoverPassword extends React.PureComponent<IRecoverPasswordProps, IRecove
       try {
         this.setState({ error: '', success: '', loading: true })
 
-
+        await resetPassword(this.props.match.params.token, password)
 
         this.setState({ error: '', success: 'resetSuccess', loading: false })        
       } catch (error) {
