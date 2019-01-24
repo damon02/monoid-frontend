@@ -83,6 +83,21 @@ class Notifications extends React.PureComponent<INotificationsProps, INotificati
       {
         Header: I18n.t('notifications.Risk'),
         accessor: 'Risk',
+        Cell: (value: any) => {
+          if (value.value === 0) {
+            return 'Information'
+          } else if (value.value === 1) {
+            return 'Low'
+          } else if (value.value === 2) {
+            return 'Medium'
+          } else if (value.value === 3) {
+            return 'High'
+          } else if (value.value === 4) {
+            return 'Critical'
+          } else {
+            return value.value
+          }
+        },
         maxWidth: 100,
       },
       {
@@ -109,6 +124,7 @@ class Notifications extends React.PureComponent<INotificationsProps, INotificati
           this.props.setNotifications(response)
           this.setState({ loading: false })
         } else {
+          this.setState({ loading: false })
           toast.info(I18n.t('notifications.noNotifications'), { position: toast.POSITION.BOTTOM_LEFT })
         }
         
