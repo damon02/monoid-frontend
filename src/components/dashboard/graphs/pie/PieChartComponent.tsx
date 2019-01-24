@@ -1,6 +1,5 @@
 import * as React from 'react'
-//import { I18n } from 'react-redux-i18n'
-import { Pie, PieChart, ResponsiveContainer, Tooltip, Cell } from 'recharts'  
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'  
 import { IGraphComponentData } from '../../../../statics/types'
 
 interface IPieComponentProps {
@@ -17,7 +16,7 @@ export default class PieChartComponent extends React.PureComponent<IPieComponent
 
   public render() {
     const { dataSet, responsive, dimensions } = this.props  
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
     const colorIndex = {
       'Low': 'rgb(159, 197, 232)',
       'Medium': 'rgb(255, 229, 153)',
@@ -34,7 +33,7 @@ export default class PieChartComponent extends React.PureComponent<IPieComponent
           nameKey={data.nameKey} 
           label={true} 
           labelLine={true}
-          //fill={data.color || '#32b4f1'}
+          // fill={data.color || '#32b4f1'}
           cx={'50%'}
           cy={'50%'}
         >

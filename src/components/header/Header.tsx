@@ -1,11 +1,11 @@
 import { cloneDeep } from 'lodash'
+import moment from 'moment'
 import * as React from 'react'
 import DatePicker from 'react-datepicker'
 import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { Dispatch } from 'redux'
-import moment from 'moment'
 
 import { IAppProps, IRootProps } from '../../statics/types'
 import { setTimes } from '../app/actions'

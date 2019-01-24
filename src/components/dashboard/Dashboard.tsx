@@ -168,10 +168,14 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
           moment(this.props.app.times.endDate.getTime()).toISOString(),
         )
 
+        // Format the dates to sortable timestamps
         const unixData : Array<{ DateTime: number, Count: number }> = lineGraphData.map((obj : { DateTime: string, Count: number }) => (
           { DateTime: moment(obj.DateTime).unix() * 1000, Count: obj.Count }
         )).sort(keysrt('DateTime'))
 
+        // Iterate over the dataset to ensure there are no time jumps
+        // i.e. going from 10:00 to 12:40 because the times in between
+        // have no data.
         const fixedArray : any[] = []
         const coeff = 1000 * 60 * 10
         let tempTime : Date = new Date(Math.round(this.props.app.times.startDate.getTime() / coeff) * coeff)
@@ -198,6 +202,9 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
     }
   }
 
+  /**
+   * Fetch counted information from the backend
+   */
   private getAllCounters = async () => {
     if (this.props.login.auth.token) {
       try {
@@ -213,6 +220,9 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
     }
   }
 
+  /**
+   * Get the piechart info from the state formatted into a working format
+   */
   private getRisksObjects = () : IGraphComponentData[] => {
     const riskData = [
       { risk: 'Low', amount: this.state.counters.LowRisks },

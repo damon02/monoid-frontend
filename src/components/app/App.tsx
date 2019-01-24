@@ -1,10 +1,10 @@
+import { isEqual } from 'lodash'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import { Redirect, Route, RouteComponentProps, Switch, withRouter } from 'react-router'
+import { toast, ToastContainer } from 'react-toastify'
 import { Dispatch } from 'redux'
-import { ToastContainer, toast } from 'react-toastify'
-import { isEqual } from 'lodash'
 
 import Dashboard from '../dashboard/Dashboard'
 import Header from '../header/Header'
@@ -16,9 +16,9 @@ import Settings from '../settings/Settings'
 import Statistics from '../statistics/Statistics'
 
 import { IRootProps } from '../../statics/types'
-import { getRules, getSettings, getNotifications } from '../../utils/rest'
+import { getNotifications, getRules, getSettings } from '../../utils/rest'
 import { clearAuth } from '../login/actions'
-import { setPackets, setRules, setSettings, setNotifications } from './actions'
+import { setNotifications, setPackets, setRules, setSettings } from './actions'
 
 import 'react-toastify/dist/ReactToastify.css'
 import './App.scss'
@@ -141,6 +141,9 @@ class App extends React.PureComponent<IAppProps, IAppState> {
     }
   }
 
+  /**
+   * Fetch notifications
+   */
   private fetchNotifications = async () => {
     if (this.props.login.auth.token) {
       try {

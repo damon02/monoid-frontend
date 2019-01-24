@@ -11,9 +11,7 @@ import { IRootProps } from '../../statics/types'
 import { registerUser } from '../../utils/rest'
 import './Register.scss'
 
-interface IRegisterProps extends IRootProps, RouteComponentProps<any> {
-
-}
+interface IRegisterProps extends IRootProps, RouteComponentProps<any> {}
 
 interface IRegisterState {
   username: string
@@ -181,14 +179,7 @@ class Register extends React.PureComponent<IRegisterProps, IRegisterState> {
       // SUCCESS HANDLING
       try {
         this.setState({ loading: true, error: '' })
-        // TODO: registration handling
-        // 1. POST to API with username, pass
-        // 2. Retrieve 200 OK
-        // 3. Set success to true
-        // 4. Let user redirect itself to login
-
         await registerUser(username, email, password) 
-
         this.setState({ loading: false, error: '', success: true })
       } catch (error) {
         console.error(error)

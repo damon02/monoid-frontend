@@ -298,9 +298,11 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
       {
         Header: I18n.t('rules.delete'),
         Cell: (value: any) => {
-          return <button className="button red" onClick={() => this.deleteRule(value.original.Id)}>
-            <i className="fas fa-times"/>{I18n.t('rules.deleteRule')}
-          </button>
+          return (
+            <button className="button red" onClick={() => this.deleteRule(value.original.Id)}>
+              <i className="fas fa-times"/>{I18n.t('rules.deleteRule')}
+            </button>
+          )
         }
       },
     ]

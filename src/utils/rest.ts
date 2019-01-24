@@ -1,5 +1,5 @@
 import { BASE_URL } from '../statics/constants'
-import { ICountersResponse, IGenericAPIResponse, ILoginResponse, IPacketsResponse, IRegisterResponse, IRule, IRulesResponse, ISettingsResponse, ITokenResponse, ITLSCountResponse, IProtocolCountResponse, ITrafficCountResponse, ITrafficSizeResponse, INotificationResponse } from '../statics/types'
+import { ICountersResponse, IGenericAPIResponse, ILineGraphResponse, ILoginResponse, INotificationResponse, IPacketsResponse, IProtocolCountResponse, IRegisterResponse, IRule, IRulesResponse, ISettingsResponse, ITLSCountResponse, ITokenResponse, ITrafficCountResponse, ITrafficSizeResponse } from '../statics/types'
 
 /**
  * Registers a user inside the backend
@@ -70,7 +70,7 @@ export function requestPasswordRecoveryEmail(emailAddress: string) : Promise<IGe
  * @param {String} token
  * @param {String} password
  */
-export function resetPassword(token: string, password: string) : Promise<any> {
+export function resetPassword(token: string, password: string) : Promise<null> {
   const options = {
     method: 'POST',
     headers: {
@@ -83,7 +83,7 @@ export function resetPassword(token: string, password: string) : Promise<any> {
   }
 
   return fetch(`${BASE_URL}/user/password-recovery`, options)
-    .then(r => formatResponseFromBackend<any>(r))
+    .then(r => formatResponseFromBackend<null>(r))
 }
 
 /**
@@ -104,7 +104,7 @@ export function getToken(token: string, refresh?: boolean) : Promise<ITokenRespo
 }
 
 
-export function activateAccountFirstTime(token: string) : Promise<any> {
+export function activateAccountFirstTime(token: string) : Promise<null> {
   const options = {
     method: 'POST',
     headers: {
@@ -116,7 +116,7 @@ export function activateAccountFirstTime(token: string) : Promise<any> {
   }
 
   return fetch(`${BASE_URL}/authorize/activate-user`, options)
-    .then(r => formatResponseFromBackend<any>(r))
+    .then(r => formatResponseFromBackend<null>(r))
 }
 
 export function getSettings(token: string) : Promise<ISettingsResponse> {
@@ -214,7 +214,7 @@ export function getCounters(token: string) : Promise<ICountersResponse> {
     .then(r => formatResponseFromBackend<ICountersResponse>(r))
 }
 
-export function getPacketsOverTime(token: string, startDateTime: string, endDateTime: string) : Promise<any> {
+export function getPacketsOverTime(token: string, startDateTime: string, endDateTime: string) : Promise<ILineGraphResponse> {
   const options = {
     method: 'GET',
     headers: {
@@ -224,7 +224,7 @@ export function getPacketsOverTime(token: string, startDateTime: string, endDate
   }
 
   return fetch(`${BASE_URL}/data/get-line-graph-data?startDateTime=${startDateTime}&endDateTime=${endDateTime}`, options)
-    .then(r => formatResponseFromBackend<any>(r))
+    .then(r => formatResponseFromBackend<ILineGraphResponse>(r))
 }
 
 export function getTrafficCountIP(token: string, startDateTime: string, endDateTime: string) : Promise<ITrafficCountResponse> {

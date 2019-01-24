@@ -14,9 +14,7 @@ interface IActivateAccountState {
   success: string
 }
 
-interface IActivateAccountProps extends IRootProps, RouteComponentProps<IActivateAccountParams> {
-
-}
+interface IActivateAccountProps extends IRootProps, RouteComponentProps<IActivateAccountParams> {}
 
 class ActivateAccount extends React.PureComponent<IActivateAccountProps, IActivateAccountState> {
   constructor(props : IActivateAccountProps) {

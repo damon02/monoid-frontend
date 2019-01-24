@@ -6,7 +6,6 @@ import { appReducer } from '../components/app/reducer'
 import { loginReducer } from '../components/login/reducer'
 
 import en_EN from '../translations/en_EN'
-import nl_NL from '../translations/nl_NL'
 import { loadProperty } from '../utils/cookies'
 import { IAuthObject, II18nState, IRootProps } from './types'
 
@@ -16,7 +15,9 @@ const emptyAuthObject : IAuthObject = {
   timestamp: null
 }
 
-
+/**
+ * Initial redux state upon first boot
+ */
 export const initialState : IRootProps = {
   app: {
     notifications: null,
@@ -36,7 +37,7 @@ export const initialState : IRootProps = {
     auth: loadProperty('auth', emptyAuthObject)
   },
   i18n: {
-    translations: { nl: nl_NL, en: en_EN },
+    translations: { en: en_EN },
     locale: 'en'
   } as II18nState,
 }

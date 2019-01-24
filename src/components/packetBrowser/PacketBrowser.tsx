@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import { RouteComponentProps, withRouter } from 'react-router'
 import ReactTable from 'react-table'
+import { toast } from 'react-toastify'
 import { Dispatch } from 'redux'
 
 import ErrorComponent from '../html/errorComponent/ErrorComponent'
@@ -13,7 +14,6 @@ import { setPackets } from '../app/actions'
 import { clearAuth } from '../login/actions'
 
 import 'react-table/react-table.css'
-import { toast } from 'react-toastify'
 import './PacketBrowser.scss'
 
 interface IPacketBrowserProps extends IRootProps, RouteComponentProps<any> {

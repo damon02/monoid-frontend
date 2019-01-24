@@ -97,16 +97,6 @@ class Login extends React.PureComponent<ILoginComponentProps, ILoginState> {
             </button>
           </div>
           <button className="hyperlink" onClick={() => this.props.history.push(`/recovery/`)}>{I18n.t('login.forgot')}</button>
-          {/* {this.state.passwordForgot
-            ? <div className="forgotpass">
-              <InputComponent
-                label={I18n.t('login.username')} 
-                type={'email'}
-                value={this.state.passwordForgotValue} 
-              />
-            </div>
-            : null
-          } */}
         </div>
         <div className="monoid-logo"/>
       </div>
