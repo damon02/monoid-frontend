@@ -166,7 +166,7 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
           this.props.login.auth.token, 
           moment(this.props.app.times.startDate.getTime()).toISOString(),
           moment(this.props.app.times.endDate.getTime()).toISOString(),
-        )
+        ) || []
 
         // Format the dates to sortable timestamps
         const unixData : Array<{ DateTime: number, Count: number }> = lineGraphData.map((obj : { DateTime: string, Count: number }) => (
