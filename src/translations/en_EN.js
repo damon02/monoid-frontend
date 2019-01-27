@@ -136,6 +136,7 @@ export default {
     message: 'Message',
     notify: 'Notify',
     protocol: 'Protocol',
+    MainProtocol: 'Main Protocol',
     risk: 'Risk', 
     sourceIP: 'Source IP',
     sourcePort: 'Source Port',

@@ -89,6 +89,7 @@ export type IRule = {
   Log: boolean
   Message: string
   Notify: boolean
+  MainProtocol: number
   Protocol: number
   Risk: number
   SourceIp: string[]

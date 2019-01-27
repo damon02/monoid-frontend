@@ -29,6 +29,7 @@ interface IRulesState {
   DestPort: number[]
   RuleId: string | undefined
   Log: boolean | undefined
+  MainProtocol: number | undefined
   Message: string
   Notify: boolean | undefined
   Protocol: number | undefined
@@ -49,6 +50,7 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
       DestPort: [],
       RuleId: undefined,
       Log: false,
+      MainProtocol: undefined,
       Message: '',
       Notify: false,
       Protocol: undefined,
@@ -76,6 +78,20 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
           </div>
           <div className="row toggleRow">
             <div className="select-wrap">
+              <span>{I18n.t('rules.MainProtocol')}</span>
+              <select
+                onChange={(e) => this.setState({ MainProtocol: parseInt(e.target.value, 10) })}
+                value={this.state.MainProtocol}
+                className="inputComponent field"
+                placeholder={'MainProtocol'}
+              >
+                <option value={0}>{I18n.t('rules.IP')}</option>
+                <option value={1}>{I18n.t('rules.ICMP')}</option>
+                <option value={6}>{I18n.t('rules.TCP')}</option>
+                <option value={17}>{I18n.t('rules.UDP')}</option>
+              </select>
+            </div>
+            <div className="select-wrap">
               <span>{I18n.t('rules.Protocol')}</span>
               <select
                 onChange={(e) => this.setState({ Protocol: parseInt(e.target.value, 10) })}
@@ -84,9 +100,27 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
                 placeholder={'Protocol'}
               >
                 <option value={0}>{I18n.t('rules.Undefined')}</option>
-                <option value={1}>{I18n.t('rules.ICMP')}</option>
-                <option value={6}>{I18n.t('rules.TCP')}</option>
-                <option value={17}>{I18n.t('rules.UDP')}</option>
+                <option value={1}>{I18n.t('rules.SSH')}</option>
+                <option value={2}>{I18n.t('rules.Telnet')}</option>
+                <option value={3}>{I18n.t('rules.Finger')}</option>
+                <option value={4}>{I18n.t('rules.TFTP')}</option>
+                <option value={5}>{I18n.t('rules.SNMP')}</option>
+                <option value={6}>{I18n.t('rules.FTP')}</option>
+                <option value={7}>{I18n.t('rules.SMB')}</option>
+                <option value={8}>{I18n.t('rules.ARP')}</option>
+                <option value={9}>{I18n.t('rules.DNS')}</option>
+                <option value={10}>{I18n.t('rules.LLC')}</option>
+                <option value={11}>{I18n.t('rules.STP')}</option>
+                <option value={12}>{I18n.t('rules.HTTP')}</option>
+                <option value={13}>{I18n.t('rules.TCP')}</option>
+                <option value={14}>{I18n.t('rules.NBNS')}</option>
+                <option value={15}>{I18n.t('rules.LLMNR')}</option>
+                <option value={16}>{I18n.t('rules.SSDP')}</option>
+                <option value={17}>{I18n.t('rules.ICMP')}</option>
+                <option value={18}>{I18n.t('rules.TLSV1')}</option>
+                <option value={19}>{I18n.t('rules.TLSV11')}</option>
+                <option value={20}>{I18n.t('rules.TLSV12')}</option>
+                <option value={21}>{I18n.t('rules.UDP')}</option>
               </select>
             </div>
             <div className="select-wrap">
@@ -183,9 +217,10 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
   }
 
   private async addNewRule() {
-    if (this.props.login.auth.token && (this.state.Protocol && this.state.Notify && this.state.Log && this.state.Message && this.state.Risk)) {
+    if (this.props.login.auth.token && (this.state.Protocol && this.state.MainProtocol && this.state.Notify && this.state.Log && this.state.Message && this.state.Risk)) {
       try {
         const rule : IRule = {
+          MainProtocol: this.state.MainProtocol,
           Protocol: this.state.Protocol,
           DestIp: this.state.DestIP,
           DestPort: this.state.DestPort,
@@ -277,9 +312,20 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
         maxWidth: 64,
       },
       {
+        Header: I18n.t('rules.MainProtocol'),
+        accessor: 'MainProtocol',
+        maxWidth: 64,
+        Cell: (value : any) => {
+          return `${this.translateNumberToMainProtocol(value.value)} (${value.value})`
+        },
+      },
+      {
         Header: I18n.t('rules.protocol'),
         accessor: 'Protocol',
         maxWidth: 64,
+        Cell: (value : any) => {
+          return `${this.translateNumberToProtocol(value.value)} (${value.value})`
+        },
       },
       {
         Header: I18n.t('rules.risk'),
@@ -306,6 +352,16 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
         }
       },
     ]
+  }
+
+  private translateNumberToMainProtocol = (protocol : number) => {
+    const protocols = ['IP', 'ICMP', 'TCP', 'UDP']
+    return protocols[protocol] || 'Unknown'
+  }
+
+  private translateNumberToProtocol = (protocol : number) => {
+    const protocols = ['Undefined', 'SSH', 'Telnet', 'Finger', 'TFTP', 'SNMP', 'FTP', 'SMB', 'ARP', 'DNS', 'LLC', 'STP', 'HTTP', 'TCP', 'NBMS', 'LLMNR', 'SSDP', 'ICMP', 'TLSV1', 'TLSV11', 'TLSV12', 'UDP']
+    return protocols[protocol] || 'Unknown'
   }
 }
 
