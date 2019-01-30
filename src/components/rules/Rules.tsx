@@ -80,7 +80,7 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
             <div className="select-wrap">
               <span>{I18n.t('rules.MainProtocol')}</span>
               <select
-                onChange={(e) => this.setState({ MainProtocol: parseInt(e.target.value, 10) })}
+                onChange={(e) => this.handleMainProtocolChange(parseInt(e.target.value, 10))}
                 value={this.state.MainProtocol}
                 className="inputComponent field"
                 placeholder={'MainProtocol'}
@@ -100,27 +100,27 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
                 placeholder={'Protocol'}
               >
                 <option value={0}>{I18n.t('rules.Undefined')}</option>
-                <option value={1}>{I18n.t('rules.SSH')}</option>
-                <option value={2}>{I18n.t('rules.Telnet')}</option>
-                <option value={3}>{I18n.t('rules.Finger')}</option>
-                <option value={4}>{I18n.t('rules.TFTP')}</option>
-                <option value={5}>{I18n.t('rules.SNMP')}</option>
-                <option value={6}>{I18n.t('rules.FTP')}</option>
-                <option value={7}>{I18n.t('rules.SMB')}</option>
-                <option value={8}>{I18n.t('rules.ARP')}</option>
-                <option value={9}>{I18n.t('rules.DNS')}</option>
-                <option value={10}>{I18n.t('rules.LLC')}</option>
-                <option value={11}>{I18n.t('rules.STP')}</option>
-                <option value={12}>{I18n.t('rules.HTTP')}</option>
-                <option value={13}>{I18n.t('rules.TCP')}</option>
-                <option value={14}>{I18n.t('rules.NBNS')}</option>
-                <option value={15}>{I18n.t('rules.LLMNR')}</option>
-                <option value={16}>{I18n.t('rules.SSDP')}</option>
-                <option value={17}>{I18n.t('rules.ICMP')}</option>
-                <option value={18}>{I18n.t('rules.TLSV1')}</option>
-                <option value={19}>{I18n.t('rules.TLSV11')}</option>
-                <option value={20}>{I18n.t('rules.TLSV12')}</option>
-                <option value={21}>{I18n.t('rules.UDP')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(1)} value={1}>{I18n.t('rules.SSH')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(2)} value={2}>{I18n.t('rules.Telnet')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(3)} value={3}>{I18n.t('rules.Finger')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(4)} value={4}>{I18n.t('rules.TFTP')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(5)} value={5}>{I18n.t('rules.SNMP')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(6)} value={6}>{I18n.t('rules.FTP')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(7)} value={7}>{I18n.t('rules.SMB')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(8)} value={8}>{I18n.t('rules.ARP')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(9)} value={9}>{I18n.t('rules.DNS')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(10)} value={10}>{I18n.t('rules.LLC')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(11)} value={11}>{I18n.t('rules.STP')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(12)} value={12}>{I18n.t('rules.HTTP')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(13)} value={13}>{I18n.t('rules.TCP')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(14)} value={14}>{I18n.t('rules.NBNS')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(15)} value={15}>{I18n.t('rules.LLMNR')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(16)} value={16}>{I18n.t('rules.SSDP')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(17)} value={17}>{I18n.t('rules.ICMP')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(18)} value={18}>{I18n.t('rules.TLSV1')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(19)} value={19}>{I18n.t('rules.TLSV11')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(20)} value={20}>{I18n.t('rules.TLSV12')}</option>
+                <option disabled={this.getIfProtocolIsDisabled(21)} value={21}>{I18n.t('rules.UDP')}</option>
               </select>
             </div>
             <div className="select-wrap">
@@ -217,7 +217,16 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
   }
 
   private async addNewRule() {
-    if (this.props.login.auth.token && (this.state.Protocol && this.state.MainProtocol && this.state.Notify && this.state.Log && this.state.Message && this.state.Risk)) {
+    if (this.props.login.auth.token 
+      && (
+        this.state.Protocol 
+        && this.state.Protocol !== 0
+        && this.state.MainProtocol 
+        && this.state.Notify 
+        && this.state.Log 
+        && this.state.Message 
+        && this.state.Risk
+    )) {
       try {
         const rule : IRule = {
           MainProtocol: this.state.MainProtocol,
@@ -362,6 +371,40 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
   private translateNumberToProtocol = (protocol : number) => {
     const protocols = ['Undefined', 'SSH', 'Telnet', 'Finger', 'TFTP', 'SNMP', 'FTP', 'SMB', 'ARP', 'DNS', 'LLC', 'STP', 'HTTP', 'TCP', 'NBMS', 'LLMNR', 'SSDP', 'ICMP', 'TLSV1', 'TLSV11', 'TLSV12', 'UDP']
     return protocols[protocol] || 'Unknown'
+  }
+
+  private getIfProtocolIsDisabled = (protocol : number, mainProtocol? : number) : boolean =>  {
+    const currentMainProtocol = mainProtocol || this.state.MainProtocol
+    const convertedProtocol = this.translateNumberToProtocol(protocol)
+
+    switch(currentMainProtocol) {
+      case 0:
+        const IPprotocols = ['STP', 'TCP', 'ICMP', 'UDP', 'ARP']
+        return IPprotocols.filter(v => v === convertedProtocol).length === 0
+      case 1:
+        const ICMPprotocols : string[] = []
+        return ICMPprotocols.filter(v => v === convertedProtocol).length === 0
+      case 6:
+        const TCPprotocols = ['SSH', 'Telnet', 'Finger', 'FTP', 'SMB', 'DNS', 'LLC', 'HTTP', 'NBNS', 'LLMNR', 'TLSV1', 'TLSV11', 'TLSV12']
+        return TCPprotocols.filter(v => v === convertedProtocol).length === 0
+      case 17:
+        const UDPprotocols = ['TFTP', 'SNMP', 'DNS', 'NBNS', 'LLMNR', 'SSDP']
+        return UDPprotocols.filter(v => v === convertedProtocol).length === 0
+      default:
+        return true
+    }
+  }
+
+  private handleMainProtocolChange = (MainProtocol: number) => {
+    const currentProtocol = this.state.Protocol || -1
+    const isChangeAllowed = !this.getIfProtocolIsDisabled(currentProtocol, MainProtocol)
+    console.log(this.state.MainProtocol, '=>', MainProtocol, isChangeAllowed)
+
+    if (isChangeAllowed) {
+      this.setState({ MainProtocol })
+    } else {
+      this.setState({ MainProtocol, Protocol: 0 })
+    }
   }
 }
 
