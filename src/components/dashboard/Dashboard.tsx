@@ -17,6 +17,7 @@ import { keysrt } from '../../utils/general'
 import { getCounters, getPacketsOverTime } from '../../utils/rest'
 import { clearAuth } from '../login/actions'
 import './Dashboard.scss'
+import { DATETIME_FORMAT } from '../../statics/constants';
 
 interface IDashboardComponentProps extends IRootProps, RouteComponentProps<any> {
 }
@@ -164,8 +165,8 @@ class Dashboard extends React.PureComponent<IDashboardComponentProps, IDashboard
         this.setState({ loading: true })
         const lineGraphData = await getPacketsOverTime(
           this.props.login.auth.token, 
-          moment(this.props.app.times.startDate.getTime()).toISOString(),
-          moment(this.props.app.times.endDate.getTime()).toISOString(),
+          moment(this.props.app.times.startDate.getTime()).format(DATETIME_FORMAT),
+          moment(this.props.app.times.endDate.getTime()).format(DATETIME_FORMAT),
         ) || []
 
         // Format the dates to sortable timestamps

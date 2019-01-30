@@ -3,15 +3,17 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import { RouteComponentProps, withRouter } from 'react-router'
-
-import { IRootProps } from '../../statics/types'
-import { getTrafficCountIP, getTrafficProtocol, getTrafficSizeIP, getTrafficTLS } from '../../utils/rest'
-
 import { toast } from 'react-toastify'
-import { invkeysrt, keysrt } from '../../utils/general'
+
 import BarChartComponent from '../dashboard/graphs/bar/BarChartComponent'
 import PieChartComponent from '../dashboard/graphs/pie/PieChartComponent'
 import TableComponent from '../dashboard/graphs/table/TableComponent'
+
+import { IRootProps } from '../../statics/types'
+import { getTrafficCountIP, getTrafficProtocol, getTrafficSizeIP, getTrafficTLS } from '../../utils/rest'
+import { DATETIME_FORMAT } from '../../statics/constants'
+import { invkeysrt, keysrt } from '../../utils/general'
+
 import './Statistics.scss'
 
 interface IStatisticsProps extends IRootProps, RouteComponentProps<any> {
@@ -169,8 +171,8 @@ class Statistics extends React.PureComponent<IStatisticsProps, IStatisticsState>
         this.setState({ loading: true })
         const trafficSizeIP = await getTrafficSizeIP(
           this.props.login.auth.token,
-          moment(this.props.app.times.startDate).toISOString(), 
-          moment(this.props.app.times.endDate).toISOString()
+          moment(this.props.app.times.startDate).format(DATETIME_FORMAT), 
+          moment(this.props.app.times.endDate).format(DATETIME_FORMAT)
         )
 
         if (trafficSizeIP) {
@@ -206,8 +208,8 @@ class Statistics extends React.PureComponent<IStatisticsProps, IStatisticsState>
         this.setState({ loading: true })
         const trafficCountIP = await getTrafficCountIP(
           this.props.login.auth.token,
-          moment(this.props.app.times.startDate).toISOString(), 
-          moment(this.props.app.times.endDate).toISOString()
+          moment(this.props.app.times.startDate).format(DATETIME_FORMAT), 
+          moment(this.props.app.times.endDate).format(DATETIME_FORMAT)
         )
 
         if (trafficCountIP) {
@@ -243,8 +245,8 @@ class Statistics extends React.PureComponent<IStatisticsProps, IStatisticsState>
         this.setState({ loading: true })
         const tlscounts = await getTrafficTLS(
           this.props.login.auth.token,
-          moment(this.props.app.times.startDate).toISOString(), 
-          moment(this.props.app.times.endDate).toISOString()
+          moment(this.props.app.times.startDate).format(DATETIME_FORMAT), 
+          moment(this.props.app.times.endDate).format(DATETIME_FORMAT)
         )
 
         if (tlscounts) {
@@ -279,8 +281,8 @@ class Statistics extends React.PureComponent<IStatisticsProps, IStatisticsState>
         this.setState({ loading: true })
         const protocols = await getTrafficProtocol(
           this.props.login.auth.token, 
-          moment(this.props.app.times.startDate).toISOString(), 
-          moment(this.props.app.times.endDate).toISOString()
+          moment(this.props.app.times.startDate).format(DATETIME_FORMAT), 
+          moment(this.props.app.times.endDate).format(DATETIME_FORMAT)
         )
 
         if (protocols) {
