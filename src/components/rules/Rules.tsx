@@ -325,7 +325,7 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
         accessor: 'MainProtocol',
         maxWidth: 64,
         Cell: (value : any) => {
-          return `${this.translateNumberToMainProtocol(value.value)} (${value.value})`
+          return `${this.translateNumberToMainProtocol(value.value)}`
         },
       },
       {
@@ -333,7 +333,7 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
         accessor: 'Protocol',
         maxWidth: 64,
         Cell: (value : any) => {
-          return `${this.translateNumberToProtocol(value.value)} (${value.value})`
+          return `${this.translateNumberToProtocol(value.value)}`
         },
       },
       {
@@ -358,7 +358,8 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
               <i className="fas fa-times"/>{I18n.t('rules.deleteRule')}
             </button>
           )
-        }
+        },
+        minWidth: 210
       },
     ]
   }
@@ -398,7 +399,6 @@ class Rules extends React.PureComponent<IRulesProps, IRulesState> {
   private handleMainProtocolChange = (MainProtocol: number) => {
     const currentProtocol = this.state.Protocol || -1
     const isChangeAllowed = !this.getIfProtocolIsDisabled(currentProtocol, MainProtocol)
-    console.log(this.state.MainProtocol, '=>', MainProtocol, isChangeAllowed)
 
     if (isChangeAllowed) {
       this.setState({ MainProtocol })
